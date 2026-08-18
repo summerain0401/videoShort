@@ -73,6 +73,41 @@
 - 查询精确命中 id/名称/标签时自动置顶（兼容旧版关键词检索）
 - 索引产物在 `shared/.clip-index/`（不入库，随时可重建）；素材入库后记得重新 `build`
 
+## 封面生成（generate-cover.py）
+
+`scripts/generate-cover.py` 为每个项目自动生成 1080×1440 竖版 3:4 封面，统一账号视觉风格。
+
+```bash
+# 默认读取项目 scene-config.json 的标题、背景、角色情绪
+./.venv/bin/python scripts/generate-cover.py --project 02_项目/C003_工资与物价
+
+# 手动指定标题/版式/素材
+./.venv/bin/python scripts/generate-cover.py --project 02_项目/C003_工资与物价 \
+  --title "工资" --subtitle "为什么总涨不过物价？" \
+  --tags "经济学 生活常识 看懂购买力" \
+  --layout split --character thinking --background 小镇街道
+```
+
+版式：
+
+- `split`（默认）：完整角色站在右侧，左侧标题卡片。突出 IP 形象，适合小红书/抖音/视频号。
+- `center`：角色底部居中半身，底部大标题。强调标题冲击力，适合热点选题。
+
+脚本会自动从 `material-library.json` 检索：
+
+1. 背景（优先取 scene-config 第一场景 `background`，否则随机 active 背景）
+2. 角色（优先取 scene-config 第一个 character 的 `emotion`，默认 `thinking`）
+3. 道具（优先取 scene-config 第一个 prop 的 `name`）
+
+标题若是以「为什么」开头的完整句子（如「为什么工资总涨不过物价」），脚本会自动拆分为主标题「工资」+ 副标题「为什么总涨不过物价？」。
+
+设计要点：
+
+- 文字全部用 Pillow 叠加，**不要求 AI 在底图上写中文**（避免乱码）
+- 品牌条固定显示账号名与 slogan，强化「布丁经济学」识别度
+- 默认加载系统字体（优先 PingFang/STHeiti），可用 `--font` 指定字体路径
+- 输出默认：`02_项目/<项目>/deliverables/<videoId>_封面.jpg`
+
 ## 关键规则
 
 1. 文件名只能帮助人快速浏览，**内容描述字段才是检索依据**
