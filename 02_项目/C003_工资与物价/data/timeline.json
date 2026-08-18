@@ -1,18 +1,18 @@
 {
   "videoId": "C003",
   "title": "为什么工资总涨不过物价",
-  "totalDuration": 53.112,
+  "totalDuration": 49.512,
   "audioFile": "/Volumes/Samsung/codexProjects/videoShort/02_项目/C003_工资与物价/audio/voice.mp3",
   "scenes": [
     {
       "sceneId": "S01",
-      "start": 0.1,
-      "end": 9.725,
+      "start": 0.07,
+      "end": 7.181,
       "backgroundName": "小镇街道",
       "subtitle": {
         "text": "你有没有发现，工资明明在涨，钱却越来越不经花？十年前一百块能买一周菜，现在进超市一转眼就没了。",
-        "start": 0.1,
-        "end": 9.525,
+        "start": 0.07,
+        "end": 6.981,
         "highlights": [
           "工资",
           "一百块"
@@ -21,14 +21,14 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "thinking",
           "enterFrom": "left",
           "position": null,
           "zIndex": 2,
           "duration": [
-            0.1,
-            9.725
+            0.07,
+            7.181
           ]
         },
         {
@@ -39,21 +39,21 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            0.1,
-            9.725
+            0.07,
+            7.181
           ]
         }
       ]
     },
     {
       "sceneId": "S02",
-      "start": 9.725,
-      "end": 19.312,
+      "start": 7.181,
+      "end": 16.311,
       "backgroundName": "超市内部",
       "subtitle": {
         "text": "其实这不是错觉。工资涨的是数字，物价涨的是生活成本。物价跑得比工资快，你的购买力就在偷偷缩水。",
-        "start": 9.725,
-        "end": 19.113,
+        "start": 7.181,
+        "end": 16.111,
         "highlights": [
           "物价",
           "购买力"
@@ -62,14 +62,14 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "explaining",
           "enterFrom": "none",
           "position": null,
           "zIndex": 2,
           "duration": [
-            9.725,
-            19.312
+            7.181,
+            16.311
           ]
         },
         {
@@ -80,21 +80,21 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            9.725,
-            19.312
+            7.181,
+            16.311
           ]
         }
       ]
     },
     {
       "sceneId": "S03",
-      "start": 19.312,
-      "end": 31.512,
+      "start": 16.311,
+      "end": 27.926,
       "backgroundName": "超市内部",
       "subtitle": {
         "text": "为什么会这样？因为物价是被大家一起抬上去的：原材料涨、人工贵、房租高，每一环成本都悄悄加进商品价格里，买单的还是你。",
-        "start": 19.312,
-        "end": 31.312,
+        "start": 16.311,
+        "end": 27.726,
         "highlights": [
           "成本",
           "商品价格"
@@ -103,14 +103,14 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "serious",
           "enterFrom": "none",
           "position": null,
           "zIndex": 2,
           "duration": [
-            19.312,
-            31.512
+            16.311,
+            27.926
           ]
         },
         {
@@ -121,21 +121,21 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            19.312,
-            31.512
+            16.311,
+            27.926
           ]
         }
       ]
     },
     {
       "sceneId": "S04",
-      "start": 31.512,
-      "end": 41.45,
+      "start": 27.926,
+      "end": 37.6,
       "backgroundName": "小镇街道",
       "subtitle": {
         "text": "更要命的是，工资总是慢半拍。企业要等行情稳了才舍得加薪。等你拿到加薪通知，物价早就又涨了一轮。",
-        "start": 31.512,
-        "end": 41.25,
+        "start": 27.926,
+        "end": 37.4,
         "highlights": [
           "加薪",
           "慢半拍"
@@ -144,14 +144,14 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "worried",
           "enterFrom": "none",
           "position": null,
           "zIndex": 2,
           "duration": [
-            31.512,
-            41.45
+            27.926,
+            37.6
           ]
         },
         {
@@ -162,21 +162,21 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            31.512,
-            41.45
+            27.926,
+            37.6
           ]
         }
       ]
     },
     {
       "sceneId": "S05",
-      "start": 41.45,
-      "end": 53.062,
+      "start": 37.6,
+      "end": 47.945,
       "backgroundName": "小镇街道",
       "subtitle": {
         "text": "所以记住，看工资别只看数字，要看它买得到什么。与其干等加薪，不如先学会让钱生钱，这才是对抗物价的长期办法。",
-        "start": 41.45,
-        "end": 52.862,
+        "start": 37.6,
+        "end": 47.745,
         "highlights": [
           "让钱生钱",
           "长期办法"
@@ -185,14 +185,14 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "explaining",
           "enterFrom": "none",
           "position": null,
           "zIndex": 2,
           "duration": [
-            41.45,
-            53.062
+            37.6,
+            47.945
           ]
         },
         {
@@ -203,8 +203,8 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            41.45,
-            53.062
+            37.6,
+            47.945
           ]
         }
       ]

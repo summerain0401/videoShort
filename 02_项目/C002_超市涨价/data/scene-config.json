@@ -8,7 +8,7 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "thinking",
           "enterFrom": "left",
           "zIndex": 2
@@ -43,7 +43,7 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "explaining",
           "enterFrom": "none",
           "zIndex": 2
@@ -69,7 +69,7 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "serious",
           "enterFrom": "none",
           "zIndex": 2
@@ -95,7 +95,7 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "explaining",
           "enterFrom": "none",
           "zIndex": 2
@@ -121,7 +121,7 @@
       "elements": [
         {
           "type": "character",
-          "name": "小明",
+          "name": "小布丁",
           "emotion": "worried",
           "enterFrom": "none",
           "zIndex": 2

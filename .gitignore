@@ -9,3 +9,4 @@ build/
 02_项目/*/qa/
 shared/_generate/
 shared/_retired/
+public/_audio/

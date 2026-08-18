@@ -7,8 +7,19 @@
       "narrationSegment": "你有没有发现，十年前的一百块和现在的一百块，能买到的东西完全不一样",
       "preferredStart": 0.0,
       "elements": [
-        {"type": "character", "name": "小明", "emotion": "thinking", "enterFrom": "left", "zIndex": 2},
-        {"type": "prop", "name": "钱袋", "enterFrom": "right", "zIndex": 3}
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "left",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
       ]
     },
     {
@@ -16,8 +27,19 @@
       "narrationSegment": "这就是通货膨胀，简单说就是钱变得不值钱了",
       "preferredStart": 5.5,
       "elements": [
-        {"type": "character", "name": "小明", "emotion": "explaining", "enterFrom": "none", "zIndex": 2},
-        {"type": "prop", "name": "物价牌", "enterFrom": "right", "zIndex": 3}
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
       ]
     },
     {
@@ -25,8 +47,19 @@
       "narrationSegment": "市场上的东西还是那么多，但大家手里的钱却越来越多，东西自然就涨价了",
       "preferredStart": 11.0,
       "elements": [
-        {"type": "character", "name": "小明", "emotion": "serious", "enterFrom": "none", "zIndex": 2},
-        {"type": "prop", "name": "超市货架", "enterFrom": "right", "zIndex": 3}
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
       ]
     },
     {
@@ -34,8 +67,19 @@
       "narrationSegment": "如果通货膨胀太严重，你的工资上涨速度赶不上物价，生活就会越来越难",
       "preferredStart": 18.5,
       "elements": [
-        {"type": "character", "name": "小明", "emotion": "worried", "enterFrom": "none", "zIndex": 2},
-        {"type": "prop", "name": "工资条", "enterFrom": "right", "zIndex": 3}
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "worried",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
       ]
     }
   ]

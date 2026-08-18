@@ -9,13 +9,153 @@
   },
   "characters": [
     {
+      "id": "char_小布丁_smile",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "smile",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_smile.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，微笑，轻松友好",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "smile"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_thinking",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "thinking",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_thinking.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，右手托下巴，眼睛微向上看，思考表情",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "thinking"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_explaining",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "explaining",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_explaining.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，单手张开做讲解手势，自信表达",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "explaining"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_serious",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "serious",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_serious.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，眉头微皱，表情认真严肃",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "serious"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_worried",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "worried",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_worried.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，双手紧张交握，眉毛下压，担忧表情",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "worried"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_shocked",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "shocked",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_shocked.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，嘴巴张成O型，双手捧脸，震惊表情",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "shocked"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小布丁_confused",
+      "type": "character",
+      "name": "小布丁",
+      "emotion": "confused",
+      "action": "standing",
+      "filePath": "shared/characters/char_小布丁_confused.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩「小布丁」，奶油色皮肤、蜜桃粉腮红、浅黄贝雷帽、暖黄卫衣、浅蓝短裤，头微歪，单手挠头，困惑表情",
+      "tags": [
+        "角色",
+        "小布丁",
+        "布丁经济学",
+        "治愈卡通",
+        "Q版",
+        "confused"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
       "id": "char_小明",
       "type": "character",
       "name": "小明",
       "emotion": "neutral",
       "action": "standing",
       "filePath": "shared/characters/char_小明_smile.png",
-      "status": "active",
+      "status": "retired",
       "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，微笑",
       "tags": [
         "角色",
@@ -33,7 +173,7 @@
       "emotion": "thinking",
       "action": "standing",
       "filePath": "shared/characters/char_小明_thinking.png",
-      "status": "active",
+      "status": "retired",
       "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，思考表情",
       "tags": [
         "角色",
@@ -51,7 +191,7 @@
       "emotion": "explaining",
       "action": "standing",
       "filePath": "shared/characters/char_小明_explaining.png",
-      "status": "active",
+      "status": "retired",
       "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，讲解手势表情",
       "tags": [
         "角色",
@@ -69,7 +209,7 @@
       "emotion": "serious",
       "action": "standing",
       "filePath": "shared/characters/char_小明_serious.png",
-      "status": "active",
+      "status": "retired",
       "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，严肃表情",
       "tags": [
         "角色",
@@ -87,7 +227,7 @@
       "emotion": "worried",
       "action": "standing",
       "filePath": "shared/characters/char_小明_worried.png",
-      "status": "active",
+      "status": "retired",
       "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，担忧表情",
       "tags": [
         "角色",
@@ -166,7 +306,7 @@
       "action": null,
       "filePath": "shared/props/prop_物价牌.png",
       "status": "active",
-      "contentDescription": "红色物价标签牌道具",
+      "contentDescription": "治愈系卡通木质小黑板物价牌，圆润边框，暖色调",
       "tags": [
         "道具",
         "价格",
