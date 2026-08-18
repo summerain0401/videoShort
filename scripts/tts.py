@@ -18,6 +18,7 @@ Azure 引擎的词级 WordBoundary 事件会按中文标点聚合为句子边界
 """
 import argparse
 import asyncio
+import datetime
 import json
 import os
 import re
@@ -139,13 +140,18 @@ def azure_generate_tts(text: str, output_path: Path, voice: str, rate: str,
     word_boundaries = []
 
     def on_word_boundary(evt):
+        dur = evt.duration
+        # SDK >= 1.4x 的 duration 为 datetime.timedelta，统一转 100ns tick
+        if isinstance(dur, datetime.timedelta):
+            dur = int(dur.total_seconds() * TICK_TO_SEC)
         word_boundaries.append({
             "word": evt.text,
             "offset": evt.audio_offset,          # 100ns tick，与 edge-tts 一致
-            "duration": getattr(evt, "duration", 0) or 0,
+            "duration": dur or 0,
         })
 
-    synthesizer.word_boundary.connect(on_word_boundary)
+    # SDK >= 1.4x 事件名为 synthesis_word_boundary（旧版为 word_boundary）
+    synthesizer.synthesis_word_boundary.connect(on_word_boundary)
 
     ssml = (
         '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">'
@@ -196,9 +202,13 @@ def main():
     parser.add_argument("output_dir", help="输出目录")
     parser.add_argument("--engine", default="auto", choices=["auto", "azure", "edge"],
                         help="合成引擎（auto=有 Azure key 用 azure，否则 edge）")
-    parser.add_argument("--voice", default=DEFAULT_VOICE, choices=VOICE_POOL, help="音色")
+    parser.add_argument("--voice", default=None,
+                        help="音色（默认取环境变量 AZURE_VOICE，再回退 zh-CN-YunxiNeural）")
     parser.add_argument("--rate", default="+0%", help="语速，如 +10% / -5%")
     args = parser.parse_args()
+
+    # 音色优先级：--voice 参数 > AZURE_VOICE 环境变量 > 默认
+    voice = args.voice or os.environ.get("AZURE_VOICE", "").strip() or DEFAULT_VOICE
 
     input_arg = Path(args.input)
     text = input_arg.read_text(encoding="utf-8") if input_arg.exists() else args.input
@@ -217,13 +227,13 @@ def main():
     voice_path = out_dir / "voice.mp3"
     meta_path = out_dir / "voice.json"
 
-    print(f"[tts] 引擎: {engine}, 音色: {args.voice}, 语速: {args.rate}, "
+    print(f"[tts] 引擎: {engine}, 音色: {voice}, 语速: {args.rate}, "
           f"文本 {len(text)} 字, {len(split_paragraphs(text))} 个段落(场景)")
     if engine == "azure":
         key, region = detect_azure()
-        raw = azure_generate_tts(text, voice_path, args.voice, args.rate, key, region)
+        raw = azure_generate_tts(text, voice_path, voice, args.rate, key, region)
     else:
-        raw = asyncio.run(edge_generate_tts(text, voice_path, args.voice, args.rate))
+        raw = asyncio.run(edge_generate_tts(text, voice_path, voice, args.rate))
 
     # 原子边界 → 段落级边界（段落数 == 边界数，build-timeline 精确对齐）
     paragraphs = split_paragraphs(text)
@@ -233,7 +243,7 @@ def main():
 
     result = {
         "engine": engine,
-        "voice": args.voice,
+        "voice": voice,
         "rate": args.rate,
         "text": text,
         "audioFile": str(voice_path),

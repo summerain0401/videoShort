@@ -36,6 +36,11 @@ load_env() {
   # shellcheck disable=SC1091
   source "$ROOT/.env"
   set +a
+  # 兼容旧变量名：AZURE_REGION → AZURE_SPEECH_REGION
+  if [ -z "${AZURE_SPEECH_REGION:-}" ] && [ -n "${AZURE_REGION:-}" ]; then
+    export AZURE_SPEECH_REGION="$AZURE_REGION"
+    warn ".env 使用旧变量名 AZURE_REGION，已自动映射为 AZURE_SPEECH_REGION"
+  fi
   info "已加载 $ROOT/.env"
 }
 
@@ -81,13 +86,18 @@ cmd_script() {
 # voice — 配音
 # ---------------------------------------------------------------------------
 cmd_voice() {
-  local dir="$1" engine="${2:-auto}" voice="${3:-zh-CN-YunxiNeural}"
+  local dir="$1" engine="${2:-auto}" voice="${3:-}"
   require_project "$dir"
   local script_file="$ROOT/$dir/script/口播稿.txt"
   [ -f "$script_file" ] || err "缺少口播稿: $script_file"
   load_env
   info "生成配音: $script_file -> $dir/audio/ (引擎: $engine)"
-  "$PY" "$ROOT/scripts/tts.py" "$script_file" "$ROOT/$dir/audio" --engine "$engine" --voice "$voice"
+  # 未显式指定音色时不传 --voice，由 tts.py 读取 AZURE_VOICE（回退默认云希）
+  if [ -n "$voice" ]; then
+    "$PY" "$ROOT/scripts/tts.py" "$script_file" "$ROOT/$dir/audio" --engine "$engine" --voice "$voice"
+  else
+    "$PY" "$ROOT/scripts/tts.py" "$script_file" "$ROOT/$dir/audio" --engine "$engine"
+  fi
   ok "配音完成"
 }
 
