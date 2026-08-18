@@ -45,6 +45,34 @@
 - 背景：`bg_{场景名}_{序号}.png`
 - 道具：`prop_{道具名}_{序号}.png`
 
+## 语义检索（CLIP + FAISS）
+
+素材库支持语义检索（中文自然语言/图片找图），由 `scripts/search-material.py` 提供：
+
+```bash
+# 1. 建索引（素材增删后需重建）
+./.venv/bin/python scripts/search-material.py build
+
+# 2. 文本检索（中文描述，语义匹配）
+./.venv/bin/python scripts/search-material.py search "思考中的小布丁"
+./.venv/bin/python scripts/search-material.py search "惊讶的表情" --type character
+./.venv/bin/python scripts/search-material.py search "超市" --topk 3 --json
+
+# 3. 图搜图（视觉相似素材）
+./.venv/bin/python scripts/search-material.py search "图" --image shared/props/prop_零食袋.png
+
+# 4. 查看索引信息
+./.venv/bin/python scripts/search-material.py info
+```
+
+要点：
+
+- 只检索 `status=active` 的素材，`retired` 永远搜不到
+- 模型：`OFA-Sys/chinese-clip-vit-large-patch14`（首次自动下载，约 1.2GB 到 HF 缓存）
+- 双路索引：图片视觉 embedding + 元数据增强文本 embedding 加权融合
+- 查询精确命中 id/名称/标签时自动置顶（兼容旧版关键词检索）
+- 索引产物在 `shared/.clip-index/`（不入库，随时可重建）；素材入库后记得重新 `build`
+
 ## 关键规则
 
 1. 文件名只能帮助人快速浏览，**内容描述字段才是检索依据**

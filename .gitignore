@@ -9,4 +9,5 @@ build/
 02_项目/*/qa/
 shared/_generate/
 shared/_retired/
+shared/.clip-index/
 public/_audio/
