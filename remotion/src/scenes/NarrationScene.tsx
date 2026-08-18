@@ -116,31 +116,41 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
         }}
       />
 
-      {/* 角色层：第一个角色在左，第二个在右 */}
+      {/* 角色层：第一个角色在左，第二个在右；只有一个角色且无道具时居中 */}
       {characters.map((el, i) => {
         const img = el.imagePath ?? resolveElementImage?.(el);
         if (!img) {
           return null;
         }
+        const charPosition = characters.length === 1 && props.length === 0
+          ? 'center'
+          : characters.length === 1
+            ? 'left'
+            : (i % 2 === 0 ? 'left' : 'right');
         return (
           <Character
             key={`${el.name}-${i}`}
             imagePath={img}
             enterFrom={el.enterFrom ?? 'none'}
             duration={sceneRelativeDuration}
-            position={characters.length === 1 ? 'center' : (i % 2 === 0 ? 'left' : 'right')}
+            position={charPosition}
             zIndex={el.zIndex ?? 2}
             floating
           />
         );
       })}
 
-      {/* 道具层：第一个道具在右，第二个在左（与角色互补） */}
+      {/* 道具层：与角色互补；只有一个道具且无角色时居中，有角色时放右侧 */}
       {props.map((el, i) => {
         const img = el.imagePath ?? resolveElementImage?.(el);
         if (!img) {
           return null;
         }
+        const propPosition = props.length === 1 && characters.length === 0
+          ? 'center'
+          : props.length === 1
+            ? 'right'
+            : (i % 2 === 0 ? 'right' : 'left');
         // 竖屏道具比例：高度相对 VIDEO_HEIGHT，单个居中在上，多个左右分布
         const scale =
           el.name === '超市货架' ? 0.25 :
@@ -154,7 +164,7 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
             imagePath={img}
             enterFrom={el.enterFrom ?? 'right'}
             duration={[sceneRelativeDuration[0] + 0.3, sceneRelativeDuration[1]]}
-            position={props.length === 1 ? 'center' : (i % 2 === 0 ? 'left' : 'right')}
+            position={propPosition}
             scale={scale}
             zIndex={el.zIndex ?? 3}
           />
