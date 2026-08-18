@@ -102,8 +102,10 @@ async function main() {
   resolveTimelineMaterials(timeline, library);
 
   // 3. 复制配音到 public/_audio/（Remotion 只服务 public/）
+  //    注意: timeline.audioFile 可能是绝对路径, 必须用 path.resolve 而非 path.join
+  //    （path.join 会把绝对路径当普通段拼接, 拼出不存在路径导致静默无配音）
   const audioSrc = timeline.audioFile
-    ? path.join(ROOT, timeline.audioFile)
+    ? path.resolve(ROOT, timeline.audioFile)
     : null;
   let narration = undefined;
   if (audioSrc && fs.existsSync(audioSrc)) {
@@ -112,6 +114,9 @@ async function main() {
     const dest = path.join(pubDir, 'voice.mp3');
     fs.copyFileSync(audioSrc, dest);
     narration = '_audio/voice.mp3';
+    console.log(`[render] 配音已复制: ${audioSrc} -> ${dest}`);
+  } else {
+    console.warn(`[render] 警告: 未找到配音文件 ${audioSrc ?? timeline.audioFile}，成片将无旁白音频`);
   }
 
   // 4. 读取片尾问答（可选，从项目目录 outro.json）
