@@ -1,0 +1,11 @@
+node_modules/
+.venv/
+.DS_Store
+*.mp4
+*.wav
+.env
+build/
+02_项目/*/audio/*.mp3
+02_项目/*/qa/
+shared/_generate/
+shared/_retired/

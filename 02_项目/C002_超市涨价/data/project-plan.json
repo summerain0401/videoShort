@@ -1,0 +1,95 @@
+{
+  "videoId": "C002",
+  "title": "为什么超市里的东西总是越来越贵",
+  "theme": "为什么超市里的东西总是越来越贵",
+  "duration": 46.9,
+  "generatedBy": "generate-story.py (from-script)",
+  "narration": "你有没有发现，十年前的十块钱能买一大袋零食，现在却只够买一瓶饮料？\n这不是你记错了，而是钱变毛了，你手里钱的购买力一直在悄悄下降。\n商品还是那些商品，可印出来的钱越来越多，钱一多，东西自然就涨价了。\n超市进货要加价，运输要加价，员工工资也要涨，这些成本最后都算进你买的商品里。\n所以同样一张一百块，能买到的东西一年比一年少，这就是东西越来越贵的原因。",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "narrationSegment": "你有没有发现，十年前的十块钱能买一大袋零食，现在却只够买一瓶饮料？",
+      "characters": [
+        {
+          "name": "小明",
+          "emotion": "thinking"
+        }
+      ],
+      "props": [
+        {
+          "name": "超市货架"
+        }
+      ],
+      "background": "小镇街道",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S02",
+      "narrationSegment": "这不是你记错了，而是钱变毛了，你手里钱的购买力一直在悄悄下降。",
+      "characters": [
+        {
+          "name": "小明",
+          "emotion": "explaining"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "background": "小镇街道",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S03",
+      "narrationSegment": "商品还是那些商品，可印出来的钱越来越多，钱一多，东西自然就涨价了。",
+      "characters": [
+        {
+          "name": "小明",
+          "emotion": "serious"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "background": "超市内部",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S04",
+      "narrationSegment": "超市进货要加价，运输要加价，员工工资也要涨，这些成本最后都算进你买的商品里。",
+      "characters": [
+        {
+          "name": "小明",
+          "emotion": "explaining"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "background": "超市内部",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S05",
+      "narrationSegment": "所以同样一张一百块，能买到的东西一年比一年少，这就是东西越来越贵的原因。",
+      "characters": [
+        {
+          "name": "小明",
+          "emotion": "worried"
+        }
+      ],
+      "props": [
+        {
+          "name": "工资条"
+        }
+      ],
+      "background": "超市内部",
+      "layout": "center-focus"
+    }
+  ]
+}

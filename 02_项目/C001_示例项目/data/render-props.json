@@ -1,0 +1,298 @@
+{
+  "timeline": {
+    "videoId": "C001",
+    "title": "什么是通货膨胀",
+    "totalDuration": 25.611,
+    "audioFile": "02_项目/C001_示例项目/audio/voice.mp3",
+    "scenes": [
+      {
+        "sceneId": "S01",
+        "start": 0.0,
+        "end": 7.333,
+        "subtitle": {
+          "text": "你有没有发现，十年前的一百块和现在的一百块，能买到的东西完全不一样",
+          "start": 0.0,
+          "end": 7.133
+        },
+        "elements": [
+          {
+            "type": "character",
+            "name": "小明",
+            "emotion": "thinking",
+            "enterFrom": "left",
+            "zIndex": 2,
+            "duration": [
+              0.0,
+              7.333
+            ],
+            "imagePath": "/shared/characters/char_小明.png"
+          },
+          {
+            "type": "prop",
+            "name": "钱袋",
+            "emotion": null,
+            "enterFrom": "right",
+            "zIndex": 3,
+            "duration": [
+              0.0,
+              7.333
+            ],
+            "imagePath": "/shared/props/prop_钱袋.png"
+          }
+        ],
+        "backgroundPath": "/shared/backgrounds/bg_town.png"
+      },
+      {
+        "sceneId": "S02",
+        "start": 5.5,
+        "end": 9.944,
+        "subtitle": {
+          "text": "这就是通货膨胀，简单说就是钱变得不值钱了",
+          "start": 5.5,
+          "end": 9.744
+        },
+        "elements": [
+          {
+            "type": "character",
+            "name": "小明",
+            "emotion": "explaining",
+            "enterFrom": "none",
+            "zIndex": 2,
+            "duration": [
+              5.5,
+              9.944
+            ],
+            "imagePath": "/shared/characters/char_小明.png"
+          },
+          {
+            "type": "prop",
+            "name": "物价牌",
+            "emotion": null,
+            "enterFrom": "right",
+            "zIndex": 3,
+            "duration": [
+              5.5,
+              9.944
+            ],
+            "imagePath": "/shared/props/prop_物价牌.png"
+          }
+        ],
+        "backgroundPath": "/shared/backgrounds/bg_town.png"
+      },
+      {
+        "sceneId": "S03",
+        "start": 11.0,
+        "end": 18.333,
+        "subtitle": {
+          "text": "市场上的东西还是那么多，但大家手里的钱却越来越多，东西自然就涨价了",
+          "start": 11.0,
+          "end": 18.133
+        },
+        "elements": [
+          {
+            "type": "character",
+            "name": "小明",
+            "emotion": "serious",
+            "enterFrom": "none",
+            "zIndex": 2,
+            "duration": [
+              11.0,
+              18.333
+            ],
+            "imagePath": "/shared/characters/char_小明.png"
+          },
+          {
+            "type": "prop",
+            "name": "超市货架",
+            "emotion": null,
+            "enterFrom": "right",
+            "zIndex": 3,
+            "duration": [
+              11.0,
+              18.333
+            ],
+            "imagePath": "/shared/props/prop_超市货架.png"
+          }
+        ],
+        "backgroundPath": "/shared/backgrounds/bg_market.png"
+      },
+      {
+        "sceneId": "S04",
+        "start": 18.5,
+        "end": 25.611,
+        "subtitle": {
+          "text": "如果通货膨胀太严重，你的工资上涨速度赶不上物价，生活就会越来越难",
+          "start": 18.5,
+          "end": 25.411
+        },
+        "elements": [
+          {
+            "type": "character",
+            "name": "小明",
+            "emotion": "worried",
+            "enterFrom": "none",
+            "zIndex": 2,
+            "duration": [
+              18.5,
+              25.611
+            ],
+            "imagePath": "/shared/characters/char_小明.png"
+          },
+          {
+            "type": "prop",
+            "name": "工资条",
+            "emotion": null,
+            "enterFrom": "right",
+            "zIndex": 3,
+            "duration": [
+              18.5,
+              25.611
+            ],
+            "imagePath": "/shared/props/prop_工资条.png"
+          }
+        ],
+        "backgroundPath": "/shared/backgrounds/bg_market.png"
+      }
+    ]
+  },
+  "library": {
+    "version": "0.1.0",
+    "lastUpdated": "2026-08-17",
+    "statuses": {
+      "generating": "素材生成中，未检查",
+      "pending_review": "已生成待人工检查",
+      "active": "已通过检查，可被检索使用",
+      "retired": "已淘汰（水印/绿边/错误内容），不可被检索"
+    },
+    "characters": [
+      {
+        "id": "char_小明",
+        "type": "character",
+        "name": "小明",
+        "emotion": "neutral",
+        "action": "standing",
+        "filePath": "shared/characters/char_小明.png",
+        "status": "active",
+        "contentDescription": "卡通风格小男孩角色，正面站立",
+        "tags": [
+          "角色",
+          "小明",
+          "卡通"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      }
+    ],
+    "backgrounds": [
+      {
+        "id": "bg_town",
+        "type": "background",
+        "name": "小镇街道",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/backgrounds/bg_town.png",
+        "status": "active",
+        "contentDescription": "海边小镇街道背景，蓝色调",
+        "tags": [
+          "背景",
+          "小镇",
+          "街道"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      },
+      {
+        "id": "bg_market",
+        "type": "background",
+        "name": "超市内部",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/backgrounds/bg_market.png",
+        "status": "active",
+        "contentDescription": "超市货架内部背景，深蓝色调",
+        "tags": [
+          "背景",
+          "超市",
+          "货架"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      }
+    ],
+    "props": [
+      {
+        "id": "prop_钱袋",
+        "type": "prop",
+        "name": "钱袋",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/props/prop_钱袋.png",
+        "status": "active",
+        "contentDescription": "棕色钱袋道具，鼓鼓的装满钱",
+        "tags": [
+          "道具",
+          "钱",
+          "钱袋"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      },
+      {
+        "id": "prop_物价牌",
+        "type": "prop",
+        "name": "物价牌",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/props/prop_物价牌.png",
+        "status": "active",
+        "contentDescription": "红色物价标签牌道具",
+        "tags": [
+          "道具",
+          "价格",
+          "物价"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      },
+      {
+        "id": "prop_超市货架",
+        "type": "prop",
+        "name": "超市货架",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/props/prop_超市货架.png",
+        "status": "active",
+        "contentDescription": "超市货架道具，放满商品",
+        "tags": [
+          "道具",
+          "超市",
+          "货架"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      },
+      {
+        "id": "prop_工资条",
+        "type": "prop",
+        "name": "工资条",
+        "emotion": null,
+        "action": null,
+        "filePath": "shared/props/prop_工资条.png",
+        "status": "active",
+        "contentDescription": "白色工资条单据道具",
+        "tags": [
+          "道具",
+          "工资",
+          "单据"
+        ],
+        "createdAt": "2026-08-17",
+        "usageCount": 0
+      }
+    ]
+  },
+  "narration": "_audio/voice.mp3",
+  "outro": {
+    "question": "通货膨胀是什么？",
+    "answer": "钱变得不值钱了。"
+  }
+}

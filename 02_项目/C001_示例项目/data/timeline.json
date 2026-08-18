@@ -1,0 +1,144 @@
+{
+  "videoId": "C001",
+  "title": "什么是通货膨胀",
+  "totalDuration": 25.611,
+  "audioFile": "02_项目/C001_示例项目/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.0,
+      "end": 7.333,
+      "subtitle": {
+        "text": "你有没有发现，十年前的一百块和现在的一百块，能买到的东西完全不一样",
+        "start": 0.0,
+        "end": 7.133
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小明",
+          "emotion": "thinking",
+          "enterFrom": "left",
+          "zIndex": 2,
+          "duration": [
+            0.0,
+            7.333
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "zIndex": 3,
+          "duration": [
+            0.0,
+            7.333
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 5.5,
+      "end": 9.944,
+      "subtitle": {
+        "text": "这就是通货膨胀，简单说就是钱变得不值钱了",
+        "start": 5.5,
+        "end": 9.744
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小明",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "zIndex": 2,
+          "duration": [
+            5.5,
+            9.944
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "right",
+          "zIndex": 3,
+          "duration": [
+            5.5,
+            9.944
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 11.0,
+      "end": 18.333,
+      "subtitle": {
+        "text": "市场上的东西还是那么多，但大家手里的钱却越来越多，东西自然就涨价了",
+        "start": 11.0,
+        "end": 18.133
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小明",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "zIndex": 2,
+          "duration": [
+            11.0,
+            18.333
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "emotion": null,
+          "enterFrom": "right",
+          "zIndex": 3,
+          "duration": [
+            11.0,
+            18.333
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 18.5,
+      "end": 25.611,
+      "subtitle": {
+        "text": "如果通货膨胀太严重，你的工资上涨速度赶不上物价，生活就会越来越难",
+        "start": 18.5,
+        "end": 25.411
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小明",
+          "emotion": "worried",
+          "enterFrom": "none",
+          "zIndex": 2,
+          "duration": [
+            18.5,
+            25.611
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "right",
+          "zIndex": 3,
+          "duration": [
+            18.5,
+            25.611
+          ]
+        }
+      ]
+    }
+  ]
+}

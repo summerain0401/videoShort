@@ -1,0 +1,249 @@
+{
+  "version": "0.1.0",
+  "lastUpdated": "2026-08-18",
+  "statuses": {
+    "generating": "素材生成中，未检查",
+    "pending_review": "已生成待人工检查",
+    "active": "已通过检查，可被检索使用",
+    "retired": "已淘汰（水印/绿边/错误内容），不可被检索"
+  },
+  "characters": [
+    {
+      "id": "char_小明",
+      "type": "character",
+      "name": "小明",
+      "emotion": "neutral",
+      "action": "standing",
+      "filePath": "shared/characters/char_小明_smile.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，微笑",
+      "tags": [
+        "角色",
+        "小明",
+        "治愈卡通",
+        "Q版"
+      ],
+      "createdAt": "2026-08-17",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小明_thinking",
+      "type": "character",
+      "name": "小明",
+      "emotion": "thinking",
+      "action": "standing",
+      "filePath": "shared/characters/char_小明_thinking.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，思考表情",
+      "tags": [
+        "角色",
+        "小明",
+        "治愈卡通",
+        "Q版"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小明_explaining",
+      "type": "character",
+      "name": "小明",
+      "emotion": "explaining",
+      "action": "standing",
+      "filePath": "shared/characters/char_小明_explaining.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，讲解手势表情",
+      "tags": [
+        "角色",
+        "小明",
+        "治愈卡通",
+        "Q版"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小明_serious",
+      "type": "character",
+      "name": "小明",
+      "emotion": "serious",
+      "action": "standing",
+      "filePath": "shared/characters/char_小明_serious.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，严肃表情",
+      "tags": [
+        "角色",
+        "小明",
+        "治愈卡通",
+        "Q版"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "char_小明_worried",
+      "type": "character",
+      "name": "小明",
+      "emotion": "worried",
+      "action": "standing",
+      "filePath": "shared/characters/char_小明_worried.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通Q版小男孩，橙色T恤+蓝色背带裤，担忧表情",
+      "tags": [
+        "角色",
+        "小明",
+        "治愈卡通",
+        "Q版"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "bg_town",
+      "type": "background",
+      "name": "小镇街道",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_town.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通小镇街道（竖屏 9:16），糖果色房子，暖色调",
+      "tags": [
+        "背景",
+        "小镇",
+        "街道",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "bg_market",
+      "type": "background",
+      "name": "超市内部",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_market.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通超市内部（竖屏 9:16），明亮货架，暖色调",
+      "tags": [
+        "背景",
+        "超市",
+        "货架",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    }
+  ],
+  "props": [
+    {
+      "id": "prop_钱袋",
+      "type": "prop",
+      "name": "钱袋",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_钱袋.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通麻布钱袋，金色硬币图案",
+      "tags": [
+        "道具",
+        "钱",
+        "钱袋",
+        "治愈卡通"
+      ],
+      "createdAt": "2026-08-17",
+      "usageCount": 0
+    },
+    {
+      "id": "prop_物价牌",
+      "type": "prop",
+      "name": "物价牌",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_物价牌.png",
+      "status": "active",
+      "contentDescription": "红色物价标签牌道具",
+      "tags": [
+        "道具",
+        "价格",
+        "物价"
+      ],
+      "createdAt": "2026-08-17",
+      "usageCount": 0
+    },
+    {
+      "id": "prop_超市货架",
+      "type": "prop",
+      "name": "超市货架",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_超市货架.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通白色货架，彩色商品",
+      "tags": [
+        "道具",
+        "超市",
+        "货架",
+        "治愈卡通"
+      ],
+      "createdAt": "2026-08-17",
+      "usageCount": 0
+    },
+    {
+      "id": "prop_工资条",
+      "type": "prop",
+      "name": "工资条",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_工资条.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通工资条纸条，粉色纸币",
+      "tags": [
+        "道具",
+        "工资",
+        "工资条",
+        "治愈卡通"
+      ],
+      "createdAt": "2026-08-17",
+      "usageCount": 0
+    },
+    {
+      "id": "prop_零食袋",
+      "type": "prop",
+      "name": "零食袋",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_零食袋.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通零食袋道具，一大袋零食，糖果饼干薯片",
+      "tags": [
+        "道具",
+        "零食袋",
+        "治愈卡通"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "prop_饮料瓶",
+      "type": "prop",
+      "name": "饮料瓶",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/props/prop_饮料瓶.png",
+      "status": "active",
+      "contentDescription": "治愈系卡通饮料瓶道具，一瓶饮料",
+      "tags": [
+        "道具",
+        "饮料瓶",
+        "治愈卡通"
+      ],
+      "createdAt": "2026-08-18",
+      "usageCount": 0
+    }
+  ]
+}
