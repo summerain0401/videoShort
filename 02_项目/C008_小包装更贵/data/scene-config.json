@@ -1,0 +1,11 @@
+{
+  "videoId": "C008",
+  "title": "为什么小包装反而更贵？",
+  "scenes": [
+    {"sceneId":"S01","narrationSegment":"你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。","background":"超市内部","subtitle":{"highlights":["小包装","更贵"]},"elements":[{"type":"character","name":"小布丁","emotion":"shocked","enterFrom":"left","zIndex":2},{"type":"prop","name":"零食袋","enterFrom":"right","zIndex":3}],"preferredStart":0.0},
+    {"sceneId":"S02","narrationSegment":"原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。","background":"超市内部","subtitle":{"highlights":["包装成本","运输空间"]},"elements":[{"type":"character","name":"小布丁","emotion":"explaining","enterFrom":"none","zIndex":2},{"type":"prop","name":"零食袋","enterFrom":"left","zIndex":3}],"preferredStart":10.0},
+    {"sceneId":"S03","narrationSegment":"还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。","background":"小镇街道","subtitle":{"highlights":["便利费","多付一点"]},"elements":[{"type":"character","name":"小布丁","emotion":"serious","enterFrom":"none","zIndex":2},{"type":"prop","name":"零食袋","enterFrom":"right","zIndex":3}],"preferredStart":20.7},
+    {"sceneId":"S04","narrationSegment":"所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。大包装也不一定更省，还要看你能不能吃完。","background":"超市内部","subtitle":{"highlights":["总价","每一百克","不一定更省"]},"elements":[{"type":"character","name":"小布丁","emotion":"thinking","enterFrom":"none","zIndex":2},{"type":"prop","name":"物价牌","enterFrom":"left","zIndex":3}],"preferredStart":31.4},
+    {"sceneId":"S05","narrationSegment":"记住一句话，便宜要看单位价格，省钱也要看实际用量。买得少不一定浪费，买得多也不一定划算。","background":"小镇街道","subtitle":{"highlights":["单位价格","实际用量"]},"elements":[{"type":"character","name":"小布丁","emotion":"smile","enterFrom":"none","zIndex":2},{"type":"prop","name":"零食袋","enterFrom":"right","zIndex":3}],"preferredStart":44.5}
+  ]
+}

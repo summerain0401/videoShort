@@ -294,11 +294,19 @@ def build_center_cover(
 
 
 def split_title(title):
-    """启发式拆分标题：「为什么工资总涨不过物价」→ 主标题「工资」+ 副标题「为什么总涨不过物价？」"""
+    """把长标题拆成短主标题 + 可读副标题，避免主标题在卡片内溢出。"""
     title = title.strip()
     if title.startswith("为什么") and len(title) > 4:
         keyword = title[3:5]
         rest = "为什么" + title[5:]
+        if not rest.endswith(("？", "?", "。", ".")):
+            rest += "？"
+        return keyword, rest
+    if "第二件半价" in title:
+        return "半价", "第二件真的省钱吗？"
+    if len(title) > 6:
+        keyword = title[:3]
+        rest = title[3:]
         if not rest.endswith(("？", "?", "。", ".")):
             rest += "？"
         return keyword, rest
@@ -356,19 +364,15 @@ def main():
         sys.exit("素材库中没有可用背景")
     bg_path = resolve_asset_path(bg_assets[0])
 
-    # 角色情绪
+    # 角色情绪：封面优先使用讲解/正面识别度更高的姿态，除非用户显式指定。
     char_emotion = args.character
     if not char_emotion:
-        scenes = scene_config.get("scenes", [])
-        for s in scenes:
-            for e in s.get("elements", []):
-                if e.get("type") == "character" and e.get("emotion"):
-                    char_emotion = e["emotion"]
-                    break
-            if char_emotion:
-                break
-    char_emotion = char_emotion or "thinking"
-    char_assets = find_assets(assets, type_="character", emotion=char_emotion, limit=1)
+        char_emotion = "explaining"
+    char_assets = find_assets(assets, type_="character", emotion=char_emotion, name="小布丁", limit=1)
+    if not char_assets:
+        char_assets = find_assets(assets, type_="character", emotion=char_emotion, limit=1)
+    if not char_assets:
+        char_assets = find_assets(assets, type_="character", name="小布丁", limit=1)
     if not char_assets:
         char_assets = find_assets(assets, type_="character", limit=1)
     char_path = resolve_asset_path(char_assets[0])

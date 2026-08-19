@@ -31,6 +31,8 @@ def main():
     parser = argparse.ArgumentParser(description="成片技术检查")
     parser.add_argument("video", help="渲染完成的 MP4 路径")
     parser.add_argument("--audio", help="参考音频路径（对比时长）")
+    parser.add_argument("--timeline", help="时间轴 JSON 路径；用于把片头/片尾包装时长计入预期时长")
+    parser.add_argument("--packaging-duration", type=float, default=8.0, help="片头+片尾预期包装时长，默认 8 秒")
     args = parser.parse_args()
 
     video = Path(args.video)
@@ -69,11 +71,24 @@ def main():
             ainfo = ffprobe(audio_path)
             a_dur = float(ainfo.get("format", {}).get("duration", 0))
             report["audioDuration"] = round(a_dur, 3)
-            diff = abs(duration - a_dur)
+            expected_duration = a_dur + args.packaging_duration
+            if args.timeline and Path(args.timeline).exists():
+                try:
+                    timeline = json.loads(Path(args.timeline).read_text(encoding="utf-8"))
+                    timeline_duration = float(timeline.get("totalDuration", a_dur))
+                    expected_duration = timeline_duration + args.packaging_duration
+                    report["timelineDuration"] = round(timeline_duration, 3)
+                except (OSError, ValueError, json.JSONDecodeError):
+                    report["issues"].append({
+                        "level": "warning",
+                        "message": "无法读取 timeline.json，已回退到音频时长校验",
+                    })
+            report["expectedDuration"] = round(expected_duration, 3)
+            diff = abs(duration - expected_duration)
             if diff > 1.0:
                 report["issues"].append({
                     "level": "error",
-                    "message": f"视频时长 {duration:.2f}s 与音频时长 {a_dur:.2f}s 差异过大 ({diff:.2f}s)",
+                    "message": f"视频时长 {duration:.2f}s 与预期时长 {expected_duration:.2f}s 差异过大 ({diff:.2f}s)",
                 })
 
     report["pass"] = not any(i["level"] == "error" for i in report["issues"])

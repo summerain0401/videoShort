@@ -1,0 +1,214 @@
+{
+  "videoId": "C007",
+  "title": "为什么工资三万，到手只剩两万？",
+  "totalDuration": 51.696,
+  "audioFile": "02_项目/C007_到手工资/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.07,
+      "end": 8.578,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "你有没有发现，工资条上的数字看着很大，真正到账的时候却少了一截？比如税前三万，为什么到手可能只剩两万多？",
+        "start": 0.07,
+        "end": 8.378,
+        "highlights": [
+          "税前三万",
+          "到手"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            0.07,
+            8.578
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            0.07,
+            8.578
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 8.578,
+      "end": 19.195,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "这里先分清两个概念：税前工资是公司算给你的总额，到手工资才是扣掉社保、公积金和个税后，真正进入银行卡的钱。",
+        "start": 8.578,
+        "end": 18.995,
+        "highlights": [
+          "税前工资",
+          "到手工资"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            8.578,
+            19.195
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            8.578,
+            19.195
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 19.195,
+      "end": 30.685,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "这些扣款不是凭空消失。社保是在给未来的医疗和养老攒保障，公积金则像一笔专门用于住房的长期储蓄，个税按规定交给公共服务。",
+        "start": 19.195,
+        "end": 30.485,
+        "highlights": [
+          "社保",
+          "公积金",
+          "个税"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            19.195,
+            30.685
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            19.195,
+            30.685
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 30.685,
+      "end": 43.055,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "所以工资条不是少了一笔钱，而是把一部分收入换成了不同用途。真正要比较工作机会，不能只看税前数字，还要看福利、扣款和实际到手。",
+        "start": 30.685,
+        "end": 42.855,
+        "highlights": [
+          "不同用途",
+          "实际到手"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            30.685,
+            43.055
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            30.685,
+            43.055
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "start": 43.055,
+      "end": 51.535,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "记住一句话，税前工资是报价，到手工资才是预算。看懂工资条，才知道自己每个月真正能花多少钱。",
+        "start": 43.055,
+        "end": 51.335,
+        "highlights": [
+          "税前工资是报价",
+          "到手工资才是预算"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            43.055,
+            51.535
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            43.055,
+            51.535
+          ]
+        }
+      ]
+    }
+  ]
+}

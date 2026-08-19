@@ -1,0 +1,213 @@
+{
+  "videoId": "C006",
+  "title": "超市第二件半价的真相",
+  "totalDuration": 45.288,
+  "audioFile": "02_项目/C006_第二件半价/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.07,
+      "end": 6.79,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "超市里看到\"第二件半价\"，是不是觉得赚到了？先别急着开心，这背后藏着商家的定价心思。",
+        "start": 0.07,
+        "end": 6.59,
+        "highlights": [
+          "第二件半价",
+          "赚到了"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            0.07,
+            6.79
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            0.07,
+            6.79
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 6.79,
+      "end": 17.072,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "你算一笔账：第一件原价十五块，第二件七块五，两件一共二十二块五。你花了二十二块五，买了两件原本十五块一个的东西。",
+        "start": 6.79,
+        "end": 16.872,
+        "highlights": [
+          "十五块",
+          "二十二块五"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            6.79,
+            17.072
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            6.79,
+            17.072
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 17.072,
+      "end": 26.401,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "商家为什么愿意？因为第二件半价的成本其实很低。多卖一件，多赚一份利润，你觉得自己省了，商家多赚了。",
+        "start": 17.072,
+        "end": 26.201,
+        "highlights": [
+          "成本很低",
+          "多赚"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            17.072,
+            26.401
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            17.072,
+            26.401
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 26.401,
+      "end": 35.206,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "更妙的是，半价会让你买本来不需要的东西。你为了七块五的优惠，多花了十五块，这叫\"促销诱导消费\"。",
+        "start": 26.401,
+        "end": 35.006,
+        "highlights": [
+          "不需要",
+          "诱导消费"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "confused",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            26.401,
+            35.206
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            26.401,
+            35.206
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "start": 35.206,
+      "end": 43.852,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "所以记住一句话，第二件半价不是帮你省钱，是帮你多花钱。真正省钱的办法只有一个：只买你本来就要买的。",
+        "start": 35.206,
+        "end": 43.652,
+        "highlights": [
+          "多花钱",
+          "只买"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            35.206,
+            43.852
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            35.206,
+            43.852
+          ]
+        }
+      ]
+    }
+  ]
+}

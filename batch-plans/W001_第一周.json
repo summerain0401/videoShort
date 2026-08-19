@@ -1,0 +1,42 @@
+{
+  "batchId": "W001",
+  "batchName": "第一周选题",
+  "createdAt": "2026-08-19",
+  "account": "布丁经济学",
+  "cadence": "daily",
+  "batchSize": 3,
+  "schedule": [
+    "周一",
+    "周二",
+    "周三"
+  ],
+  "topics": [
+    {
+      "videoId": "C004",
+      "title": "为什么奶茶越卖越贵",
+      "column": "一分钟经济学",
+      "theme": "奶茶涨价背后的经济学原理",
+      "projectDir": "02_项目/C004_奶茶涨价",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    },
+    {
+      "videoId": "C005",
+      "title": "为什么你总在月底没钱",
+      "column": "钱去哪了",
+      "theme": "消费陷阱与月底没钱的原因",
+      "projectDir": "02_项目/C005_月底没钱",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    },
+    {
+      "videoId": "C006",
+      "title": "超市第二件半价的真相",
+      "column": "布丁小剧场",
+      "theme": "第二件半价背后的定价策略",
+      "projectDir": "02_项目/C006_第二件半价",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    }
+  ]
+}

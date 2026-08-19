@@ -1,0 +1,42 @@
+{
+  "batchId": "W002",
+  "batchName": "第二周选题",
+  "createdAt": "2026-08-19",
+  "account": "布丁经济学",
+  "cadence": "daily",
+  "batchSize": 3,
+  "schedule": [
+    "周一",
+    "周二",
+    "周三"
+  ],
+  "topics": [
+    {
+      "videoId": "C007",
+      "title": "为什么工资三万，到手只剩两万？",
+      "column": "打工人经济学",
+      "theme": "从税前工资到手工资，讲清工资条上的扣款去哪了",
+      "projectDir": "02_项目/C007_到手工资",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    },
+    {
+      "videoId": "C008",
+      "title": "为什么小包装反而更贵？",
+      "column": "一分钟经济学",
+      "theme": "用单位价格解释小包装商品的便利费与规模成本",
+      "projectDir": "02_项目/C008_小包装更贵",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    },
+    {
+      "videoId": "C009",
+      "title": "凑单真的更省钱吗？",
+      "column": "钱去哪了",
+      "theme": "拆解满减凑单如何改变消费决策和实际支出",
+      "projectDir": "02_项目/C009_凑单消费",
+      "status": "delivered",
+      "review": {"scriptApproved": true, "materialsApproved": true, "reviewer": "历史交付确认", "reviewedAt": "2026-08-19"}
+    }
+  ]
+}

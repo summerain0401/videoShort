@@ -9,9 +9,15 @@
 #   ./scripts/pipeline.sh timeline <项目目录>        # 构建时间轴
 #   ./scripts/pipeline.sh preview <项目目录>         # 批量场景预览图
 #   ./scripts/pipeline.sh render <项目目录> [--still N]  # 渲染成片/单帧
-#   ./scripts/pipeline.sh check <项目目录>           # 技术+语义检查
+#   ./scripts/pipeline.sh check <项目目录>           # 统一质检门禁（技术+语义）
 #   ./scripts/pipeline.sh all <项目目录>             # voice→timeline→render→check
+#   ./scripts/pipeline.sh materials <项目目录>       # 扫描选题素材缺口并生成任务清单
+#   ./scripts/pipeline.sh review <项目目录> [--init] # 查看/初始化人工审核文件
 #   ./scripts/pipeline.sh list                      # 列出所有项目
+#   ./scripts/pipeline.sh batch <plan.json> --list   # 列出批量计划选题
+#   ./scripts/pipeline.sh batch <plan.json> --check  # 检查批量脚本就绪
+#   ./scripts/pipeline.sh batch <plan.json> --all [--only C004]  # 批量全链生产
+#   ./scripts/pipeline.sh batch <plan.json> --steps voice,render [--only C004,C005]
 #
 # 前置: python3 + edge-tts + ffmpeg/ffprobe, node + remotion
 # ============================================================================
@@ -57,6 +63,12 @@ require_project() {
   [ -d "$ROOT/$1" ] || err "项目目录不存在: $1"
 }
 
+production_gate() {
+  local dir="$1"
+  "$PY" "$ROOT/scripts/project-review-gate.py" "$dir"
+  "$PY" "$ROOT/scripts/material-gap.py" "$dir" >/dev/null
+}
+
 # ---------------------------------------------------------------------------
 # new / script — 生成剧本
 # ---------------------------------------------------------------------------
@@ -72,14 +84,16 @@ cmd_new() {
     dir=$(printf "C%03d_%s" "$num" "$(echo "$theme" | tr -cd 'a-zA-Z0-9\u4e00-\u9fff' | head -c 8)")
   fi
   "$PY" "$ROOT/scripts/generate-story.py" "$theme" "$ROOT/02_项目/$dir" --mode template
+  "$PY" "$ROOT/scripts/project-review-gate.py" "02_项目/$dir" --init
   ok "项目已创建: 02_项目/$dir"
-  info "下一步: 编辑 script/口播稿.txt 打磨口播，然后: ./scripts/pipeline.sh all \"02_项目/$dir\""
+  info "下一步: 编辑 script/口播稿.txt，补齐素材并完成人工审核，然后再进入生产"
 }
 
 cmd_script() {
   local theme="$1" dir="$2"
   require_project "$dir"
   "$PY" "$ROOT/scripts/generate-story.py" "$theme" "$ROOT/$dir" --overwrite
+  "$PY" "$ROOT/scripts/project-review-gate.py" "$dir" --init
 }
 
 # ---------------------------------------------------------------------------
@@ -88,6 +102,7 @@ cmd_script() {
 cmd_voice() {
   local dir="$1" engine="${2:-auto}" voice="${3:-}"
   require_project "$dir"
+  production_gate "$dir"
   local script_file="$ROOT/$dir/script/口播稿.txt"
   [ -f "$script_file" ] || err "缺少口播稿: $script_file"
   load_env
@@ -107,6 +122,7 @@ cmd_voice() {
 cmd_timeline() {
   local dir="$1"
   require_project "$dir"
+  production_gate "$dir"
   [ -f "$ROOT/$dir/audio/voice.json" ] || err "缺少 audio/voice.json，请先: pipeline.sh voice $dir"
   "$PY" "$ROOT/scripts/build-timeline.py" "$dir"
   ok "时间轴完成"
@@ -128,6 +144,7 @@ cmd_preview() {
 cmd_render() {
   local dir="$1" extra="${2:-}"
   require_project "$dir"
+  production_gate "$dir"
   [ -f "$ROOT/$dir/data/timeline.json" ] || err "缺少 timeline.json，请先: pipeline.sh timeline $dir"
   info "渲染: node scripts/render.mjs $dir $extra"
   node "$ROOT/scripts/render.mjs" "$dir" $extra
@@ -140,14 +157,13 @@ cmd_render() {
 cmd_check() {
   local dir="$1"
   require_project "$dir"
+  production_gate "$dir"
   local mp4
   mp4=$(ls "$ROOT/$dir/deliverables/"*.mp4 2>/dev/null | head -1 || true)
   [ -n "$mp4" ] || err "未找到成片，请先: pipeline.sh render $dir"
-  info "技术检查: $(basename "$mp4")"
-  "$PY" "$ROOT/scripts/tech-check.py" "$mp4"
-  info "语义检查"
-  "$PY" "$ROOT/scripts/semantic-check.py" "$dir"
-  ok "检查完成"
+  info "统一质检门禁: $dir"
+  "$PY" "$ROOT/scripts/quality-check.py" "$dir"
+  ok "质检通过，报告在 $dir/qa/quality-report.json"
 }
 
 # ---------------------------------------------------------------------------
@@ -178,8 +194,31 @@ cmd_list() {
 }
 
 # ---------------------------------------------------------------------------
+# batch — 批量生产
+# ---------------------------------------------------------------------------
+cmd_batch() {
+  local plan="$1"
+  [ -n "$plan" ] || err "用法: pipeline.sh batch <plan.json> [--list|--check|--all|--steps ...]"
+  shift
+  load_env
+  "$PY" "$ROOT/scripts/batch-produce.py" "$plan" "$@"
+}
+
+cmd_materials() {
+  local dir="$1"
+  require_project "$dir"
+  "$PY" "$ROOT/scripts/material-gap.py" "$dir"
+}
+
+cmd_review() {
+  local dir="$1"
+  require_project "$dir"
+  "$PY" "$ROOT/scripts/project-review-gate.py" "$dir" "${2:-}"
+}
+
+# ---------------------------------------------------------------------------
 help() {
-  sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'
+  sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'
 }
 
 case "$CMD" in
@@ -192,6 +231,9 @@ case "$CMD" in
   check)    cmd_check "$@" ;;
   all)      cmd_all "$@" ;;
   list)     cmd_list "$@" ;;
+  batch)    cmd_batch "$@" ;;
+  materials) cmd_materials "$@" ;;
+  review)  cmd_review "$@" ;;
   help|-h|--help) help ;;
   *) help; exit 1 ;;
 esac

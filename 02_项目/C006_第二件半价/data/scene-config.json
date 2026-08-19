@@ -1,0 +1,126 @@
+{
+  "videoId": "C006",
+  "title": "超市第二件半价的真相",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "narrationSegment": "超市里看到\"第二件半价\"，是不是觉得赚到了？先别急着开心，这背后藏着商家的定价心思。",
+      "background": "超市内部",
+      "subtitle": {
+        "highlights": ["第二件半价", "赚到了"]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
+      ],
+      "preferredStart": 0.0
+    },
+    {
+      "sceneId": "S02",
+      "narrationSegment": "你算一笔账：第一件原价十五块，第二件七块五，两件一共二十二块五。你花了二十二块五，买了两件原本十五块一个的东西。",
+      "background": "超市内部",
+      "subtitle": {
+        "highlights": ["十五块", "二十二块五"]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "enterFrom": "left",
+          "zIndex": 3
+        }
+      ],
+      "preferredStart": 10.0
+    },
+    {
+      "sceneId": "S03",
+      "narrationSegment": "商家为什么愿意？因为第二件半价的成本其实很低。多卖一件，多赚一份利润，你觉得自己省了，商家多赚了。",
+      "background": "超市内部",
+      "subtitle": {
+        "highlights": ["成本很低", "多赚"]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
+      ],
+      "preferredStart": 22.22
+    },
+    {
+      "sceneId": "S04",
+      "narrationSegment": "更妙的是，半价会让你买本来不需要的东西。你为了七块五的优惠，多花了十五块，这叫\"促销诱导消费\"。",
+      "background": "超市内部",
+      "subtitle": {
+        "highlights": ["不需要", "诱导消费"]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "confused",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "enterFrom": "left",
+          "zIndex": 3
+        }
+      ],
+      "preferredStart": 32.22
+    },
+    {
+      "sceneId": "S05",
+      "narrationSegment": "所以记住一句话，第二件半价不是帮你省钱，是帮你多花钱。真正省钱的办法只有一个：只买你本来就要买的。",
+      "background": "小镇街道",
+      "subtitle": {
+        "highlights": ["多花钱", "只买"]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "zIndex": 2
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "enterFrom": "right",
+          "zIndex": 3
+        }
+      ],
+      "preferredStart": 42.22
+    }
+  ]
+}

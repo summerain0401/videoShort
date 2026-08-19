@@ -1,0 +1,214 @@
+{
+  "videoId": "C009",
+  "title": "凑单真的更省钱吗？",
+  "totalDuration": 45.264,
+  "audioFile": "02_项目/C009_凑单消费/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.07,
+      "end": 9.716,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "你有没有为了凑满减，明明只想买一件，最后却多买了好几件？结账时觉得省了钱，回家一看购物车却变长了。",
+        "start": 0.07,
+        "end": 9.516,
+        "highlights": [
+          "凑满减",
+          "省了钱"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            0.07,
+            9.716
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            0.07,
+            9.716
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 9.716,
+      "end": 19.806,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "满减的关键不是商品变便宜了，而是平台把优惠门槛设在一个需要你继续购买的位置。你要先花够，才拿得到那张优惠券。",
+        "start": 9.716,
+        "end": 19.606,
+        "highlights": [
+          "优惠门槛",
+          "先花够"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            9.716,
+            19.806
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            9.716,
+            19.806
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 19.806,
+      "end": 28.986,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "这时最容易出现一个错觉：省了二十块，所以赚了二十块。但如果为了优惠多花了六十，实际支出反而增加了四十。",
+        "start": 19.806,
+        "end": 28.786,
+        "highlights": [
+          "省了二十块",
+          "多花了六十",
+          "增加了四十"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            19.806,
+            28.986
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            19.806,
+            28.986
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 28.986,
+      "end": 39.456,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "正确的算法很简单，先问自己没有优惠时会不会买，再比较优惠后的总支出。为了凑单买来的东西，往往才是最贵的那一件。",
+        "start": 28.986,
+        "end": 39.256,
+        "highlights": [
+          "总支出",
+          "最贵的那一件"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            28.986,
+            39.456
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            28.986,
+            39.456
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "start": 39.456,
+      "end": 45.096,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "记住一句话，优惠不是省钱的证明，少买并且真的需要，才是省下来的钱。",
+        "start": 39.456,
+        "end": 44.896,
+        "highlights": [
+          "优惠不是省钱的证明",
+          "真的需要"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            39.456,
+            45.096
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            39.456,
+            45.096
+          ]
+        }
+      ]
+    }
+  ]
+}

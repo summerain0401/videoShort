@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "lastUpdated": "2026-08-18",
+  "lastUpdated": "2026-08-19",
   "statuses": {
     "generating": "素材生成中，未检查",
     "pending_review": "已生成待人工检查",
@@ -276,6 +276,82 @@
         "竖屏"
       ],
       "createdAt": "2026-08-18",
+      "usageCount": 0
+    },
+    {
+      "id": "bg_office_w003",
+      "type": "background",
+      "name": "现代开放式办公室",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_office.png",
+      "status": "active",
+      "contentDescription": "竖屏治愈卡通现代开放式办公室，办公桌、电脑、窗边阳光和绿植，留出角色与字幕空间",
+      "tags": [
+        "背景",
+        "办公室",
+        "职场",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-19",
+      "usageCount": 0
+    },
+    {
+      "id": "bg_cafe_w003",
+      "type": "background",
+      "name": "社区咖啡店",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_cafe.png",
+      "status": "active",
+      "contentDescription": "竖屏治愈卡通明亮社区咖啡店，木质桌椅、柜台、窗边阳光和绿植，留出角色与字幕空间",
+      "tags": [
+        "背景",
+        "咖啡店",
+        "消费场景",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-19",
+      "usageCount": 0
+    },
+    {
+      "id": "bg_bus_stop_w003",
+      "type": "background",
+      "name": "城市公交站",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_bus_stop.png",
+      "status": "active",
+      "contentDescription": "竖屏治愈卡通明亮城市公交站，站牌、长椅、树木和柔和城市街景，留出角色与字幕空间",
+      "tags": [
+        "背景",
+        "公交站",
+        "通勤",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-19",
+      "usageCount": 0
+    },
+    {
+      "id": "bg_community_park_w003",
+      "type": "background",
+      "name": "社区公园",
+      "emotion": null,
+      "action": null,
+      "filePath": "shared/backgrounds/bg_community_park.png",
+      "status": "active",
+      "contentDescription": "竖屏治愈卡通社区公园，小路、长椅、圆润树木、柔和阳光和花朵，留出角色与字幕空间",
+      "tags": [
+        "背景",
+        "公园",
+        "社区",
+        "治愈卡通",
+        "竖屏"
+      ],
+      "createdAt": "2026-08-19",
       "usageCount": 0
     }
   ],

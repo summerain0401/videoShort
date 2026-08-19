@@ -49,10 +49,10 @@ CHARS_PER_SEC = 4.5          # 中文口播约 4.5 字/秒
 TARGET_SECONDS = 60          # 目标成片时长（不含片头片尾，正文约 25-35s）
 N_SCENES_TARGET = (4, 6)     # 场景数范围
 
-DEFAULT_CHARACTER = "小明"   # 素材库中唯一的正式角色
+DEFAULT_CHARACTER = "小布丁"  # 品牌手册唯一主角（ACCOUNT_BRAND.md 定版）
 
 # 情绪序列：按叙事节奏分配（钩子→定义→拆解→拆解→影响→总结）
-EMOTION_SEQUENCE = ["thinking", "explaining", "serious", "explaining", "worried", "happy"]
+EMOTION_SEQUENCE = ["thinking", "explaining", "serious", "confused", "worried", "smile", "shocked"]
 
 # 主题关键词 → 建议道具（从素材库按 name 匹配）
 THEME_PROP_MAP = [
@@ -210,7 +210,7 @@ def llm_generate_story(theme: str, lib_summary: str, video_id: str, title: str,
 3. 按「新信息切画面」拆成 4~6 个语义场景：新人物/动作/对象/状态变化才切，不按固定秒数
 4. 每个场景的 narrationSegment 是整句口播，拼接起来 = 全文口播
 5. 画面元素只从下面的素材库清单里选，没有合适道具就只放角色；背景按场景给建议名
-6. 角色统一用「{DEFAULT_CHARACTER}」，情绪从 [thinking, explaining, serious, worried, happy] 选
+6. 角色统一用「{DEFAULT_CHARACTER}」，情绪从 [thinking, explaining, serious, worried, smile, shocked, confused] 选
 
 可用素材库：
 {lib_summary}
@@ -222,7 +222,7 @@ def llm_generate_story(theme: str, lib_summary: str, video_id: str, title: str,
     {{
       "sceneId": "S01",
       "narrationSegment": "该场景口播整句",
-      "characters": [{{"name": "小明", "emotion": "thinking"}}],
+        "characters": [{{"name": "小布丁", "emotion": "thinking"}}],
       "props": [{{"name": "钱袋"}}],
       "background": "小镇街道",
       "layout": "center-focus"

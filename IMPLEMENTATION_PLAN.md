@@ -320,9 +320,9 @@ voice.mp3 → 词语时间戳 → timeline.json → 字幕时间 + 画面动画�
 
 - [x] 完善素材检索：CLIP 向量 + FAISS 索引（`scripts/search-material.py`，中文 CLIP large 模型 + 双路索引 + 精确匹配置顶；`git 阶段3-素材语义检索`）
 - [x] 角色一致性：建立规范角色库（统一主角「小布丁」，7 情绪版本 + 迁移退休旧角色，`git 770fbc6`）
-- [ ] 批量生产：一次生成一周的脚本，逐条审核后批量渲染
+- [x] 批量生产：`scripts/batch-produce.py` + `batch-plans/` 批量计划格式，一次生成一周脚本，逐条审核后批量渲染（`pipeline.sh batch` 命令）
 - [x] 封面模板：`scripts/generate-cover.py` 自动生成 3:4 竖版封面，split/center 两种版式，从 scene-config 自动匹配背景/角色/道具，标题自动拆分
-- [ ] 质检自动化：渲染后自动跑技术检查 + 语义检查，生成报告
+- [x] 质检自动化：`scripts/quality-check.py` 统一执行技术检查 + 语义检查，生成 `qa/quality-report.json`；`pipeline.sh check` 与批量 `--steps check` 按统一门禁判定通过/失败，并校验片头片尾包装时长
 
 **验证**：第二条视频的素材复用率 > 40%，生产时间从 3 天缩短到 1 天
 
@@ -615,3 +615,101 @@ remotion/src/scenes/NarrationScene.tsx# 删除硬编码 highlights，改读场�
 3. **阶段 5 — 多选题迭代**：用 3-5 个选题跑通，沉淀标准化 prompt 和素材风格
 
 > 这套流程的核心价值不在单条视频的生产速度，而在于**素材库的积累和流程的可复用性**。第一条视频最慢，从第二条开始加速。
+
+---
+
+## 十二、阶段三批量生产执行记录
+
+### 12.1 目标
+
+从「单条手动生产」升级为「批量计划 → 选题先行 → 素材补齐 → 人工审核 → 一键渲染」的日更生产模式；每批暂定 3 条。
+
+### 12.2 批量生产系统
+
+| 组件 | 作用 |
+|------|------|
+| `batch-plans/Wxxx_名称.json` | 批量选题计划（source of truth）：定义一周选题、栏目、排期、状态流转 |
+| `scripts/batch-produce.py` | 批量编排器：`--list` 列选题 / `--check` 检查就绪 / `--all` 全链生产 / `--steps` 自定义步骤 / `--only` 选择性执行 |
+| `pipeline.sh batch` | pipeline 集成入口：`batch <plan.json> --list/--check/--all/--steps` |
+
+**状态流转**：`planned → scripts_ready → materials_ready → human_approved → voiced → rendered → delivered`
+
+**生产闸门**：选题不受现有素材限制；场景配置完成后先运行 `pipeline.sh materials` 扫描缺口，缺口素材生成并人工检查、登记为 `active` 后，才进入剧本审核。剧本和素材均人工批准后，才允许配音、时间轴、渲染、质检和封面。
+
+### 12.3 第一周选题（W001）
+
+基于 ACCOUNT_BRAND.md 四大栏目，产出 3 条选题（对应周一/周三/周五排期）：
+
+| 视频ID | 栏目 | 标题 | 场景数 | 口播字数 | 角色/情绪链 |
+|--------|------|------|--------|----------|-------------|
+| C004 | 一分钟经济学 | 为什么奶茶越卖越贵 | 5 | ~230 | shocked→explaining→serious→confused→smile |
+| C005 | 钱去哪了 | 为什么你总在月底没钱 | 5 | ~240 | confused→explaining→serious→worried→smile |
+| C006 | 布丁小剧场 | 超市第二件半价的真相 | 5 | ~230 | shocked→explaining→serious→confused→smile |
+
+每条选题均产出完整文件集：
+- `data/project-plan.json`（故事计划）
+- `data/scene-config.json`（渲染配置：背景/角色/道具/字幕高亮）
+- `data/outro.json`（片尾问答）
+- `script/口播稿.txt`（纯文本，供 TTS）
+- `script/故事脚本.md`（人读审核稿）
+
+**素材复用**：3 条选题全部使用现有素材库（7 情绪角色 + 2 背景 + 6 道具），零新增素材需求。
+
+### 12.4 修复与改进
+
+- `generate-story.py` 角色名「小明」→「小布丁」，EMOTION_SEQUENCE 补全 7 情绪，LLM prompt 角色名对齐品牌手册
+- `pipeline.sh` 新增 `batch` 子命令，help 输出扩展到 20 行
+
+### 12.5 使用方式
+
+```bash
+# 1. 查看批量计划
+./scripts/pipeline.sh batch batch-plans/W001_第一周.json --list
+
+# 2. 检查脚本就绪
+./scripts/pipeline.sh batch batch-plans/W001_第一周.json --check
+
+# 3. 全链路生产（配音→时间轴→渲染→检查→封面）
+./scripts/pipeline.sh batch batch-plans/W001_第一周.json --all
+
+# 4. 只生产指定选题
+./scripts/pipeline.sh batch batch-plans/W001_第一周.json --all --only C004
+
+# 5. 自定义步骤
+./scripts/pipeline.sh batch batch-plans/W001_第一周.json --steps voice,timeline
+```
+
+### 12.6 第二周选题（W002）
+
+第二周选题已完成历史交付。新规则从下一批开始生效：日更节奏，每批暂定 3 条；选题先行，素材不足时先生成并审核素材；剧本与素材均人工批准后才进入生产。
+
+第二周原计划扩展职场收入、单位价格和促销心理三个方向：
+
+| 视频ID | 栏目 | 标题 | 场景数 | 配音时长 | 统一质检 |
+|--------|------|------|--------|----------|----------|
+| C007 | 打工人经济学 | 为什么工资三万，到手只剩两万？ | 5 | 51.696s | 通过，3 条语义提醒 |
+| C008 | 一分钟经济学 | 为什么小包装反而更贵？ | 5 | 45.456s | 通过，3 条语义提醒 |
+| C009 | 钱去哪了 | 凑单真的更省钱吗？ | 5 | 45.264s | 通过，1 条语义提醒 |
+
+W002 三条选题均已完成：配音、时间轴、Remotion 渲染、统一技术/语义质检和 1080×1440 封面生成。批量计划 `batch-plans/W002_第二周.json` 状态已全部写回 `delivered`。W001/W002 为规则升级前的历史项目，已在批量计划中补记为历史交付确认，不代表新项目可跳过人工审核。
+
+每条项目均包含：
+- `audio/voice.mp3` + `audio/voice.json`
+- `data/timeline.json`
+- `deliverables/C00X_成片.mp4` + `deliverables/C00X_封面.jpg`
+- `qa/quality-report.json`
+
+**质检结论**：C007-C009 均为 `errors=0`、`technicalPass=true`、统一门禁 `pass=true`；语义提醒默认不阻断交付，若需严格模式可使用 `--strict-warnings`。
+
+### 12.8 背景库扩容完成
+
+用户已人工确认 W003 生成的 4 张候选背景，现已正式登记为 `active` 并移动到 `shared/backgrounds/`：
+
+| 素材 ID | 名称 | 文件 |
+|--------|------|------|
+| `bg_office_w003` | 现代开放式办公室 | `shared/backgrounds/bg_office.png` |
+| `bg_cafe_w003` | 社区咖啡店 | `shared/backgrounds/bg_cafe.png` |
+| `bg_bus_stop_w003` | 城市公交站 | `shared/backgrounds/bg_bus_stop.png` |
+| `bg_community_park_w003` | 社区公园 | `shared/backgrounds/bg_community_park.png` |
+
+当前正式背景总数为 6 张，后续 W003 选题可以直接引用；素材缺口扫描只会把 `active` 素材判定为可用。

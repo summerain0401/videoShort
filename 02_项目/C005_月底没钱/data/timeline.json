@@ -1,0 +1,213 @@
+{
+  "videoId": "C005",
+  "title": "为什么你总在月底没钱",
+  "totalDuration": 42.624,
+  "audioFile": "02_项目/C005_月底没钱/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.07,
+      "end": 4.99,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "每次到了月底，钱包就空了，明明工资没少发，钱到底花到哪去了？",
+        "start": 0.07,
+        "end": 4.79,
+        "highlights": [
+          "月底",
+          "钱包空"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "confused",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            0.07,
+            4.99
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            0.07,
+            4.99
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 4.99,
+      "end": 14.915,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "其实大多数人的问题不是赚得少，而是花得太不知不觉。每天一杯奶茶、一单外卖、一个盲盒，单看都不贵，但加起来就是大数。",
+        "start": 4.99,
+        "end": 14.715,
+        "highlights": [
+          "不知不觉",
+          "加起来"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            4.99,
+            14.915
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            4.99,
+            14.915
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 14.915,
+      "end": 22.136,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "更隐蔽的是\"拿铁因子\"。你每天花的小钱，乘以三百六十五天，就是一笔你从没算过的巨款。",
+        "start": 14.915,
+        "end": 21.936,
+        "highlights": [
+          "拿铁因子",
+          "巨款"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            14.915,
+            22.136
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            14.915,
+            22.136
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 22.136,
+      "end": 32.126,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "还有一个陷阱叫\"超前消费\"。花呗、信用卡让你先花后还，感觉钱没少，但下个月工资一到手就先还了账，能用的更少了。",
+        "start": 22.136,
+        "end": 31.926,
+        "highlights": [
+          "超前消费",
+          "先还账"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "worried",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            22.136,
+            32.126
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "工资条",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            22.136,
+            32.126
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "start": 32.126,
+      "end": 41.447,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "所以记住一句话，管住每天的小开支，比偶尔省大钱更管用。记账不是抠门，是让你看清自己的钱去了哪。",
+        "start": 32.126,
+        "end": 41.247,
+        "highlights": [
+          "小开支",
+          "钱去了哪"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            32.126,
+            41.447
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            32.126,
+            41.447
+          ]
+        }
+      ]
+    }
+  ]
+}

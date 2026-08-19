@@ -1,0 +1,213 @@
+{
+  "videoId": "C004",
+  "title": "为什么奶茶越卖越贵",
+  "totalDuration": 47.904,
+  "audioFile": "02_项目/C004_奶茶涨价/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "start": 0.07,
+      "end": 8.553,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "你有没有发现，五年前十块钱就能买一大杯奶茶，现在随便一杯就要二十多？奶茶的价格好像一直在偷偷往上爬。",
+        "start": 0.07,
+        "end": 8.353,
+        "highlights": [
+          "十块钱",
+          "二十多"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            0.07,
+            8.553
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "饮料瓶",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            0.07,
+            8.553
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "start": 8.553,
+      "end": 17.946,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "其实奶茶涨价不是老板贪心。奶原料贵了、茶叶贵了、连杯子和吸管都涨了，每一杯的成本都在往上走。",
+        "start": 8.553,
+        "end": 17.746,
+        "highlights": [
+          "成本",
+          "往上走"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            8.553,
+            17.946
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            8.553,
+            17.946
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "start": 17.946,
+      "end": 27.996,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "更关键的是房租和人工。一家奶茶店每月光房租就要好几万，员工工资也在涨，这些钱最终都摊进了你手里那杯奶茶。",
+        "start": 17.946,
+        "end": 27.796,
+        "highlights": [
+          "房租",
+          "摊进"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            17.946,
+            27.996
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "钱袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            17.946,
+            27.996
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "start": 27.996,
+      "end": 36.808,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "你可能想，那我不喝不就行了？但问题是，不只奶茶在涨，所有东西都在涨。你很难找到不受通胀影响的替代品。",
+        "start": 27.996,
+        "end": 36.608,
+        "highlights": [
+          "替代品",
+          "通胀"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "confused",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            27.996,
+            36.808
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "超市货架",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            27.996,
+            36.808
+          ]
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "start": 36.808,
+      "end": 46.222,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "所以记住一句话，奶茶贵的不只是奶和茶，是房租、人工和供应链的综合成本。看懂了这条链，你就看懂了价格背后的逻辑。",
+        "start": 36.808,
+        "end": 46.022,
+        "highlights": [
+          "综合成本",
+          "价格背后"
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            36.808,
+            46.222
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "饮料瓶",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            36.808,
+            46.222
+          ]
+        }
+      ]
+    }
+  ]
+}

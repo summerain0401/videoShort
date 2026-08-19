@@ -1,0 +1,11 @@
+{
+  "videoId": "C009",
+  "title": "凑单真的更省钱吗？",
+  "scenes": [
+    {"sceneId":"S01","narrationSegment":"你有没有为了凑满减，明明只想买一件，最后却多买了好几件？结账时觉得省了钱，回家一看购物车却变长了。","background":"超市内部","subtitle":{"highlights":["凑满减","省了钱"]},"elements":[{"type":"character","name":"小布丁","emotion":"shocked","enterFrom":"left","zIndex":2},{"type":"prop","name":"超市货架","enterFrom":"right","zIndex":3}],"preferredStart":0.0},
+    {"sceneId":"S02","narrationSegment":"满减的关键不是商品变便宜了，而是平台把优惠门槛设在一个需要你继续购买的位置。你要先花够，才拿得到那张优惠券。","background":"超市内部","subtitle":{"highlights":["优惠门槛","先花够"]},"elements":[{"type":"character","name":"小布丁","emotion":"explaining","enterFrom":"none","zIndex":2},{"type":"prop","name":"物价牌","enterFrom":"left","zIndex":3}],"preferredStart":11.0},
+    {"sceneId":"S03","narrationSegment":"这时最容易出现一个错觉：省了二十块，所以赚了二十块。但如果为了优惠多花了六十，实际支出反而增加了四十。","background":"小镇街道","subtitle":{"highlights":["省了二十块","多花了六十","增加了四十"]},"elements":[{"type":"character","name":"小布丁","emotion":"serious","enterFrom":"none","zIndex":2},{"type":"prop","name":"钱袋","enterFrom":"right","zIndex":3}],"preferredStart":22.5},
+    {"sceneId":"S04","narrationSegment":"正确的算法很简单，先问自己没有优惠时会不会买，再比较优惠后的总支出。为了凑单买来的东西，往往才是最贵的那一件。","background":"超市内部","subtitle":{"highlights":["总支出","最贵的那一件"]},"elements":[{"type":"character","name":"小布丁","emotion":"thinking","enterFrom":"none","zIndex":2},{"type":"prop","name":"超市货架","enterFrom":"left","zIndex":3}],"preferredStart":34.0},
+    {"sceneId":"S05","narrationSegment":"记住一句话，优惠不是省钱的证明，少买并且真的需要，才是省下来的钱。","background":"小镇街道","subtitle":{"highlights":["优惠不是省钱的证明","真的需要"]},"elements":[{"type":"character","name":"小布丁","emotion":"smile","enterFrom":"none","zIndex":2},{"type":"prop","name":"钱袋","enterFrom":"right","zIndex":3}],"preferredStart":45.8}
+  ]
+}
