@@ -7,6 +7,7 @@
 | `characters/` | 角色素材（透明底 PNG），只存放通过检查的正式素材 |
 | `backgrounds/` | 背景素材（不抠图，仅交代地点和气氛） |
 | `props/` | 道具素材（透明底 PNG） |
+| `avatars/` | 账号头像（3 版：圆形/圆角方形/透明原图） |
 | `_generate/` | 新生成待检查的素材，检查通过后移动到正式目录并登记 |
 | `_retired/` | 淘汰素材（水印、绿边、错误角色/内容），永久不可检索 |
 
@@ -107,6 +108,31 @@
 - 品牌条固定显示账号名与 slogan，强化「布丁经济学」识别度
 - 默认加载系统字体（优先 PingFang/STHeiti），可用 `--font` 指定字体路径
 - 输出默认：`02_项目/<项目>/deliverables/<videoId>_封面.jpg`
+
+## 头像生成（generate-avatar.py）
+
+`scripts/generate-avatar.py` 基于 `char_小布丁_explaining.png`（举手讲解姿态）生成账号头像的 3 个派生版本：
+
+```bash
+./.venv/bin/python scripts/generate-avatar.py
+```
+
+输出（均在 `shared/avatars/`）：
+
+| 文件 | 用途 | 规格 |
+|------|------|------|
+| `avatar_circle.png` | 视频号 / 小红书 / 抖音（自动圆形裁切） | 1024×1024，径向渐变蜜桃粉→奶油白 |
+| `avatar_rounded.png` | 公众号 / 官网（不裁切） | 1024×1024，对角渐变蜜桃粉→浅橙，220px 圆角 |
+| `avatar_original.png` | 其他平台直传 / 自定义裁切 | 1024×1024，透明原图 |
+
+设计要点：
+
+- 主形象选 `explaining`（举手讲解）——直接对应品牌承诺"讲清生活的经济学"
+- 主体占画面 80% 高度，水平居中，顶部留 10% 圆形裁切安全区
+- 渐变全程使用品牌色（`#FFF8EF` 奶油白 / `#FFE3D8` 蜜桃粉 / `#FFD9B3` 浅橙）
+- 切换情绪版改 `CHAR_PATH` 常量即可；色系改顶部的 `CREAM/PEACH/APRICOT` 常量
+
+详见 `ACCOUNT_BRAND.md` 第 7 节「账号头像」。
 
 ## 关键规则
 
