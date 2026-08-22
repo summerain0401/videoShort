@@ -14,7 +14,10 @@ Azure 引擎的词级 WordBoundary 事件会按中文标点聚合为句子边界
 与 edge-tts 的 SentenceBoundary 输出格式保持一致，build-timeline.py 无需改动。
 
 用法:
-    python scripts/tts.py <text_file|text> <output_dir> [--engine auto|azure|edge] [--voice zh-CN-YunxiNeural] [--rate +0%]
+    python scripts/tts.py <text_file|text> <output_dir> [--engine auto|azure|edge] [--voice zh-CN-YunxiNeural] [--rate +20%]
+
+语速默认 +20%（1.2x，工程标准 1.15x~1.25x），可用 TTS_RATE 环境变量覆盖；
+Azure 路径额外支持 TTS_PITCH（默认 +1st）与句读微停顿（情感节奏）。
 """
 import argparse
 import asyncio
@@ -33,6 +36,61 @@ VOICE_POOL = [
     "zh-CN-YunyangNeural", # 云扬（男，新闻感）
 ]
 TICK_TO_SEC = 10_000_000  # 100ns tick
+
+# ---------------------------------------------------------------- 多音字纠正
+
+# 发音纠正字典：词 -> sapi 拼音（数字声调）
+# 命中词在 SSML 中包裹 <phoneme alphabet="sapi" ph="...">，只改发音不改文本，
+# 因此 WordBoundary 事件的 evt.text 不变，build-timeline.py 对齐不受影响。
+# 词条按「最易误读」的财经/生活高频词收录，可随口播稿风险词持续扩充。
+#
+# ⚠ 2026-08-21 实测结论：当前可用的两个引擎均不支持 <phoneme>——
+#   · Azure Speech SDK（region=eastasia，zh-CN 全音色 + sapi/ipa/ups alphabet）→ 全部 Canceled
+#   · edge-tts 消费端点（speech.platform.bing.com）→ NoAudioReceived，且 <break>/<say-as>
+#     会被当正文朗读
+# 因此本功能默认关闭（ENABLE_PHONEME=1 才注入），多音字预防以
+# scripts/check-pronunciation.py 预检 + 口播稿改写（文案规避）为主。
+PRONUNCIATION_OVERRIDES: dict[str, str] = {
+    # 财经高频
+    "便宜": "pian2 yi5",        # 易读 biànyí
+    "花呗": "hua1 bei1",        # 易读 huābèi
+    "公积金": "gong1 ji1 jin1",
+    "个税": "ge4 shui4",
+    "还了": "huan2 le5",        # 易读 hái
+    "先花后还": "xian1 hua1 hou4 huan2",
+    "涨": "zhang3",             # 涨价/上涨
+    "挣钱": "zheng4 qian2",     # 易读 zhēng
+    "省": "sheng3",             # 省钱/节省
+    # 生活口语
+    "干等": "gan4 deng3",       # 易读 gān
+    "干活": "gan4 huo2",
+    "藏着": "cang2 zhe5",       # 易读 zàng
+    "空儿": "kong4 r5",
+}
+
+
+def apply_phoneme_overrides(text: str) -> str:
+    """把命中的多音字词包裹为 SSML phoneme 标签，其余文本保持 XML 转义。
+
+    词按长度降序匹配（长词优先，避免「藏」吞掉「藏着」），
+    文本本体不变 → 合成结果字符与输入一致 → 时间轴对齐不受影响。
+
+    默认关闭：仅当所用引擎确认支持 SSML phoneme 时设 ENABLE_PHONEME=1 开启。
+    当前 Azure/edge 均不支持（见上注释），设了也不生效、且会让 Azure 合成失败。
+    """
+    if os.environ.get("ENABLE_PHONEME") != "1" or not PRONUNCIATION_OVERRIDES:
+        return escape_xml(text)
+
+    # 按词长降序排序，保证长词先匹配
+    words = sorted(PRONUNCIATION_OVERRIDES.keys(), key=len, reverse=True)
+    pattern = re.compile("|".join(re.escape(w) for w in words))
+
+    def _replace(match: re.Match) -> str:
+        word = match.group(0)
+        ph = PRONUNCIATION_OVERRIDES[word]
+        return f'<phoneme alphabet="sapi" ph="{ph}">{escape_xml(word)}</phoneme>'
+
+    return pattern.sub(_replace, escape_xml(text))
 
 
 # ---------------------------------------------------------------- 通用工具
@@ -55,6 +113,29 @@ def normalize_rate(rate: str) -> str:
         if num.isdigit():
             return f"{sign}{num}.00%"
     return rate if rate else "+0.00%"
+
+
+# ---------------------------------------------------------------- 情感停顿
+
+# 句读 → 停顿时长：解说节奏感（提升语调丰富度，避免机械平铺）
+# ⚠ 仅 Azure SSML 路径可用：edge-tts 消费端点会把 <break> 当正文朗读（2026-08 实测）
+# 时长已压缩（140→100ms / 60→40ms）：语速提到 1.2x 后停顿过长会拖节奏（用户反馈）
+PAUSE_BREAKS = [
+    (re.compile(r"([。！？；])"), r"\1<break time=\"100ms\"/>"),
+    (re.compile(r"([，、：])"), r"\1<break time=\"40ms\"/>"),
+]
+
+
+def inject_pauses(text: str) -> str:
+    """在句读标点后插入微停顿（SSML <break>），提升解说节奏。
+
+    输入应为已 XML 转义的文本；标点不含 XML 特殊字符，安全。
+    文本本体不变 → 合成结果字符与输入一致 → 时间轴对齐不受影响
+    （WordBoundary 事件的 evt.text 不含标签，仅 offset 顺延，边界仍精确）。
+    """
+    for pat, repl in PAUSE_BREAKS:
+        text = pat.sub(repl, text)
+    return text
 
 
 def _norm(s: str) -> str:
@@ -104,6 +185,13 @@ def group_to_paragraphs(paragraphs: list, boundaries: list) -> list:
 
 async def edge_generate_tts(text: str, output_path: Path, voice: str, rate: str) -> dict:
     import edge_tts
+
+    # edge-tts 消费端点实测不支持 SSML phoneme（2026-08）：显式开启时提示纠正不会生效
+    if os.environ.get("ENABLE_PHONEME") == "1":
+        hit = [w for w in PRONUNCIATION_OVERRIDES if w in text]
+        if hit:
+            print(f"[warn] edge-tts 不支持 phoneme 发音纠正，以下词可能误读: {', '.join(hit)}", file=sys.stderr)
+            print(f"[hint]  建议 --engine azure（需 .env 配置 AZURE_SPEECH_KEY）或改写口播稿规避多音字", file=sys.stderr)
 
     communicate = edge_tts.Communicate(text, voice, rate=rate)
     audio_bytes = b""
@@ -156,14 +244,17 @@ def azure_generate_tts(text: str, output_path: Path, voice: str, rate: str,
     ssml = (
         '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">'
         f'<voice name="{voice}">'
-        f'<prosody rate="{normalize_rate(rate)}">{escape_xml(text)}</prosody>'
-        "</voice></speak>"
+        f'<prosody rate="{normalize_rate(rate)}" pitch="{os.environ.get("TTS_PITCH", "+1st")}">'
+        f'{inject_pauses(apply_phoneme_overrides(text))}'
+        "</prosody></voice></speak>"
     )
     result = synthesizer.speak_ssml_async(ssml).get()
 
     if result.reason != speechsdk.ResultReason.SynthesizingAudioCompleted:
+        # 新版 SDK 的 SpeechSynthesisResult 已无 error_details 属性，用 getattr 兜底
+        details = getattr(result, "error_details", "") or ""
         raise RuntimeError(
-            f"Azure TTS 合成失败: {result.reason} | {result.error_details or ''}"
+            f"Azure TTS 合成失败: {result.reason} | {details}"
         )
     output_path.write_bytes(result.audio_data)
 
@@ -204,7 +295,8 @@ def main():
                         help="合成引擎（auto=有 Azure key 用 azure，否则 edge）")
     parser.add_argument("--voice", default=None,
                         help="音色（默认取环境变量 AZURE_VOICE，再回退 zh-CN-YunxiNeural）")
-    parser.add_argument("--rate", default="+0%", help="语速，如 +10% / -5%")
+    parser.add_argument("--rate", default=os.environ.get("TTS_RATE", "+20%"),
+                        help="语速，如 +10% / -5%（默认 +20%，可用环境变量 TTS_RATE 覆盖，建议 1.15x~1.25x）")
     args = parser.parse_args()
 
     # 音色优先级：--voice 参数 > AZURE_VOICE 环境变量 > 默认

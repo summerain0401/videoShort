@@ -146,6 +146,11 @@ cmd_render() {
   require_project "$dir"
   production_gate "$dir"
   [ -f "$ROOT/$dir/data/timeline.json" ] || err "缺少 timeline.json，请先: pipeline.sh timeline $dir"
+  # 渲染前自动混音：配音 + BGM Ducking + 转场音效 → audio/mixed.mp3
+  if [ -f "$ROOT/$dir/audio/voice.mp3" ]; then
+    info "混音: audio/voice.mp3 + 转场音效（有 BGM 则自动 Ducking）"
+    "$PY" "$ROOT/scripts/mix-audio.py" "$dir"
+  fi
   info "渲染: node scripts/render.mjs $dir $extra"
   node "$ROOT/scripts/render.mjs" "$dir" $extra
   ok "渲染完成"

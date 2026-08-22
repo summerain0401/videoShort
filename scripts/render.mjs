@@ -101,12 +101,16 @@ async function main() {
   // 2. 解析素材路径并内嵌到 timeline
   resolveTimelineMaterials(timeline, library);
 
-  // 3. 复制配音到 public/_audio/（Remotion 只服务 public/）
-  //    注意: timeline.audioFile 可能是绝对路径, 必须用 path.resolve 而非 path.join
+  // 3. 复制音频到 public/_audio/（Remotion 只服务 public/）
+  //    注意: audioFile 可能是绝对路径, 必须用 path.resolve 而非 path.join
   //    （path.join 会把绝对路径当普通段拼接, 拼出不存在路径导致静默无配音）
-  const audioSrc = timeline.audioFile
-    ? path.resolve(ROOT, timeline.audioFile)
-    : null;
+  //    优先使用混音轨 audio/mixed.mp3（BGM Ducking + 转场音效，由 mix-audio.py 生成）
+  const mixedPath = path.join(projectDir, 'audio', 'mixed.mp3');
+  const audioSrc = fs.existsSync(mixedPath)
+    ? mixedPath
+    : timeline.audioFile
+      ? path.resolve(ROOT, timeline.audioFile)
+      : null;
   let narration = undefined;
   if (audioSrc && fs.existsSync(audioSrc)) {
     const pubDir = path.join(ROOT, 'public', '_audio');
@@ -114,9 +118,9 @@ async function main() {
     const dest = path.join(pubDir, 'voice.mp3');
     fs.copyFileSync(audioSrc, dest);
     narration = '_audio/voice.mp3';
-    console.log(`[render] 配音已复制: ${audioSrc} -> ${dest}`);
+    console.log(`[render] 音频已复制: ${audioSrc} -> ${dest}`);
   } else {
-    console.warn(`[render] 警告: 未找到配音文件 ${audioSrc ?? timeline.audioFile}，成片将无旁白音频`);
+    console.warn(`[render] 警告: 未找到音频文件 ${audioSrc ?? timeline.audioFile}，成片将无旁白音频`);
   }
 
   // 4. 读取片尾问答（可选，从项目目录 outro.json）
@@ -124,6 +128,19 @@ async function main() {
   const outroPath = path.join(projectDir, 'data', 'outro.json');
   if (fs.existsSync(outroPath)) {
     outro = readJson(outroPath);
+  }
+
+  // 4.1 片尾角色素材解析：outro.character 指定角色名，缺省兜底「小布丁」；
+  //     提问阶段用 thinking，答案揭晓阶段用 smile；找不到素材则整体回退纯卡片
+  if (outro) {
+    const outroCharName = outro.character || '小布丁';
+    outro.character = outroCharName;
+    outro.characterImage =
+      outro.characterImage ??
+      findActiveMaterial(library, 'character', outroCharName, 'thinking');
+    outro.characterImageHappy =
+      outro.characterImageHappy ??
+      findActiveMaterial(library, 'character', outroCharName, 'smile');
   }
 
   const inputProps = {timeline, library, narration, outro};

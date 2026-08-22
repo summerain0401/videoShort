@@ -6,9 +6,9 @@
 
 import {staticFile} from 'remotion';
 
-export const staticPath = (p?: string | null): string | undefined => {
+export const staticPath = (p?: string | null): string => {
   if (!p) {
-    return undefined;
+    return '';
   }
   return staticFile(p);
 };

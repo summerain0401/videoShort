@@ -8,7 +8,9 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import {INTRO_DURATION} from '../lib/constants';
+import {EASE, kenBurnsScale, kenBurnsTranslate, springIn} from '../lib/animations';
+import {INTRO_DURATION, SAFE_AREA} from '../lib/constants';
+import {Sparkles} from '../components/effects/Sparkles';
 import {staticPath} from '../lib/staticPath';
 
 interface IntroSceneProps {
@@ -19,9 +21,9 @@ interface IntroSceneProps {
 
 /**
  * 片头（治愈卡通风）：
- * - 治愈系小镇街道背景 + 暖色渐变遮罩
- * - 大标题卡片淡入 + 轻微缩放
- * - 左上角频道标签、右下角时长胶囊
+ * - 治愈系小镇街道背景 + 暖色渐变遮罩 + 闪烁星光
+ * - 大标题卡片 spring 弹入
+ * - 左上角频道标签、右下角时长胶囊（均约束在安全区）
  */
 export const IntroScene: React.FC<IntroSceneProps> = ({
   title,
@@ -35,29 +37,29 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
     frame,
     [0, fps * 0.3, totalFrames - fps * 0.3, totalFrames],
     [0, 1, 1, 0],
-    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.out},
   );
 
-  const scale = interpolate(frame, [0, fps * 0.5], [0.94, 1], {
-    extrapolateRight: 'clamp',
-  });
+  // 标题 spring 弹入
+  const titleSpring = springIn(frame, 0, {fps});
+  const scale = 0.94 + titleSpring * 0.06;
 
-  // 片头背景 Ken Burns：缓慢放大 + 轻微左移
+  // 片头背景 Ken Burns（easeInOut）
   const bgProgress = frame / totalFrames;
-  // 竖屏片头背景 Ken Burns：轻微推进即可，避免画面移动过大
-  const bgScale = interpolate(bgProgress, [0, 1], [1, 1.06], {extrapolateRight: 'clamp'});
-  const bgTranslateY = interpolate(bgProgress, [0, 1], [0, -18], {extrapolateRight: 'clamp'});
+  const bgScale = kenBurnsScale(bgProgress, {from: 1, to: 1.06});
+  const bgTranslateY = kenBurnsTranslate(bgProgress, [0, -18]);
 
   const titleRise = interpolate(frame, [fps * 0.15, fps * 0.6], [36, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
+    easing: EASE.out,
   });
 
   const badgeOpacity = interpolate(
     frame,
     [fps * 0.05, fps * 0.35, totalFrames - fps * 0.2, totalFrames],
     [0, 1, 1, 0],
-    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.out},
   );
 
   return (
@@ -84,12 +86,15 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
         }}
       />
 
-      {/* 左上角频道标签 */}
+      {/* 闪烁星光点缀 */}
+      <Sparkles count={10} color="#fff3c4" size={22} opacity={0.3} speed={1} />
+
+      {/* 左上角频道标签（安全区内） */}
       <div
         style={{
           position: 'absolute',
-          top: 100,
-          left: 60,
+          top: SAFE_AREA.top,
+          left: SAFE_AREA.side,
           display: 'flex',
           alignItems: 'center',
           gap: 12,
@@ -131,14 +136,14 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
       >
         <div
           style={{
-          color: '#ffffff',
-          fontSize: 92,
-          fontWeight: 800,
-          fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
-          textAlign: 'center',
-          padding: '44px 56px',
-          lineHeight: 1.35,
-          maxWidth: '86%',
+            color: '#ffffff',
+            fontSize: 92,
+            fontWeight: 800,
+            fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
+            textAlign: 'center',
+            padding: '44px 56px',
+            lineHeight: 1.35,
+            maxWidth: '86%',
             transform: `translateY(${titleRise}px)`,
             textShadow:
               '0 4px 0 rgba(60, 30, 10, 0.4), 0 10px 30px rgba(0, 0, 0, 0.45)',
@@ -153,12 +158,12 @@ export const IntroScene: React.FC<IntroSceneProps> = ({
         </div>
       </AbsoluteFill>
 
-      {/* 右下角时长胶囊 */}
+      {/* 右下角时长胶囊（安全区内） */}
       <div
         style={{
           position: 'absolute',
-          bottom: 120,
-          right: 60,
+          bottom: SAFE_AREA.bottom,
+          right: SAFE_AREA.side,
           display: 'flex',
           alignItems: 'center',
           gap: 10,

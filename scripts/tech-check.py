@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """
 tech-check.py — 技术检查脚本
-渲染完成后自动检查视频时长、音频时长、首末帧等基础指标。
+渲染完成后自动检查视频时长、音频时长、首末帧、中间黑帧等基础指标。
 
 用法:
-    python scripts/tech-check.py <video_file> [--audio voice.mp3]
+    python scripts/tech-check.py <video_file> [--audio voice.mp3] [--timeline timeline.json]
 
 输出:
     JSON 格式技术检查报告
+
+黑帧规则:
+    - 片头(<0.5s)/片尾(>duration-0.5s)的黑帧视为淡入淡出，仅记录不报错
+    - 内容区(中间)黑帧 >= black_min_duration 记为 error，需返回修复
 """
 import argparse
 import json
@@ -27,12 +31,47 @@ def ffprobe(path: Path) -> dict:
     return json.loads(r.stdout)
 
 
+def detect_black_frames(video: Path, min_duration: float = 0.5, pix_threshold: float = 0.10) -> list:
+    """用 ffmpeg blackdetect 滤镜扫描黑帧。
+
+    返回 [{start, end, duration}, ...]，按 start 升序。
+    黑帧 = 亮度低于 pix_threshold(默认10%) 且持续 >= min_duration 的片段。
+    """
+    r = subprocess.run(
+        ["ffmpeg", "-v", "info", "-i", str(video),
+         "-vf", f"blackdetect=d={min_duration}:pix_th={pix_threshold}",
+         "-an", "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    blacks = []
+    # 输出行格式: [blackdetect @ 0x...] black_start:0 black_end:1.5 black_duration:1.5
+    for line in r.stderr.splitlines():
+        if "black_start:" not in line:
+            continue
+        parts = {}
+        for token in line.split():
+            if ":" in token:
+                k, _, v = token.partition(":")
+                parts[k] = v
+        if "black_start" in parts:
+            blacks.append({
+                "start": round(float(parts.get("black_start", 0)), 3),
+                "end": round(float(parts.get("black_end", 0)), 3),
+                "duration": round(float(parts.get("black_duration", 0)), 3),
+            })
+    return blacks
+
+
 def main():
     parser = argparse.ArgumentParser(description="成片技术检查")
     parser.add_argument("video", help="渲染完成的 MP4 路径")
     parser.add_argument("--audio", help="参考音频路径（对比时长）")
     parser.add_argument("--timeline", help="时间轴 JSON 路径；用于把片头/片尾包装时长计入预期时长")
     parser.add_argument("--packaging-duration", type=float, default=8.0, help="片头+片尾预期包装时长，默认 8 秒")
+    parser.add_argument("--black-min-duration", type=float, default=0.5,
+                        help="黑帧判定最短时长(秒)，默认 0.5")
+    parser.add_argument("--black-pix-threshold", type=float, default=0.10,
+                        help="黑帧亮度阈值(0-1)，默认 0.10（亮度低于10%视为黑）")
     args = parser.parse_args()
 
     video = Path(args.video)
@@ -64,6 +103,28 @@ def main():
                 })
         if not audio_stream:
             report["issues"].append({"level": "error", "message": "视频没有音轨"})
+
+        # ── 黑帧检测（只把内容区黑帧算问题，首尾淡入淡出黑帧仅记录） ──
+        try:
+            blacks = detect_black_frames(video, args.black_min_duration, args.black_pix_threshold)
+            report["blackFrames"] = blacks
+            mid_black = [b for b in blacks
+                         if b["start"] >= 0.5 and b["end"] <= duration - 0.5]
+            for b in mid_black:
+                report["issues"].append({
+                    "level": "error",
+                    "message": (f"内容区黑帧 {b['start']:.2f}s-{b['end']:.2f}s "
+                                f"(持续 {b['duration']:.2f}s)，可能因空背景/转场淡黑导致，需修复"),
+                })
+            if not mid_black and blacks:
+                report["notes"] = report.get("notes", []) + [
+                    f"检测到 {len(blacks)} 处黑帧，均位于首尾淡入淡出区（正常）"
+                ]
+        except FileNotFoundError:
+            report["issues"].append({
+                "level": "warning",
+                "message": "未找到 ffmpeg，跳过黑帧检测",
+            })
 
     if args.audio:
         audio_path = Path(args.audio)

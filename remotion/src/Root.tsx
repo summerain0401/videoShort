@@ -7,9 +7,9 @@
 import React from 'react';
 import {Composition, getInputProps} from 'remotion';
 import {MainComposition} from './Main';
-import {FPS, VIDEO_HEIGHT, VIDEO_WIDTH} from './lib/constants';
+import {CROSS_DISSOLVE, FPS, VIDEO_HEIGHT, VIDEO_WIDTH} from './lib/constants';
 import {resolveElementImage, resolveSceneBackground} from './lib/resolveMaterials';
-import type {Timeline} from './lib/types';
+import type {OutroData, Timeline} from './lib/types';
 import type {Library} from './lib/resolveMaterials';
 import TestImg from './TestImg';
 
@@ -20,7 +20,7 @@ interface RootInputProps {
   /** 相对 public/ 的音频路径，如 _audio/voice.mp3 */
   narration?: string;
   /** 片尾问答 */
-  outro?: {question: string; answer: string};
+  outro?: OutroData;
 }
 
 const EMPTY_TIMELINE: Timeline = {
@@ -38,7 +38,8 @@ export const RemotionRoot: React.FC = () => {
 
   const duration = Math.max(
     30,
-    Math.ceil((3 + (timeline.totalDuration ?? 30) + 5) * FPS),
+    // 无静态片头：正文 totalDuration + 片尾 OUTRO_DURATION（片尾提前 CROSS_DISSOLVE 开始，故 +cross 帧余量）
+    Math.ceil(((timeline.totalDuration ?? 30) + 5) * FPS) + Math.round(CROSS_DISSOLVE * FPS),
   );
 
   return (
@@ -53,7 +54,7 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition
         id="Main"
-        component={MainComposition}
+        component={MainComposition as unknown as React.FC<Record<string, unknown>>}
         durationInFrames={duration}
         fps={FPS}
         width={VIDEO_WIDTH}

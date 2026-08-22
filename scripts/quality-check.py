@@ -84,6 +84,7 @@ def main() -> int:
         "missingFiles": missing,
         "technical": {},
         "semantic": {},
+        "pronunciation": {},
         "issues": [],
     }
 
@@ -134,6 +135,31 @@ def main() -> int:
             for issue in scene.get("issues", []):
                 report["issues"].append({"source": "semantic", "sceneId": scene.get("sceneId"), **issue})
 
+    # 发音预检报告（qa/pronunciation-report.json，由 check-pronunciation.py 生成）
+    pronunciation_report_path = project / "qa" / "pronunciation-report.json"
+    if pronunciation_report_path.exists():
+        try:
+            pron = json.loads(pronunciation_report_path.read_text(encoding="utf-8"))
+            report["pronunciation"] = pron
+            for hit in pron.get("hits", []):
+                report["issues"].append({
+                    "level": "warning",
+                    "source": "pronunciation",
+                    "type": "polyphonic_word",
+                    "word": hit.get("word"),
+                    "message": (
+                        f"多音字风险「{hit.get('word')}」建议读 {hit.get('correct')}"
+                        f"（常见误读 {hit.get('wrong') or '-'}，{hit.get('note') or ''}）："
+                        f"{hit.get('sentence', '')[:40]}"
+                    ),
+                })
+        except json.JSONDecodeError as exc:
+            report["issues"].append({
+                "level": "error",
+                "type": "pronunciation_report",
+                "message": f"发音报告不是有效 JSON: {exc}",
+            })
+
     errors = [issue for issue in report["issues"] if issue.get("level") == "error"]
     warnings = [issue for issue in report["issues"] if issue.get("level") == "warning"]
     report["summary"] = {
@@ -141,6 +167,7 @@ def main() -> int:
         "warnings": len(warnings),
         "technicalPass": report["technical"].get("pass", False) if report["technical"] else False,
         "semanticWarnings": report["semantic"].get("warnings", 0) if report["semantic"] else 0,
+        "pronunciationWarnings": report["pronunciation"].get("total", 0) if report["pronunciation"] else 0,
     }
     report["pass"] = not errors and (not args.strict_warnings or not warnings)
 

@@ -63,6 +63,47 @@ THEME_PROP_MAP = [
 ]
 FALLBACK_PROPS = ["钱袋", "工资条"]
 
+# 数字/计算/对比 语句 → 动态视觉子模板（节点3：不依赖生图，纯文本图层由 Remotion 渲染）
+VS_KEYWORDS = ("对比", "更贵", "更省", "更划算", "更便宜", "哪个", "还是", "vs", "VS", "不如", "差", "比")
+# 数字+单位（可含口语尾数，如 "12块8" = 12.8 元）
+NUM_UNIT_RE = re.compile(r"\d+(?:\.\d+)?\s*(?:%|元|块|折|倍|克|斤|分|毫升|ml|ML|L)\d*")
+UNIT_CHARS = "元块克斤折倍分%毫升mlML"
+
+
+def detect_overlays(seg: str) -> list:
+    """在数字/计算/对比语句上触发特定子模板：价格标签 / 算式 / 对比卡。
+
+    返回 scene-config 的 overlay 元素列表（Remotion 端纯文本渲染，无需素材图）。
+    触发规则：
+      · 对比关键词 + ≥2 个带单位数字 → vs-card（如 "大包12块8 vs 小包5块5"）
+      · 单个带单位数字 → price-tag（如 "30块"）
+      · 仅纯数字 → equation（算式块）
+    """
+    nums = [m.group(0).strip() for m in NUM_UNIT_RE.finditer(seg)]
+    nums = [n for n in nums if re.search(r"\d", n)][:2]
+    if not nums:
+        return []
+    units = [n for n in nums if re.search(f"[{re.escape(UNIT_CHARS)}]", n)]
+    has_vs = any(k in seg for k in VS_KEYWORDS)
+    overlays = []
+    if has_vs and len(units) >= 2:
+        overlays.append({
+            "type": "overlay", "kind": "vs-card",
+            "text": f"{units[0]} vs {units[1]}",
+            "title": "对比一下", "position": "top",
+        })
+    elif units:
+        overlays.append({
+            "type": "overlay", "kind": "price-tag",
+            "text": units[0], "title": "关键数字", "position": "top",
+        })
+    else:
+        overlays.append({
+            "type": "overlay", "kind": "equation",
+            "text": nums[0], "title": "关键数字", "position": "top",
+        })
+    return overlays
+
 # LLM 配置
 LLM_PROVIDERS = [
     {"key": "OPENAI_API_KEY",       "base": "https://api.openai.com/v1",                "model": "gpt-4o-mini"},
@@ -137,6 +178,8 @@ def build_scenes(narration_segments: list, lib: dict, theme: str) -> list:
         for prop_name in match_props(lib, theme, idx, total):
             elements.append({"type": "prop", "name": prop_name,
                              "enterFrom": "right" if idx % 2 == 1 else "left", "zIndex": 3})
+        # 数字/计算/对比语句 → 动态视觉子模板（价格标签/算式/对比卡）
+        elements.extend(detect_overlays(seg))
         scenes.append({
             "sceneId": f"S{idx:02d}",
             "narrationSegment": seg,
@@ -169,6 +212,45 @@ def split_script(text: str) -> list:
         return segs
     # 3. 整段（单场景）
     return [text]
+
+
+# 前 3 秒 / 结尾互动 钩子校验词表
+PADDING_OPENERS = ("今天", "大家好", "接下来", "这是一期", "我们来聊", "让我们", "先来看看", "本期", "欢迎")
+INTERACTIVE_ENDERS = ("评论", "你更", "你觉", "投票", "选择", "聊聊", "怎么看", "站队", "扣1", "扣一", "告诉我")
+QUESTION_HINTS = ("？", "?", "吗", "呢", "为什么", "怎么", "居然", "竟然", "其实", "差距", "差别")
+
+
+def validate_hook_rules(narration_full: str, segs: list) -> list:
+    """对已写好的口播稿做钩子规则校验，返回 [(rule, ok, hint), ...]，不阻断生成。
+
+    规则：
+      R1 0 秒入戏：首句不得是「今天/大家好/接下来…」等静态垫片开场
+      R2 前 3 秒 Hook：首句应含 疑问/数字/反差 元素
+      R3 结尾互动：末句应含 投票/选择/评论 引导词
+    """
+    first = segs[0].strip() if segs else narration_full.strip()
+    last = segs[-1].strip() if segs else narration_full.strip()
+    checks = []
+    # R1
+    if any(first.startswith(p) for p in PADDING_OPENERS):
+        checks.append(("R1 0秒入戏", False,
+                       "首句疑似垫片开场，请改为直接抛钩子（反常识提问/数字对比），0 秒入戏"))
+    else:
+        checks.append(("R1 0秒入戏", True, "首句无垫片开场"))
+    # R2
+    has_hook = any(h in first for h in QUESTION_HINTS) or bool(re.search(r"\d", first))
+    if not has_hook:
+        checks.append(("R2 前3秒Hook", False,
+                       "首句缺少 疑问/数字/反差 元素，建议用「你知道吗，XX 其实…」或数字对比句式"))
+    else:
+        checks.append(("R2 前3秒Hook", True, "首句含钩子元素"))
+    # R3
+    if not any(e in last for e in INTERACTIVE_ENDERS):
+        checks.append(("R3 结尾互动", False,
+                       "末句缺少互动引导，建议追加投票式提问：如「你更倾向 A 还是 B？评论区站队」"))
+    else:
+        checks.append(("R3 结尾互动", True, "末句含互动引导词"))
+    return checks
 
 
 # ---------------------------------------------------------------- LLM
@@ -206,11 +288,19 @@ def llm_generate_story(theme: str, lib_summary: str, video_id: str, title: str,
 
 要求：
 1. 口播全文 180~230 字，纯口语化，念起来顺（可以默读验证），一条因果链讲到底
-2. 结构：反常识钩子开头 → 一句话定义 → 通俗拆解（1-2 层因果）→ 生活中的例子 → 金句总结
-3. 按「新信息切画面」拆成 4~6 个语义场景：新人物/动作/对象/状态变化才切，不按固定秒数
-4. 每个场景的 narrationSegment 是整句口播，拼接起来 = 全文口播
-5. 画面元素只从下面的素材库清单里选，没有合适道具就只放角色；背景按场景给建议名
-6. 角色统一用「{DEFAULT_CHARACTER}」，情绪从 [thinking, explaining, serious, worried, smile, shocked, confused] 选
+2. 黄金开篇（硬性，前 3 秒必须入戏）：
+   · 第 1 句就是钩子，禁止任何静态前置垫片——「今天我们来聊聊…」「大家好…」「这是一个关于…的视频」「接下来讲…」一律禁止
+   · 首选「反常识提问」句式：如"你知道吗，XX 其实是个陷阱？""为什么越贵的东西反而越好卖？"
+   · 或「数字对比套路」：如"3 块钱和 30 块钱的矿泉水，差别居然只有…"
+   · 第 1 句必须包含 悬念 / 冲突 / 数字 三要素中的至少一个
+3. 结构：黄金钩子 → 一句话定义 → 通俗拆解（1-2 层因果）→ 生活中的例子 → 金句总结
+4. 结尾互动钩子（硬性）：最后一句必须是投票/选择式提问，引导评论区互动，如：
+   "你更倾向 A 还是 B？评论区站队！""如果是你，你会怎么选？评论区聊聊你的答案"
+5. 按「新信息切画面」拆成 4~6 个语义场景：新人物/动作/对象/状态变化才切，不按固定秒数
+6. 每个场景的 narrationSegment 是整句口播，拼接起来 = 全文口播
+7. 画面元素只从下面的素材库清单里选，没有合适道具就只放角色；背景按场景给建议名
+8. 角色统一用「{DEFAULT_CHARACTER}」，情绪从 [thinking, explaining, serious, worried, smile, shocked, confused] 选
+9. 涉及数字/克重/价格/对比的句子（如"大包 vs 小包""每克单价"），在对应场景的 props 里尽量给出 商品道具 或 价格标签 类道具名（素材库里有就选，没有就用最接近的）
 
 可用素材库：
 {lib_summary}
@@ -253,12 +343,12 @@ def _current_key() -> str:
 def template_story(theme: str, lib_summary: str) -> dict:
     """内置 6 场景叙事模板。口播含【待润色】标记，确认阶段打磨后改 from-script 重新生成。"""
     scenes = [
-        ("你有没有发现，【围绕“{t}”写一个反常识现象/开场问题，30-40字】", ["thinking"], ["钱袋"]),
+        ("你有没有发现，【围绕“{t}”抛一个反常识提问或数字对比，如“XX竟然比XX更X/3块的XX和30块的XX”，25-35字】？", ["thinking"], ["钱袋"]),
         ("简单说，{t}就是【用一句大白话下定义，20-30字】。", ["explaining"], ["物价牌"]),
         ("为什么会这样？因为【讲第一层因果：机制/原理，40-50字】。", ["serious"], ["超市货架"]),
         ("更关键的是，【讲第二层因果或对比：谁受影响/会怎样发展，40-50字】。", ["explaining"], ["钱袋"]),
         ("打个比方，【一个具体生活场景例子，30-40字】。", ["worried"], ["工资条"]),
-        ("所以记住，【金句总结+行动/记忆点，20-30字】。", ["happy"], ["钱袋"]),
+        ("所以记住，【金句总结，15-25字】。你更倾向【围绕{t}给两个对立选项，如“大包装还是小包装”】？评论区聊聊你的选择。", ["happy"], ["钱袋"]),
     ]
     out_scenes = []
     narration_parts = []
@@ -437,6 +527,12 @@ def main():
         text = Path(args.input_file).read_text(encoding="utf-8")
         segments = split_script(text)
         narration_full = "\n".join(segments)
+        # 钩子规则校验（0秒入戏 / 前3秒Hook / 结尾互动），只提示不阻断
+        for rule, ok, hint in validate_hook_rules(narration_full, segments):
+            if ok:
+                print(f"[hook] ✓ {rule}: {hint}")
+            else:
+                print(f"[hook] ⚠ {rule}: {hint}")
         scenes = build_scenes(segments, lib, args.theme)
         plan_scenes = []
         for idx, s in enumerate(scenes, start=1):

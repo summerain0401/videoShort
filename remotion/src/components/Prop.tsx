@@ -1,8 +1,9 @@
-// 道具层组件 —— 绝对定位 + 进入/退出动画 + 投影
+// 道具层组件 —— 绝对定位 + spring 进入/退出 + 投影
 
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
-import {ENTER_ANIM_DURATION, EXIT_ANIM_DURATION} from '../lib/constants';
+import {ENTER_ANIM_DURATION, EXIT_ANIM_DURATION, SAFE_AREA} from '../lib/constants';
+import {springIn} from '../lib/animations';
 import {staticPath} from '../lib/staticPath';
 
 interface PropProps {
@@ -18,21 +19,16 @@ interface PropProps {
 }
 
 const PROP_LEFT_PCT: Record<string, string> = {
-  left: '4%',
-  right: '50%',
-  center: '50%',
-};
-
-const PROP_TOP_PCT: Record<string, string> = {
   left: '8%',
-  right: '8%',
-  center: '8%',
+  right: '46%',
+  center: '50%',
 };
 
 /**
  * 道具层：
  * - 绝对定位，与角色形成稳定左右构图
- * - 从指定方向滑入/滑出
+ * - 从指定方向 spring 弹性滑入/滑出
+ * - 顶部约束在安全区内（SAFE_AREA.top + 40）
  * - 透明底 PNG + 柔和投影
  */
 export const Prop: React.FC<PropProps> = ({
@@ -50,12 +46,7 @@ export const Prop: React.FC<PropProps> = ({
   const startFrame = start * fps;
   const endFrame = end * fps;
 
-  const enterProgress = interpolate(
-    frame,
-    [startFrame, startFrame + fps * ENTER_ANIM_DURATION],
-    [0, 1],
-    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
-  );
+  const enterProgress = springIn(frame, startFrame, {fps});
 
   const exitProgress = interpolate(
     frame,
@@ -71,7 +62,7 @@ export const Prop: React.FC<PropProps> = ({
   const isCenter = position === 'center';
   const centerTransform = isCenter ? 'translateX(-50%)' : '';
 
-  const opacity = inScene ? exitProgress : 0;
+  const opacity = inScene ? enterProgress * exitProgress : 0;
 
   if (!inScene || opacity <= 0.01) {
     return null;
@@ -84,7 +75,7 @@ export const Prop: React.FC<PropProps> = ({
         style={{
           position: 'absolute',
           left: PROP_LEFT_PCT[position],
-          top: PROP_TOP_PCT[position],
+          top: SAFE_AREA.top + 40,
           height: `${scale * 100}%`,
           width: 'auto',
           objectFit: 'contain',

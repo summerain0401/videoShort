@@ -1,21 +1,33 @@
 {
   "videoId": "C008",
   "title": "为什么小包装反而更贵？",
-  "totalDuration": 45.456,
-  "audioFile": "02_项目/C008_小包装更贵/audio/voice.mp3",
+  "totalDuration": 46.8,
+  "audioFile": "/Volumes/Samsung/codexProjects/videoShort/02_项目/C008_小包装更贵/audio/voice.mp3",
   "scenes": [
     {
-      "sceneId": "S01",
+      "sceneId": "S01a",
       "start": 0.07,
-      "end": 7.666,
+      "end": 2.533,
       "backgroundName": "超市内部",
       "subtitle": {
-        "text": "你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。",
+        "text": "你有没有发现，同一种零食，",
         "start": 0.07,
-        "end": 7.466,
+        "end": 2.333,
         "highlights": [
           "小包装",
           "更贵"
+        ],
+        "segments": [
+          {
+            "text": "你有没有发现，",
+            "start": 0.07,
+            "end": 1.289
+          },
+          {
+            "text": "同一种零食，",
+            "start": 1.289,
+            "end": 2.333
+          }
         ]
       },
       "elements": [
@@ -28,7 +40,7 @@
           "zIndex": 2,
           "duration": [
             0.07,
-            7.666
+            2.533
           ]
         },
         {
@@ -40,23 +52,142 @@
           "zIndex": 3,
           "duration": [
             0.07,
-            7.666
+            2.533
           ]
         }
-      ]
+      ],
+      "overlays": [],
+      "shotIndex": 0
     },
     {
-      "sceneId": "S02",
-      "start": 7.666,
-      "end": 17.696,
+      "sceneId": "S01b",
+      "start": 2.533,
+      "end": 5.186,
       "backgroundName": "超市内部",
       "subtitle": {
-        "text": "原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。",
-        "start": 7.666,
-        "end": 17.496,
+        "text": "小包装单价常常比大包装更贵？",
+        "start": 2.533,
+        "end": 4.986,
+        "highlights": [
+          "小包装",
+          "更贵"
+        ],
+        "segments": [
+          {
+            "text": "小包装单价常常比大包",
+            "start": 2.533,
+            "end": 4.285
+          },
+          {
+            "text": "装更贵？",
+            "start": 4.285,
+            "end": 4.986
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            2.533,
+            5.186
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            2.533,
+            5.186
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 1
+    },
+    {
+      "sceneId": "S01c",
+      "start": 5.186,
+      "end": 8.218,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "明明买得少，按克数算却更不划算。",
+        "start": 5.186,
+        "end": 8.018,
+        "highlights": [
+          "小包装",
+          "更贵"
+        ],
+        "segments": [
+          {
+            "text": "明明买得少，",
+            "start": 5.186,
+            "end": 6.248
+          },
+          {
+            "text": "按克数算却更不划算。",
+            "start": 6.248,
+            "end": 8.018
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "shocked",
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            5.186,
+            8.218
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            5.186,
+            8.218
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 2
+    },
+    {
+      "sceneId": "S02a",
+      "start": 8.218,
+      "end": 10.23,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "原因之一是包装成本。",
+        "start": 8.218,
+        "end": 10.03,
         "highlights": [
           "包装成本",
           "运输空间"
+        ],
+        "segments": [
+          {
+            "text": "原因之一是包装成本。",
+            "start": 8.218,
+            "end": 10.03
+          }
         ]
       },
       "elements": [
@@ -68,8 +199,8 @@
           "position": null,
           "zIndex": 2,
           "duration": [
-            7.666,
-            17.696
+            8.218,
+            10.23
           ]
         },
         {
@@ -80,24 +211,188 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            7.666,
-            17.696
+            8.218,
+            10.23
           ]
         }
-      ]
+      ],
+      "overlays": [],
+      "shotIndex": 3
     },
     {
-      "sceneId": "S03",
-      "start": 17.696,
-      "end": 26.865,
+      "sceneId": "S02b",
+      "start": 10.23,
+      "end": 12.644,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "一个大袋子和几个小袋子，",
+        "start": 10.23,
+        "end": 12.444,
+        "highlights": [
+          "包装成本",
+          "运输空间"
+        ],
+        "segments": [
+          {
+            "text": "一个大袋子和几个小袋子，",
+            "start": 10.23,
+            "end": 12.444
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            10.23,
+            12.644
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            10.23,
+            12.644
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 4
+    },
+    {
+      "sceneId": "S02c",
+      "start": 12.644,
+      "end": 16.466,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "装的东西差不多，但小包装需要更多封口、",
+        "start": 12.644,
+        "end": 16.266,
+        "highlights": [
+          "包装成本",
+          "运输空间"
+        ],
+        "segments": [
+          {
+            "text": "装的东西差不多，",
+            "start": 12.644,
+            "end": 14.169
+          },
+          {
+            "text": "但小包装需要更多封口、",
+            "start": 14.169,
+            "end": 16.266
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            12.644,
+            16.466
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            12.644,
+            16.466
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 5
+    },
+    {
+      "sceneId": "S02d",
+      "start": 16.466,
+      "end": 18.076,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "标签和运输空间。",
+        "start": 16.466,
+        "end": 17.876,
+        "highlights": [
+          "包装成本",
+          "运输空间"
+        ],
+        "segments": [
+          {
+            "text": "标签和运输空间。",
+            "start": 16.466,
+            "end": 17.876
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            16.466,
+            18.076
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            16.466,
+            18.076
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 6
+    },
+    {
+      "sceneId": "S03a",
+      "start": 18.076,
+      "end": 20.393,
       "backgroundName": "小镇街道",
       "subtitle": {
-        "text": "还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。",
-        "start": 17.696,
-        "end": 26.665,
+        "text": "还有一个原因是便利费。",
+        "start": 18.076,
+        "end": 20.193,
         "highlights": [
           "便利费",
           "多付一点"
+        ],
+        "segments": [
+          {
+            "text": "还有一个原因是便利费。",
+            "start": 18.076,
+            "end": 20.193
+          }
         ]
       },
       "elements": [
@@ -109,8 +404,8 @@
           "position": null,
           "zIndex": 2,
           "duration": [
-            17.696,
-            26.865
+            18.076,
+            20.393
           ]
         },
         {
@@ -121,25 +416,149 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            17.696,
-            26.865
+            18.076,
+            20.393
           ]
         }
-      ]
+      ],
+      "overlays": [],
+      "shotIndex": 7
     },
     {
-      "sceneId": "S04",
-      "start": 26.865,
-      "end": 37.25,
+      "sceneId": "S03b",
+      "start": 20.393,
+      "end": 23.974,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "小包装更容易携带、分享和控制分量，",
+        "start": 20.393,
+        "end": 23.774,
+        "highlights": [
+          "便利费",
+          "多付一点"
+        ],
+        "segments": [
+          {
+            "text": "小包装更容易携带、",
+            "start": 20.393,
+            "end": 22.183
+          },
+          {
+            "text": "分享和控制分量，",
+            "start": 22.183,
+            "end": 23.774
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            20.393,
+            23.974
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            20.393,
+            23.974
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 8
+    },
+    {
+      "sceneId": "S03c",
+      "start": 23.974,
+      "end": 27.345,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "很多人愿意为这种方便多付一点钱。",
+        "start": 23.974,
+        "end": 27.145,
+        "highlights": [
+          "便利费",
+          "多付一点"
+        ],
+        "segments": [
+          {
+            "text": "很多人愿意为这种方便",
+            "start": 23.974,
+            "end": 25.956
+          },
+          {
+            "text": "多付一点钱。",
+            "start": 25.956,
+            "end": 27.145
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "serious",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            23.974,
+            27.345
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            23.974,
+            27.345
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 9
+    },
+    {
+      "sceneId": "S04a",
+      "start": 27.345,
+      "end": 30.475,
       "backgroundName": "超市内部",
       "subtitle": {
-        "text": "所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。大包装也不一定更省，还要看你能不能吃完。",
-        "start": 26.865,
-        "end": 37.05,
+        "text": "所以买东西不能只看包装上的总价，",
+        "start": 27.345,
+        "end": 30.275,
         "highlights": [
           "总价",
           "每一百克",
           "不一定更省"
+        ],
+        "segments": [
+          {
+            "text": "所以买东西不能只看包",
+            "start": 27.345,
+            "end": 29.176
+          },
+          {
+            "text": "装上的总价，",
+            "start": 29.176,
+            "end": 30.275
+          }
         ]
       },
       "elements": [
@@ -151,8 +570,8 @@
           "position": null,
           "zIndex": 2,
           "duration": [
-            26.865,
-            37.25
+            27.345,
+            30.475
           ]
         },
         {
@@ -163,24 +582,196 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            26.865,
-            37.25
+            27.345,
+            30.475
           ]
         }
-      ]
+      ],
+      "overlays": [],
+      "shotIndex": 10
     },
     {
-      "sceneId": "S05",
-      "start": 37.25,
-      "end": 45.26,
+      "sceneId": "S04b",
+      "start": 30.475,
+      "end": 32.236,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "要把价格除以重量，",
+        "start": 30.475,
+        "end": 32.036,
+        "highlights": [
+          "总价",
+          "每一百克",
+          "不一定更省"
+        ],
+        "segments": [
+          {
+            "text": "要把价格除以重量，",
+            "start": 30.475,
+            "end": 32.036
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            30.475,
+            32.236
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            30.475,
+            32.236
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 11
+    },
+    {
+      "sceneId": "S04c",
+      "start": 32.236,
+      "end": 34.584,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "比较每一百克到底多少钱。",
+        "start": 32.236,
+        "end": 34.384,
+        "highlights": [
+          "总价",
+          "每一百克",
+          "不一定更省"
+        ],
+        "segments": [
+          {
+            "text": "比较每一百克到底多少钱。",
+            "start": 32.236,
+            "end": 34.384
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            32.236,
+            34.584
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            32.236,
+            34.584
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 12
+    },
+    {
+      "sceneId": "S04d",
+      "start": 34.584,
+      "end": 38.497,
+      "backgroundName": "超市内部",
+      "subtitle": {
+        "text": "大包装也不一定更省，还要看你能不能吃完。",
+        "start": 34.584,
+        "end": 38.297,
+        "highlights": [
+          "总价",
+          "每一百克",
+          "不一定更省"
+        ],
+        "segments": [
+          {
+            "text": "大包装也不一定更省，",
+            "start": 34.584,
+            "end": 36.441
+          },
+          {
+            "text": "还要看你能不能吃完。",
+            "start": 36.441,
+            "end": 38.297
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "thinking",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            34.584,
+            38.497
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "物价牌",
+          "emotion": null,
+          "enterFrom": "left",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            34.584,
+            38.497
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 13
+    },
+    {
+      "sceneId": "S05a",
+      "start": 38.497,
+      "end": 41.282,
       "backgroundName": "小镇街道",
       "subtitle": {
-        "text": "记住一句话，便宜要看单位价格，省钱也要看实际用量。买得少不一定浪费，买得多也不一定划算。",
-        "start": 37.25,
-        "end": 45.06,
+        "text": "记住一句话，划算要看单位价格，",
+        "start": 38.497,
+        "end": 41.082,
         "highlights": [
           "单位价格",
           "实际用量"
+        ],
+        "segments": [
+          {
+            "text": "记住一句话，",
+            "start": 38.497,
+            "end": 39.531
+          },
+          {
+            "text": "划算要看单位价格，",
+            "start": 39.531,
+            "end": 41.082
+          }
         ]
       },
       "elements": [
@@ -192,8 +783,8 @@
           "position": null,
           "zIndex": 2,
           "duration": [
-            37.25,
-            45.26
+            38.497,
+            41.282
           ]
         },
         {
@@ -204,11 +795,118 @@
           "position": null,
           "zIndex": 3,
           "duration": [
-            37.25,
-            45.26
+            38.497,
+            41.282
           ]
         }
-      ]
+      ],
+      "overlays": [],
+      "shotIndex": 14
+    },
+    {
+      "sceneId": "S05b",
+      "start": 41.282,
+      "end": 43.139,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "省钱也要看实际用量。",
+        "start": 41.282,
+        "end": 42.939,
+        "highlights": [
+          "单位价格",
+          "实际用量"
+        ],
+        "segments": [
+          {
+            "text": "省钱也要看实际用量。",
+            "start": 41.282,
+            "end": 42.939
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            41.282,
+            43.139
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            41.282,
+            43.139
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 15
+    },
+    {
+      "sceneId": "S05c",
+      "start": 43.139,
+      "end": 46.667,
+      "backgroundName": "小镇街道",
+      "subtitle": {
+        "text": "买得少不一定浪费，买得多也不一定划算。",
+        "start": 43.139,
+        "end": 46.467,
+        "highlights": [
+          "单位价格",
+          "实际用量"
+        ],
+        "segments": [
+          {
+            "text": "买得少不一定浪费，",
+            "start": 43.139,
+            "end": 44.715
+          },
+          {
+            "text": "买得多也不一定划算。",
+            "start": 44.715,
+            "end": 46.467
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小布丁",
+          "emotion": "smile",
+          "enterFrom": "none",
+          "position": null,
+          "zIndex": 2,
+          "duration": [
+            43.139,
+            46.667
+          ]
+        },
+        {
+          "type": "prop",
+          "name": "零食袋",
+          "emotion": null,
+          "enterFrom": "right",
+          "position": null,
+          "zIndex": 3,
+          "duration": [
+            43.139,
+            46.667
+          ]
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 16
     }
   ]
 }
