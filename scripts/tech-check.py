@@ -67,7 +67,8 @@ def main():
     parser.add_argument("video", help="渲染完成的 MP4 路径")
     parser.add_argument("--audio", help="参考音频路径（对比时长）")
     parser.add_argument("--timeline", help="时间轴 JSON 路径；用于把片头/片尾包装时长计入预期时长")
-    parser.add_argument("--packaging-duration", type=float, default=8.0, help="片头+片尾预期包装时长，默认 8 秒")
+    parser.add_argument("--packaging-duration", type=float, default=5.4,
+                        help="片尾+转场预期包装时长，默认 5.4 秒（无静态片头：OUTRO 5s + 交叉溶解 0.35s 余量）")
     parser.add_argument("--black-min-duration", type=float, default=0.5,
                         help="黑帧判定最短时长(秒)，默认 0.5")
     parser.add_argument("--black-pix-threshold", type=float, default=0.10,

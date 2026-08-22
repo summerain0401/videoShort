@@ -75,32 +75,50 @@ def detect_overlays(seg: str) -> list:
 
     返回 scene-config 的 overlay 元素列表（Remotion 端纯文本渲染，无需素材图）。
     触发规则：
-      · 对比关键词 + ≥2 个带单位数字 → vs-card（如 "大包12块8 vs 小包5块5"）
-      · 单个带单位数字 → price-tag（如 "30块"）
-      · 仅纯数字 → equation（算式块）
+      · 价格对（N元/N块 ×2）+ 对比词 → vs-card（如 "9.9块 vs 7.5块"）
+      · 对比词 + ≥2 个带单位数字 → vs-card（如 "100克 vs 9.9块" 退化形态）
+      · 单个带单位数字 → price-tag（优先取价格，如 "5.5块"）
+      · 计算语义（除以/单价/每克）→ equation（如 "总价 ÷ 重量 = 单价"）
+      可同时返回 vs-card/price-tag + equation 多个 overlay。
     """
     nums = [m.group(0).strip() for m in NUM_UNIT_RE.finditer(seg)]
-    nums = [n for n in nums if re.search(r"\d", n)][:2]
+    nums = [n for n in nums if re.search(r"\d", n)][:4]
     if not nums:
         return []
     units = [n for n in nums if re.search(f"[{re.escape(UNIT_CHARS)}]", n)]
     has_vs = any(k in seg for k in VS_KEYWORDS)
+    # 价格对优先：形如 "9.9块"/"7.5元" 的成对价格
+    price_pairs = re.findall(r"\d+(?:\.\d+)?\s*(?:元|块)", seg)
     overlays = []
-    if has_vs and len(units) >= 2:
+    if has_vs and len(price_pairs) >= 2:
+        overlays.append({
+            "type": "overlay", "kind": "vs-card",
+            "text": f"{price_pairs[0].strip()} vs {price_pairs[1].strip()}",
+            "title": "对比一下", "position": "top",
+        })
+    elif has_vs and len(units) >= 2:
         overlays.append({
             "type": "overlay", "kind": "vs-card",
             "text": f"{units[0]} vs {units[1]}",
             "title": "对比一下", "position": "top",
         })
     elif units:
+        # price-tag 优先展示价格（如 "5.5块"），其次带单位数字（如 "50克"）
+        pick = price_pairs[0].strip() if price_pairs else units[0]
         overlays.append({
             "type": "overlay", "kind": "price-tag",
-            "text": units[0], "title": "关键数字", "position": "top",
+            "text": pick, "title": "关键数字", "position": "top",
         })
     else:
         overlays.append({
             "type": "overlay", "kind": "equation",
             "text": nums[0], "title": "关键数字", "position": "top",
+        })
+    # 计算语义 → 追加算式卡（价格/重量换算讲解处）
+    if re.search(r"除以|除一下|单价|每\d*\.?\d*\s*克|折合成", seg):
+        overlays.append({
+            "type": "overlay", "kind": "equation",
+            "text": "总价 ÷ 重量 = 单价", "title": "算一算", "position": "bottom",
         })
     return overlays
 
@@ -415,14 +433,14 @@ def write_outputs(project_dir: Path, video_id: str, title: str, theme: str,
                 {"type": "prop", "name": p["name"],
                  "enterFrom": "right" if int(ps["sceneId"][1:]) % 2 == 1 else "left", "zIndex": 3}
                 for p in ps.get("props", [])
-            ],
+            ] + list(ps.get("overlays", [])),
         })
     fill_preferred_start(scene_config["scenes"])
     scene_path = project_dir / "data" / "scene-config.json"
     scene_path.write_text(json.dumps(scene_config, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # 口播稿.txt（纯文本，供 tts.py）
-    script_txt = narration_full
+    # 口播稿.txt（纯文本，供 tts.py 按空行切分场景；必须用 \n\n 分隔段落）
+    script_txt = "\n\n".join(ps["narrationSegment"].strip() for ps in plan_scenes)
     if gen_mode == "template":
         script_txt += ("\n\n【提示】本稿为模板骨架，含【待润色】标记。请人工/LLM 打磨后，"
                        "用 --mode from-script 重新生成 scene-config，或直接在确认环节编辑本文件。")
@@ -542,6 +560,7 @@ def main():
                 "characters": [{"name": e["name"], "emotion": e.get("emotion")}
                                for e in s["elements"] if e["type"] == "character"],
                 "props": [{"name": e["name"]} for e in s["elements"] if e["type"] == "prop"],
+                "overlays": [e for e in s["elements"] if e["type"] == "overlay"],
                 "background": "小镇街道" if idx <= 2 else "超市内部",
                 "layout": "center-focus",
             })

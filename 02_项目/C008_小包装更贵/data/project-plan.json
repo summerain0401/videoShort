@@ -1,15 +1,123 @@
 {
   "videoId": "C008",
-  "title": "为什么小包装反而更贵？",
-  "theme": "用单位价格解释小包装商品的便利费与规模成本",
-  "duration": 60.0,
-  "generatedBy": "WorkBuddy 产稿（生态内 LLM，无需外部 API key）",
-  "narration": "你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。\n\n原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。\n\n还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。\n\n所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。大包装也不一定更省，还要看你能不能吃完。\n\n记住一句话，便宜要看单位价格，省钱也要看实际用量。买得少不一定浪费，买得多也不一定划算。",
+  "title": "小包装更贵",
+  "theme": "小包装更贵",
+  "duration": 79.3,
+  "generatedBy": "generate-story.py (from-script)",
+  "narration": "你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。\n原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。比如一包50克的小包装要5.5块，同样的量拆成小包反而更贵。\n还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。\n所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。比如小包装100克卖9.9块，大包装100克只要7.5块，差的这2.4块，就是包装和便利的成本。大包装也不一定更省，还要看你能不能吃完。\n记住一句话，划算要看单位价格，省钱也要看实际用量。你觉得买大包还是买小包更划算？评论区站队。",
   "scenes": [
-    {"sceneId":"S01","narrationSegment":"你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。","characters":[{"name":"小布丁","emotion":"shocked"}],"props":[{"name":"零食袋"}],"background":"超市内部","layout":"center-focus","highlights":["小包装","更贵"]},
-    {"sceneId":"S02","narrationSegment":"原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。","characters":[{"name":"小布丁","emotion":"explaining"}],"props":[{"name":"零食袋"}],"background":"超市内部","layout":"center-focus","highlights":["包装成本","运输空间"]},
-    {"sceneId":"S03","narrationSegment":"还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。","characters":[{"name":"小布丁","emotion":"serious"}],"props":[{"name":"零食袋"}],"background":"小镇街道","layout":"center-focus","highlights":["便利费","多付一点"]},
-    {"sceneId":"S04","narrationSegment":"所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。大包装也不一定更省，还要看你能不能吃完。","characters":[{"name":"小布丁","emotion":"thinking"}],"props":[{"name":"物价牌"}],"background":"超市内部","layout":"center-focus","highlights":["总价","每一百克","不一定更省"]},
-    {"sceneId":"S05","narrationSegment":"记住一句话，划算要看单位价格，省钱也要看实际用量。买得少不一定浪费，买得多也不一定划算。","characters":[{"name":"小布丁","emotion":"smile"}],"props":[{"name":"零食袋"}],"background":"小镇街道","layout":"center-focus","highlights":["单位价格","实际用量"]}
+    {
+      "sceneId": "S01",
+      "narrationSegment": "你有没有发现，同一种零食，小包装单价常常比大包装更贵？明明买得少，按克数算却更不划算。",
+      "characters": [
+        {
+          "name": "小布丁",
+          "emotion": "thinking"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "overlays": [],
+      "background": "小镇街道",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S02",
+      "narrationSegment": "原因之一是包装成本。一个大袋子和几个小袋子，装的东西差不多，但小包装需要更多封口、标签和运输空间。比如一包50克的小包装要5.5块，同样的量拆成小包反而更贵。",
+      "characters": [
+        {
+          "name": "小布丁",
+          "emotion": "explaining"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "overlays": [
+        {
+          "type": "overlay",
+          "kind": "vs-card",
+          "text": "50克 vs 5.5块",
+          "title": "对比一下",
+          "position": "top"
+        }
+      ],
+      "background": "小镇街道",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S03",
+      "narrationSegment": "还有一个原因是便利费。小包装更容易携带、分享和控制分量，很多人愿意为这种方便多付一点钱。",
+      "characters": [
+        {
+          "name": "小布丁",
+          "emotion": "serious"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "overlays": [],
+      "background": "超市内部",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S04",
+      "narrationSegment": "所以买东西不能只看包装上的总价，要把价格除以重量，比较每一百克到底多少钱。比如小包装100克卖9.9块，大包装100克只要7.5块，差的这2.4块，就是包装和便利的成本。大包装也不一定更省，还要看你能不能吃完。",
+      "characters": [
+        {
+          "name": "小布丁",
+          "emotion": "confused"
+        }
+      ],
+      "props": [
+        {
+          "name": "钱袋"
+        }
+      ],
+      "overlays": [
+        {
+          "type": "overlay",
+          "kind": "vs-card",
+          "text": "9.9块 vs 7.5块",
+          "title": "对比一下",
+          "position": "top"
+        },
+        {
+          "type": "overlay",
+          "kind": "equation",
+          "text": "总价 ÷ 重量 = 单价",
+          "title": "算一算",
+          "position": "bottom"
+        }
+      ],
+      "background": "超市内部",
+      "layout": "center-focus"
+    },
+    {
+      "sceneId": "S05",
+      "narrationSegment": "记住一句话，划算要看单位价格，省钱也要看实际用量。你觉得买大包还是买小包更划算？评论区站队。",
+      "characters": [
+        {
+          "name": "小布丁",
+          "emotion": "worried"
+        }
+      ],
+      "props": [
+        {
+          "name": "工资条"
+        }
+      ],
+      "overlays": [],
+      "background": "超市内部",
+      "layout": "center-focus"
+    }
   ]
 }

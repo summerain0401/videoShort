@@ -64,17 +64,28 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
   const fadeOutFrames = (fadeOut ? CROSS_DISSOLVE : 0) * fps;
 
   // 场景淡入淡出（缓动曲线）：中间主体恒为 1，仅重叠区渐变
-  const sceneOpacity = interpolate(
-    frame,
-    [
-      0,
-      Math.max(0, fadeInFrames),
-      Math.min(sceneDurationFrames, sceneDurationFrames - Math.max(0, fadeOutFrames)),
-      sceneDurationFrames,
-    ],
-    [fadeIn ? 0 : 1, 1, 1, fadeOut ? 0 : 1],
-    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.out},
-  );
+  // 用两个独立的两点 interpolate 取最小，天然避免 inputRange 退化（如 [0,0,...] 或 [...36,36]）
+  let sceneOpacity = 1;
+  if (sceneDurationFrames > 2) {
+    const fadeInOpacity =
+      fadeIn && fadeInFrames > 0
+        ? interpolate(frame, [0, Math.min(sceneDurationFrames, fadeInFrames)], [0, 1], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+            easing: EASE.out,
+          })
+        : 1;
+    const fadeOutOpacity =
+      fadeOut && fadeOutFrames > 0
+        ? interpolate(
+            frame,
+            [Math.max(0, sceneDurationFrames - fadeOutFrames), sceneDurationFrames],
+            [1, 0],
+            {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE.out},
+          )
+        : 1;
+    sceneOpacity = Math.min(fadeInOpacity, fadeOutOpacity);
+  }
 
   // 场景整体轻微缩放入场：1.02 -> 1.0（缓动）
   const sceneScale = interpolate(

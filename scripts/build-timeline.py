@@ -118,6 +118,9 @@ def subdivide_scenes(scenes: list, max_dur: float = MAX_SHOT_DURATION) -> list:
             sub["start"] = round(cursor, 3)
             sub["end"] = end
             sub["shotIndex"] = shot_idx
+            # overlay 只在第一个子片出现一次，避免同一价格卡全程重复挂屏
+            if i > 0:
+                sub["overlays"] = []
             sub["subtitle"] = {
                 **scene.get("subtitle", {}),
                 "text": c,
@@ -197,6 +200,10 @@ def auto_overlays(text: str) -> list:
         for m in re.finditer(r"\d+(?:\.\d+)?\s*(?:%|元|块|折|倍|克|斤|毫升|ml|ML|L)", text)
     ]
     nums = [n for n in nums if re.search(r"\d", n)][:2]
+    # 无具体数字时不兜底：纯文本「大包装 vs 小包装」「总价 ÷ 重量」在讲解段是噪音，
+    # 信息可视化必须基于真实数字（价格/克重对比），否则宁可不出卡
+    if not nums:
+        return []
     vs_words = ("大包", "小包", "更贵", "更省", "划算", "对比", "单价", "包装")
     eq_words = ("除以", "单价", "重量", "克", "斤", "毫升", "ml", "ML", "成本", "总价", "平均")
     has_vs = any(k in text for k in vs_words)
@@ -415,15 +422,18 @@ def build_timeline(project_dir: Path) -> dict:
             cursor = end + MIN_SEGMENT_GAP
         mode = "estimated"
 
-    # 3. 节点3：分镜细分（每镜头 2.5~4s）+ 高亮自动提取 + overlay 兜底
+    # 3. 节点3：overlay 兜底（父场景层，必须在细分之前：细分后子片继承、只留第一片，
+    #    避免每个子片对局部文本重复检测出内容各异的卡）
+    for s in timeline_scenes:
+        if not s.get("overlays"):
+            s["overlays"] = auto_overlays(s["subtitle"]["text"])
+
+    # 3. 节点3：分镜细分（每镜头 2.5~4s）+ 高亮自动提取
     timeline_scenes = subdivide_scenes(timeline_scenes)
     for s in timeline_scenes:
         hl = s.get("subtitle", {}).get("highlights") or []
         if not hl:
             s["subtitle"]["highlights"] = auto_highlights(s["subtitle"]["text"])
-        # 信息可视化兜底：scene-config 没生成 overlay 时按语义自动补（价格/算式/对比卡）
-        if not s.get("overlays"):
-            s["overlays"] = auto_overlays(s["subtitle"]["text"])
 
     # 4. 节点5：6~10 字断句 —— 在细分/合并之后统一生成字幕段（对齐与估算路径共用）
     for s in timeline_scenes:
