@@ -40,7 +40,11 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
   const {fps} = useVideoConfig();
 
   const bgPath =
-    scene.backgroundPath ?? backgroundPath ?? resolveSceneBackground?.(scene.sceneId) ?? undefined;
+    scene.backgroundPath ??
+    backgroundPath ??
+    (scene.background ? resolveSceneBackground?.(scene.background) : null) ??
+    resolveSceneBackground?.(scene.sceneId) ??
+    undefined;
 
   const sceneDurationSeconds = scene.end - scene.start;
   const sceneDurationFrames = Math.max(1, Math.round(sceneDurationSeconds * fps));

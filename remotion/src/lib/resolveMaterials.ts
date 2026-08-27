@@ -42,14 +42,26 @@ export function findActiveMaterial(
   return `/${matches[0].filePath}`;
 }
 
-/** 场景背景解析：sceneId → 背景图路径（骨架版本：S01/S02 小镇街道，其余超市内部） */
+/** 场景背景解析：sceneId/bgName → 背景图路径 */
 export function resolveSceneBackground(
   lib: Library,
-  sceneId: string,
+  sceneIdOrName: string,
 ): string | null {
-  const num = parseInt(sceneId.replace(/\D/g, ''), 10) || 1;
-  const bgName = num <= 2 ? '小镇街道' : '超市内部';
-  return findActiveMaterial(lib, 'background', bgName);
+  // 如果直接是背景名
+  const directMatch = findActiveMaterial(lib, 'background', sceneIdOrName);
+  if (directMatch) {
+    return directMatch;
+  }
+  // 蜡笔小新默认场景映射
+  if (sceneIdOrName === '春日部超市' || sceneIdOrName === '超市内部') {
+    return findActiveMaterial(lib, 'background', '春日部超市') || findActiveMaterial(lib, 'background', '超市内部');
+  }
+  if (sceneIdOrName === '野原家客厅' || sceneIdOrName === '温馨客厅') {
+    return findActiveMaterial(lib, 'background', '野原家客厅') || findActiveMaterial(lib, 'background', '温馨客厅');
+  }
+  const num = parseInt(sceneIdOrName.replace(/\D/g, ''), 10) || 1;
+  const defaultBg = num <= 2 ? '春日部街道' : '春日部超市';
+  return findActiveMaterial(lib, 'background', defaultBg) || findActiveMaterial(lib, 'background', '小镇街道');
 }
 
 /** 元素素材解析：character/prop → 图片路径 */
