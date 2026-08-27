@@ -1,5 +1,4 @@
-// 角色层组件 —— 绝对定位 + spring 入场/退出 + 说话高亮 + 经典表情特效（冒蒸汽/大汗/抖动/灯泡）
-
+// 角色层组件 2.1 —— 呼吸微动 (Breathing Idle) + Spring 弹性入场 + 电影感光影描边 + 动态表情特效
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
 import {CHARACTER_BOTTOM, EXIT_ANIM_DURATION} from '../lib/constants';
@@ -63,23 +62,29 @@ export const Character: React.FC<CharacterProps> = ({
 
   // 入场位移
   const enterShiftX =
-    enterFrom === 'left' ? -300 * (1 - enterProgress) : enterFrom === 'right' ? 300 * (1 - enterProgress) : 0;
+    enterFrom === 'left' ? -350 * (1 - enterProgress) : enterFrom === 'right' ? 350 * (1 - enterProgress) : 0;
   const enterShiftY =
-    enterFrom === 'bottom' ? 300 * (1 - enterProgress) : enterFrom === 'top' ? -300 * (1 - enterProgress) : 0;
+    enterFrom === 'bottom' ? 350 * (1 - enterProgress) : enterFrom === 'top' ? -350 * (1 - enterProgress) : 0;
 
-  // 说话时的微弹跳 / 漂浮
-  const speakerBounce = isSpeaker ? Math.sin(frame * 0.35) * 6 : 0;
+  // 2.1 升级：角色呼吸微动 (Breathing Animation)
+  const breathY = Math.sin(frame * 0.16) * 4;
+  const squashX = 1 + Math.cos(frame * 0.16) * 0.012;
+  const squashY = 1 - Math.cos(frame * 0.16) * 0.012;
+
+  // 说话时的微弹跳
+  const speakerBounce = isSpeaker ? Math.sin(frame * 0.38) * 5 : 0;
   const floatOffset = floating ? naturalFloat(progress, {amp: 8, speed: 2}) : 0;
 
   // 震颤/惊吓抖动特效
-  const shakeX = effect === 'shake' ? (Math.sin(frame * 1.5) > 0 ? 8 : -8) : 0;
+  const shakeX = effect === 'shake' ? (Math.sin(frame * 1.6) > 0 ? 8 : -8) : 0;
+  const shakeY = effect === 'shake' ? (Math.cos(frame * 1.6) > 0 ? 4 : -4) : 0;
 
   const isCenter = position === 'center';
   const centerTransform = isCenter ? 'translateX(-50%)' : '';
-  const scale = isSpeaker ? 1.05 : 0.92;
+  const baseScale = isSpeaker ? 1.05 : 0.92;
 
   // 入场淡入 + 退出淡出
-  const opacity = inScene ? enterProgress * exitProgress * (isSpeaker ? 1.0 : 0.85) : 0;
+  const opacity = inScene ? enterProgress * exitProgress * (isSpeaker ? 1.0 : 0.88) : 0;
 
   if (!inScene || opacity <= 0.01) {
     return null;
@@ -92,12 +97,11 @@ export const Character: React.FC<CharacterProps> = ({
           position: 'absolute',
           left: LEFT_PCT[position],
           bottom: CHARACTER_BOTTOM,
-          height: '46%',
+          height: '48%',
           width: position === 'center' ? 'auto' : '48%',
-          transform: `${centerTransform} translate(${enterShiftX + shakeX}px, ${enterShiftY + floatOffset + speakerBounce}px) scale(${scale})`,
+          transform: `${centerTransform} translate(${enterShiftX + shakeX}px, ${enterShiftY + floatOffset + speakerBounce + breathY + shakeY}px) scale(${baseScale * squashX}, ${baseScale * squashY})`,
           transformOrigin: 'bottom center',
           opacity,
-          transition: 'transform 0.15s, opacity 0.15s',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -116,8 +120,8 @@ export const Character: React.FC<CharacterProps> = ({
             maxWidth: '100%',
             objectFit: 'contain',
             filter: isSpeaker
-              ? 'drop-shadow(0 16px 24px rgba(60, 30, 5, 0.4))'
-              : 'drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2))',
+              ? 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.4)) drop-shadow(0 18px 26px rgba(40, 20, 5, 0.38))'
+              : 'drop-shadow(0 8px 14px rgba(0, 0, 0, 0.25))',
           }}
         />
       </div>
@@ -125,7 +129,7 @@ export const Character: React.FC<CharacterProps> = ({
   );
 };
 
-/** 角色头顶漫画特效组件 */
+/** 角色头顶漫画特效组件 2.1 */
 const CharacterEffectBadge: React.FC<{
   effect: CharacterEffectType;
   frame: number;
@@ -133,23 +137,29 @@ const CharacterEffectBadge: React.FC<{
   startFrame: number;
 }> = ({effect, frame, fps, startFrame}) => {
   const enter = springIn(frame, startFrame, {fps});
-  const pulse = Math.sin(frame * 0.4) * 0.1 + 1;
+  const pulse = Math.sin(frame * 0.4) * 0.12 + 1;
+  const float = Math.sin(frame * 0.25) * 6;
 
   let emoji = '';
   let bgColor = '#FFF';
+  let borderColor = '#1E1E1E';
 
   if (effect === 'steam') {
     emoji = '💥';
-    bgColor = '#FFCDD2';
+    bgColor = '#FF8A80';
+    borderColor = '#D50000';
   } else if (effect === 'sweat') {
     emoji = '💧';
-    bgColor = '#E1F5FE';
+    bgColor = '#80D8FF';
+    borderColor = '#0091EA';
   } else if (effect === 'idea') {
     emoji = '💡';
-    bgColor = '#FFF9C4';
+    bgColor = '#FFFF8D';
+    borderColor = '#FFD600';
   } else if (effect === 'question') {
     emoji = '❓';
-    bgColor = '#FFECB3';
+    bgColor = '#FFE082';
+    borderColor = '#FF6F00';
   } else {
     return null;
   }
@@ -157,23 +167,22 @@ const CharacterEffectBadge: React.FC<{
   return (
     <div
       style={{
-        fontSize: 52,
+        fontSize: 54,
         backgroundColor: bgColor,
-        border: '4px solid #1E1E1E',
+        border: `4px solid ${borderColor}`,
         borderRadius: '50%',
-        width: 76,
-        height: 76,
+        width: 80,
+        height: 80,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: -16,
+        marginBottom: -20,
         zIndex: 10,
-        boxShadow: '0 6px 14px rgba(0,0,0,0.2)',
-        transform: `scale(${enter * pulse})`,
+        boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+        transform: `translateY(${float}px) scale(${enter * pulse})`,
       }}
     >
       {emoji}
     </div>
   );
 };
-

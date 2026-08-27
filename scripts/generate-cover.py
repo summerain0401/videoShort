@@ -1,53 +1,36 @@
 #!/usr/bin/env python3
 """
-封面模板生成器
-===============
-基于项目 scene-config.json 与素材库，自动生成 1080×1440 3:4 竖版封面。
-
-用法：
-  python scripts/generate-cover.py --project 02_项目/C003_工资与物价
-  python scripts/generate-cover.py --project 02_项目/C003_工资与物价 \
-      --title "工资" --subtitle "为什么总涨不过物价？" \
-      --tags "经济学 生活常识 看懂购买力" \
-      --layout split --character serious --background 超市内部
-
-输出：
-  <project>/deliverables/<videoId>_封面.jpg
-
-版式：
-  - split（默认）：角色完整站在右侧，左侧标题卡片，适合突出 IP
-  - center：角色底部居中半身，底部大标题，适合信息流强标题
+generate-cover.py — 爆款短视频高点击率（CTR）封面生成器 2.1
+=========================================================
+专为抖音/小红书/B站短视频打造：
+- 黄金 3 秒高饱和度视觉冲击（黑黄警示胶带风、红白爆破风、深色霓虹风）
+- 夸张情绪角色放大（占据封面 50%~60% 黄金视觉区）
+- 倾斜大字痛点标题（带强描边、投影与高亮色块打底）
+- 爆款悬念贴纸与利益点标签
 """
 import argparse
 import json
+import math
+import os
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 MATERIAL_LIBRARY = ROOT / "shared/material-library.json"
-DEFAULT_FONT = "/System/Library/Fonts/STHeiti Medium.ttc"
-
-LAYOUTS = ["split", "center"]
-
-
-def load_json(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
 
 def find_font():
     candidates = [
         "/System/Library/Fonts/PingFang.ttc",
         "/System/Library/Fonts/STHeiti Medium.ttc",
-        "/System/Library/Fonts/STHeiti Light.ttc",
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/System/Library/Fonts/Hiragino Sans GB.ttc",
         "/Library/Fonts/Arial Unicode.ttf",
     ]
     for c in candidates:
         if Path(c).exists():
             return c
     return None
-
 
 def load_font(size, font_path=None):
     path = font_path or find_font()
@@ -58,378 +41,228 @@ def load_font(size, font_path=None):
             pass
     return ImageFont.load_default()
 
-
-def find_assets(assets, type_=None, name=None, emotion=None, limit=1):
-    """按类型/名称/情绪模糊匹配素材"""
-    results = []
-    for a in assets:
-        if a.get("status") != "active":
-            continue
-        if type_ and a.get("type") != type_:
-            continue
-        hay = " ".join(
-            str(x).lower()
-            for x in [a.get("name", ""), a.get("emotion", ""), a.get("contentDescription", ""), " ".join(a.get("tags", []))]
-        )
-        score = 0
-        if name and name.lower() in hay:
-            score += 10
-            if a.get("name", "").lower() == name.lower():
-                score += 10
-        if emotion and emotion.lower() in hay:
-            score += 8
-            if a.get("emotion", "").lower() == emotion.lower():
-                score += 8
-        if score > 0:
-            results.append((score, a))
-    results.sort(key=lambda x: -x[0])
-    return [a for _, a in results[:limit]]
-
-
-def resolve_asset_path(asset):
-    return ROOT / asset["filePath"]
-
-
-def add_drop_shadow(canvas, img, offset=(8, 8), blur=8, opacity=80):
+def add_drop_shadow(canvas, img, offset=(12, 16), blur=16, opacity=120, shadow_color=(20, 15, 10)):
     alpha = img.split()[-1]
-    shadow = Image.new("RGBA", img.size, (60, 50, 40, 0))
-    mask = alpha.point(lambda a: min(a, opacity))
+    shadow = Image.new("RGBA", img.size, (*shadow_color, 0))
+    mask = alpha.point(lambda a: int(a * (opacity / 255)))
     shadow.putalpha(mask)
     shadow = shadow.filter(ImageFilter.GaussianBlur(blur))
     ox, oy = offset
     canvas.paste(shadow, (ox, oy), shadow)
 
+def draw_stroked_text(draw, pos, text, font, text_color, stroke_color, stroke_width=6):
+    """绘制带粗描边的醒目大字"""
+    x, y = pos
+    # 绘制描边
+    for dx in range(-stroke_width, stroke_width + 1):
+        for dy in range(-stroke_width, stroke_width + 1):
+            if dx * dx + dy * dy <= stroke_width * stroke_width:
+                draw.text((x + dx, y + dy), text, font=font, fill=stroke_color)
+    # 绘制正文字
+    draw.text((x, y), text, font=font, fill=text_color)
 
-def draw_brand_bar(canvas, brand, slogan, font_path=None):
-    W = canvas.width
-    brand_h = 78
-    brand_y = 50
-    brand_pad = 36
-    brand_w = W - brand_pad * 2
-    layer = Image.new("RGBA", (W, brand_h), (0, 0, 0, 0))
-    bd = ImageDraw.Draw(layer)
-    bd.rounded_rectangle((brand_pad, 0, brand_pad + brand_w, brand_h), radius=40, fill=(255, 255, 255, 225))
-    bd.ellipse((brand_pad + 16, brand_h // 2 - 26, brand_pad + 16 + 52, brand_h // 2 + 26), fill=(255, 200, 120, 255))
-    f_title = load_font(30, font_path)
-    f_slogan = load_font(18, font_path)
-    bd.text((brand_pad + 78, 14), brand, font=f_title, fill=(80, 55, 40, 255))
-    bd.text((brand_pad + 80, 48), slogan, font=f_slogan, fill=(120, 100, 90, 255))
-    canvas.paste(layer, (0, brand_y), layer)
-
-
-def build_split_cover(
+def build_viral_cover(
     bg_path,
     char_path,
     prop_path,
     title,
     subtitle,
     tags,
-    brand,
-    slogan,
+    brand="野原经济学",
+    slogan="看懂生活底层套路",
     font_path=None,
     output=None,
+    sticker_text="⚠️ 惊人内幕"
 ):
+    """爆款高点击率封面 (Viral 3:4 竖屏 1080x1440)"""
     W, H = 1080, 1440
-    canvas = Image.new("RGBA", (W, H), (255, 255, 255, 255))
+    canvas = Image.new("RGBA", (W, H), (20, 20, 25, 255))
 
-    # 背景
-    bg = Image.open(bg_path).convert("RGBA").resize((W, H), Image.LANCZOS)
-    overlay = Image.new("RGBA", (W, H), (255, 255, 255, 0))
-    d = ImageDraw.Draw(overlay)
-    for i in range(200):
-        alpha = int(90 * (1 - i / 200))
-        d.line([(0, i), (W, i)], fill=(255, 248, 235, alpha))
-    canvas.paste(Image.alpha_composite(bg, overlay), (0, 0))
+    # 1. 强化背景质感（高斯模糊 + 暖黑渐变遮罩，凸显前景人物与大字）
+    if bg_path and Path(bg_path).exists():
+        bg = Image.open(bg_path).convert("RGBA").resize((W, H), Image.LANCZOS)
+        bg = bg.filter(ImageFilter.GaussianBlur(6)) # 轻微模糊增加景深
+    else:
+        bg = Image.new("RGBA", (W, H), (30, 25, 40, 255))
 
-    draw_brand_bar(canvas, brand, slogan, font_path)
-
-    # 道具
-    if prop_path:
-        prop = Image.open(prop_path).convert("RGBA")
-        prop = prop.resize((240, int(prop.height * 240 / prop.width)), Image.LANCZOS)
-        add_drop_shadow(canvas, prop, offset=(10, 14), blur=12)
-        canvas.paste(prop, (W - 300, 320), prop)
-
-    # 角色
-    char = Image.open(char_path).convert("RGBA")
-    char = char.resize((600, int(char.height * 600 / char.width)), Image.LANCZOS)
-    add_drop_shadow(canvas, char, offset=(12, 16), blur=14)
-    canvas.paste(char, (W // 2 - 60, H - 760), char)
-
-    # 左侧标题卡片
-    title_layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    td = ImageDraw.Draw(title_layer)
-    card_x, card_y, card_w, card_h = 56, 340, 520, 400
-    # 卡片阴影
-    shadow = Image.new("RGBA", (card_w + 28, card_h + 28), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(shadow)
-    sd.rounded_rectangle((8, 8, card_w + 20, card_h + 20), radius=36, fill=(50, 40, 35, 75))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(12))
-    title_layer.paste(shadow, (card_x - 8, card_y - 8), shadow)
-    td.rounded_rectangle((card_x, card_y, card_x + card_w, card_y + card_h), radius=30, fill=(255, 252, 245, 230))
-    canvas = Image.alpha_composite(canvas, title_layer)
-
-    draw = ImageDraw.Draw(canvas)
-    f_kw = load_font(100, font_path)
-    f_sub = load_font(46, font_path)
-    f_tag = load_font(24, font_path)
-
-    draw.text((card_x + 44, card_y + 44), title, font=f_kw, fill=(80, 50, 30, 255))
-
-    # 副标题自动换行
-    lines = []
-    words = list(subtitle)
-    buf = ""
-    for w in words:
-        test = buf + w
-        bbox = draw.textbbox((0, 0), test, font=f_sub)
-        if (bbox[2] - bbox[0]) > card_w - 80 and buf:
-            lines.append(buf)
-            buf = w
+    # 叠加暗角与高对比度渐变层
+    dark_overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    dd = ImageDraw.Draw(dark_overlay)
+    for y in range(H):
+        # 顶部暗以衬托标题，底部暗以衬托人物
+        if y < 600:
+            alpha = int(180 * (1 - y / 600 * 0.4))
         else:
-            buf = test
-    lines.append(buf)
-    # 避免最后一行只剩标点
-    if len(lines) > 1 and len(lines[-1]) <= 2 and not any(c.isalnum() for c in lines[-1]):
-        lines[-2] += lines[-1]
-        lines.pop()
-    y = card_y + 170
-    for line in lines:
-        draw.text((card_x + 44, y), line, font=f_sub, fill=(70, 65, 85, 255))
-        y += 64
-
-    if tags:
-        tag_text = " ".join(f"#{t}" for t in tags.split())
-        bbox = draw.textbbox((0, 0), tag_text, font=f_tag)
-        tag_w = bbox[2] - bbox[0]
-        tag_h = 46
-        tag_y = card_y + card_h - 84
-        draw.rounded_rectangle((card_x + 44, tag_y, card_x + 44 + tag_w + 28, tag_y + tag_h), radius=23, fill=(255, 200, 120, 235))
-        draw.text((card_x + 58, tag_y + 8), tag_text, font=f_tag, fill=(80, 50, 30, 255))
-
-    final = canvas.convert("RGB")
-    if output:
-        final.save(output, "JPEG", quality=95)
-        print(f"Saved: {output}")
-    return final
-
-
-def build_center_cover(
-    bg_path,
-    char_path,
-    prop_path,
-    title,
-    subtitle,
-    tags,
-    brand,
-    slogan,
-    font_path=None,
-    output=None,
-):
-    W, H = 1080, 1440
-    canvas = Image.new("RGBA", (W, H), (255, 255, 255, 255))
-
-    bg = Image.open(bg_path).convert("RGBA").resize((W, H), Image.LANCZOS)
-    overlay = Image.new("RGBA", (W, H), (255, 255, 255, 0))
-    d = ImageDraw.Draw(overlay)
-    for i in range(220):
-        alpha = int(60 * (1 - i / 220))
-        d.line([(0, i), (W, i)], fill=(255, 248, 235, alpha))
-    canvas.paste(Image.alpha_composite(bg, overlay), (0, 0))
-
-    draw_brand_bar(canvas, brand, slogan, font_path)
-
-    if prop_path:
-        prop = Image.open(prop_path).convert("RGBA")
-        prop = prop.resize((240, int(prop.height * 240 / prop.width)), Image.LANCZOS)
-        add_drop_shadow(canvas, prop, offset=(10, 14), blur=12)
-        canvas.paste(prop, (W - 280, 280), prop)
-
-    card_h = 720
-    card_y = H - card_h
-    card = Image.new("RGBA", (W, card_h), (0, 0, 0, 0))
-    cd = ImageDraw.Draw(card)
-    for i in range(card_h):
-        alpha = int(205 * (i / card_h))
-        cd.line([(0, card_h - 1 - i), (W, card_h - 1 - i)], fill=(45, 40, 60, alpha))
-    canvas.paste(card, (0, card_y), card)
-
-    char = Image.open(char_path).convert("RGBA")
-    char = char.resize((560, int(char.height * 560 / char.width)), Image.LANCZOS)
-    add_drop_shadow(canvas, char, offset=(12, 16), blur=14)
-    canvas.paste(char, (W // 2 - 280, H - 360), char)
+            alpha = int(130 + 100 * ((y - 600) / (H - 600)))
+        dd.line([(0, y), (W, y)], fill=(15, 12, 22, alpha))
+    bg = Image.alpha_composite(bg, dark_overlay)
+    canvas.paste(bg, (0, 0))
 
     draw = ImageDraw.Draw(canvas)
-    f_kw = load_font(108, font_path)
-    f_sub = load_font(50, font_path)
-    f_tag = load_font(26, font_path)
 
-    bbox = draw.textbbox((0, 0), title, font=f_kw)
-    kw_w = bbox[2] - bbox[0]
-    kw_x = (W - kw_w) // 2
-    kw_y = card_y + 90
-    draw.text((kw_x + 3, kw_y + 3), title, font=f_kw, fill=(0, 0, 0, 120))
-    draw.text((kw_x, kw_y), title, font=f_kw, fill=(255, 225, 110, 255))
+    # 2. 顶部爆款 IP 标识条 (黑金胶囊)
+    brand_w, brand_h = 420, 58
+    brand_x, brand_y = (W - brand_w) // 2, 45
+    draw.rounded_rectangle(
+        [brand_x, brand_y, brand_x + brand_w, brand_y + brand_h],
+        radius=29,
+        fill=(255, 215, 0, 240),
+        outline=(255, 255, 255, 200),
+        width=3
+    )
+    f_brand = load_font(28, font_path)
+    brand_label = f"【{brand}】 {slogan}"
+    bbox = draw.textbbox((0, 0), brand_label, font=f_brand)
+    bw = bbox[2] - bbox[0]
+    draw.text((brand_x + (brand_w - bw) // 2, brand_y + 12), brand_label, font=f_brand, fill=(20, 20, 20, 255))
 
-    bbox = draw.textbbox((0, 0), subtitle, font=f_sub)
-    sub_w = bbox[2] - bbox[0]
-    draw.text(((W - sub_w) // 2, card_y + 235), subtitle, font=f_sub, fill=(255, 255, 255, 255))
+    # 3. 巨幅爆款痛点主标题（倾斜黄色胶带/黑底爆破风格）
+    f_title = load_font(110, font_path)
+    f_sub = load_font(52, font_path)
 
+    # 主标题背景胶带倾斜层
+    title_text = title if title else "为什么总没钱？"
+    title_box = draw.textbbox((0, 0), title_text, font=f_title)
+    tw = title_box[2] - title_box[0]
+    th = title_box[3] - title_box[1]
+
+    tape_w = tw + 90
+    tape_h = th + 45
+    tape_x = (W - tape_w) // 2
+    tape_y = 145
+
+    # 绘制高亮黄色斜切底块
+    tape_layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    td = ImageDraw.Draw(tape_layer)
+    # 黄色警示底色
+    td.polygon([
+        (tape_x, tape_y + 12),
+        (tape_x + tape_w, tape_y - 6),
+        (tape_x + tape_w - 15, tape_y + tape_h - 4),
+        (tape_x - 15, tape_y + tape_h + 14)
+    ], fill=(255, 220, 0, 255), outline=(255, 255, 255, 255))
+    
+    # 投影
+    tape_shadow = tape_layer.filter(ImageFilter.GaussianBlur(15))
+    canvas.paste(tape_shadow, (6, 10), tape_shadow)
+    canvas.paste(tape_layer, (0, 0), tape_layer)
+
+    # 绘制主标题文字（黑字 + 极具张力）
+    draw_stroked_text(
+        draw,
+        (tape_x + 35, tape_y + 12),
+        title_text,
+        font=f_title,
+        text_color=(15, 15, 18, 255),
+        stroke_color=(255, 255, 255, 255),
+        stroke_width=2
+    )
+
+    # 4. 悬念副标题（纯白大字 + 红色强调框）
+    if subtitle:
+        sub_y = tape_y + tape_h + 30
+        sub_box = draw.textbbox((0, 0), subtitle, font=f_sub)
+        sw = sub_box[2] - sub_box[0]
+        sub_x = (W - sw) // 2
+        
+        # 黑色半透明底条衬托副标题
+        draw.rounded_rectangle(
+            [sub_x - 30, sub_y - 8, sub_x + sw + 30, sub_y + 68],
+            radius=16,
+            fill=(0, 0, 0, 190),
+            outline=(255, 60, 60, 220),
+            width=3
+        )
+        draw.text((sub_x, sub_y), subtitle, font=f_sub, fill=(255, 255, 255, 255))
+
+    # 5. 醒目悬念贴纸（右侧倾斜红色爆炸贴纸）
+    sticker_w, sticker_h = 240, 64
+    st_x, st_y = W - sticker_w - 40, tape_y + tape_h + 105
+    st_layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    std = ImageDraw.Draw(st_layer)
+    std.rounded_rectangle([st_x, st_y, st_x + sticker_w, st_y + sticker_h], radius=16, fill=(255, 45, 85, 245), outline=(255, 255, 255, 255), width=3)
+    f_st = load_font(32, font_path)
+    std.text((st_x + 22, st_y + 12), sticker_text, font=f_st, fill=(255, 255, 255, 255))
+    canvas.paste(st_layer, (0, 0), st_layer)
+
+    # 6. 大幅角色情绪立绘（占据下半部 60%，带来视觉生命力）
+    if char_path and Path(char_path).exists():
+        char = Image.open(char_path).convert("RGBA")
+        target_h = 820
+        target_w = int(char.width * (target_h / char.height))
+        char = char.resize((target_w, target_h), Image.LANCZOS)
+        
+        # 人物白色发光描边/光晕 + 立体深阴影
+        char_x = (W - target_w) // 2 + 30
+        char_y = H - target_h - 20
+        add_drop_shadow(canvas, char, offset=(char_x + 8, char_y + 16), blur=24, opacity=160, shadow_color=(0, 0, 0))
+        canvas.paste(char, (char_x, char_y), char)
+
+    # 7. 挂载关键道具（左侧放大悬浮）
+    if prop_path and Path(prop_path).exists():
+        prop = Image.open(prop_path).convert("RGBA")
+        pw = 280
+        ph = int(prop.height * (pw / prop.width))
+        prop = prop.resize((pw, ph), Image.LANCZOS)
+        add_drop_shadow(canvas, prop, offset=(45, H - ph - 160), blur=20, opacity=180)
+        canvas.paste(prop, (45, H - ph - 160), prop)
+
+    # 8. 底部热门标签（#野原经济学 #打工人必看）
     if tags:
-        tag_text = " ".join(f"#{t}" for t in tags.split())
-        bbox = draw.textbbox((0, 0), tag_text, font=f_tag)
-        tag_w = bbox[2] - bbox[0]
-        tag_pad = 18
-        tag_h = 50
-        tag_x = (W - tag_w) // 2
-        tag_y = card_y + 350
-        draw.rounded_rectangle((tag_x - tag_pad, tag_y, tag_x + tag_w + tag_pad, tag_y + tag_h), radius=25, fill=(255, 200, 120, 235))
-        draw.text((tag_x + 1, tag_y + 10), tag_text, font=f_tag, fill=(80, 50, 30, 255))
+        f_tag = load_font(26, font_path)
+        tag_str = "  ".join(f"#{t.strip('#')}" for t in tags.split())
+        draw.text((50, H - 65), tag_str, font=f_tag, fill=(255, 220, 100, 230))
 
     final = canvas.convert("RGB")
     if output:
-        final.save(output, "JPEG", quality=95)
-        print(f"Saved: {output}")
+        out_path = Path(output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        final.save(out_path, "JPEG", quality=96)
+        print(f"[ok] 2.1 爆款高点击率封面已生成: {out_path}")
     return final
-
-
-def split_title(title):
-    """把长标题拆成短主标题 + 可读副标题，避免主标题在卡片内溢出。"""
-    title = title.strip()
-    if title.startswith("为什么") and len(title) > 4:
-        keyword = title[3:5]
-        rest = "为什么" + title[5:]
-        if not rest.endswith(("？", "?", "。", ".")):
-            rest += "？"
-        return keyword, rest
-    if "第二件半价" in title:
-        return "半价", "第二件真的省钱吗？"
-    if len(title) > 6:
-        keyword = title[:3]
-        rest = title[3:]
-        if not rest.endswith(("？", "?", "。", ".")):
-            rest += "？"
-        return keyword, rest
-    return title, ""
-
 
 def main():
-    parser = argparse.ArgumentParser(description="生成布丁经济学竖版封面")
-    parser.add_argument("--project", required=True, help="项目目录，如 02_项目/C003_工资与物价")
-    parser.add_argument("--title", default=None, help="主标题")
-    parser.add_argument("--subtitle", default=None, help="副标题")
-    parser.add_argument("--tags", default="经济学 生活常识", help="标签，空格分隔")
-    parser.add_argument("--layout", choices=LAYOUTS, default="split", help="版式")
-    parser.add_argument("--background", default=None, help="背景名称，如「小镇街道」「超市内部」")
-    parser.add_argument("--character", default=None, help="角色情绪，如 thinking/serious/explaining")
-    parser.add_argument("--props", default=None, help="道具名称，逗号分隔，最多取 1 个")
-    parser.add_argument("--brand", default="布丁经济学", help="账号名")
-    parser.add_argument("--slogan", default="用治愈的卡通，讲清生活的经济学", help="账号 slogan")
-    parser.add_argument("--font", default=None, help="中文字体路径")
-    parser.add_argument("--output", default=None, help="输出路径，默认 <project>/deliverables/<videoId>_封面.jpg")
+    parser = argparse.ArgumentParser(description="2.1 爆款短视频封面生成器")
+    parser.add_argument("--project", required=True, help="视频项目路径 (如 02_项目/C002_超市涨价)")
+    parser.add_argument("--title", help="封面大标题")
+    parser.add_argument("--subtitle", help="封面副标题/痛点提问")
+    parser.add_argument("--tags", help="标签 (空格分隔)")
+    parser.add_argument("--character", help="指定角色图片路径")
+    parser.add_argument("--background", help="指定背景图片路径")
+    parser.add_argument("--prop", help="指定道具图片路径")
+    parser.add_argument("--sticker", default="[ 揭秘真相 ]", help="悬念标签文字")
+    parser.add_argument("--output", help="输出文件路径")
     args = parser.parse_args()
 
-    project_dir = ROOT / args.project
-    if not project_dir.exists():
-        sys.exit(f"项目目录不存在：{project_dir}")
+    project = Path(args.project)
+    scene_config_path = project / "data" / "scene-config.json"
+    
+    title = args.title
+    subtitle = args.subtitle or "生活里的套路到底有多深？"
+    vid = "C000"
 
-    scene_config = load_json(project_dir / "data/scene-config.json")
-    video_id = scene_config.get("videoId", project_dir.name)
-    default_title = scene_config.get("title", "")
+    if scene_config_path.exists():
+        sc = json.loads(scene_config_path.read_text(encoding="utf-8"))
+        title = title or sc.get("title", "野原经济学")
+        vid = sc.get("videoId", "C000")
 
-    title = args.title or default_title
-    subtitle = args.subtitle or ""
-    if not args.subtitle and not args.title and default_title:
-        title, subtitle = split_title(default_title)
+    # 自动定位素材
+    char_path = args.character or (ROOT / "shared/characters/char_小新_explaining.png")
+    bg_path = args.background or (ROOT / "shared/backgrounds/bg_market.png")
+    prop_path = args.prop or (ROOT / "shared/props/prop_巧克比.png")
 
-    tags = args.tags
+    out_file = args.output or (project / "deliverables" / f"{vid}_爆款封面.jpg")
 
-    # 加载素材库（合并 characters/backgrounds/props）
-    library = load_json(MATERIAL_LIBRARY)
-    assets = []
-    for section in ["characters", "backgrounds", "props"]:
-        assets.extend(library.get(section, []))
-
-    # 背景
-    bg_name = args.background
-    if not bg_name:
-        # 从第一场景取背景名
-        scenes = scene_config.get("scenes", [])
-        if scenes:
-            bg_name = scenes[0].get("background")
-    bg_assets = find_assets(assets, type_="background", name=bg_name, limit=1)
-    if not bg_assets:
-        bg_assets = find_assets(assets, type_="background", limit=1)
-    if not bg_assets:
-        sys.exit("素材库中没有可用背景")
-    bg_path = resolve_asset_path(bg_assets[0])
-
-    # 角色情绪：封面优先使用讲解/正面识别度更高的姿态，除非用户显式指定。
-    char_emotion = args.character
-    if not char_emotion:
-        char_emotion = "explaining"
-    char_assets = find_assets(assets, type_="character", emotion=char_emotion, name="小布丁", limit=1)
-    if not char_assets:
-        char_assets = find_assets(assets, type_="character", emotion=char_emotion, limit=1)
-    if not char_assets:
-        char_assets = find_assets(assets, type_="character", name="小布丁", limit=1)
-    if not char_assets:
-        char_assets = find_assets(assets, type_="character", limit=1)
-    char_path = resolve_asset_path(char_assets[0])
-
-    # 道具
-    prop_path = None
-    prop_names = [p.strip() for p in (args.props or "").split(",") if p.strip()]
-    if not prop_names:
-        # 从场景配置取第一个道具
-        scenes = scene_config.get("scenes", [])
-        for s in scenes:
-            for e in s.get("elements", []):
-                if e.get("type") == "prop" and e.get("name"):
-                    prop_names.append(e["name"])
-                    break
-            if prop_names:
-                break
-    if prop_names:
-        prop_assets = find_assets(assets, type_="prop", name=prop_names[0], limit=1)
-        if prop_assets:
-            prop_path = resolve_asset_path(prop_assets[0])
-
-    # 输出路径
-    if args.output:
-        output = ROOT / args.output
-    else:
-        output = project_dir / "deliverables" / f"{video_id}_封面.jpg"
-    output.parent.mkdir(parents=True, exist_ok=True)
-
-    # 生成
-    if args.layout == "split":
-        build_split_cover(
-            bg_path=bg_path,
-            char_path=char_path,
-            prop_path=prop_path,
-            title=title,
-            subtitle=subtitle,
-            tags=tags,
-            brand=args.brand,
-            slogan=args.slogan,
-            font_path=args.font,
-            output=output,
-        )
-    else:
-        build_center_cover(
-            bg_path=bg_path,
-            char_path=char_path,
-            prop_path=prop_path,
-            title=title,
-            subtitle=subtitle,
-            tags=tags,
-            brand=args.brand,
-            slogan=args.slogan,
-            font_path=args.font,
-            output=output,
-        )
-
+    build_viral_cover(
+        bg_path=str(bg_path) if Path(bg_path).exists() else None,
+        char_path=str(char_path) if Path(char_path).exists() else None,
+        prop_path=str(prop_path) if Path(prop_path).exists() else None,
+        title=title,
+        subtitle=subtitle,
+        tags=args.tags or "野原经济学 生活常识 避坑指南",
+        sticker_text=args.sticker,
+        output=str(out_file)
+    )
 
 if __name__ == "__main__":
     main()

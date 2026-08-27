@@ -59,9 +59,13 @@ function resolveBackground(lib, sceneId, sceneBackgroundName) {
     if (found) return found;
   }
   const num = parseInt(sceneId.replace(/\D/g, ''), 10) || 1;
-  // 默认：S01 春日部街道引入，S02 起进入春日部超市
-  const bgName = num <= 1 ? '春日部街道' : '春日部超市';
-  return findActiveMaterial(lib, 'background', bgName) || findActiveMaterial(lib, 'background', '小镇街道');
+  // 默认：S01 小镇街道引入，S02 起进入超市内部
+  const bgName = num <= 1 ? '小镇街道' : '超市内部';
+  return (
+    findActiveMaterial(lib, 'background', bgName) ||
+    findActiveMaterial(lib, 'background', '超市内部') ||
+    findActiveMaterial(lib, 'background', '小镇街道')
+  );
 }
 
 /** 把 timeline 里的场景和元素都填上素材路径 */

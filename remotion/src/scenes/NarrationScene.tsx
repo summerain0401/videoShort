@@ -70,7 +70,12 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
     sceneOpacity = Math.min(fadeInOpacity, fadeOutOpacity);
   }
 
-  // 场景整体轻微缩放入场
+  // 场景整体轻微缩放入场 + 情绪爆发镜头震动 (Camera Impact Shake)
+  const isHighImpact = scene.characterEffect === 'steam' || scene.characterEffect === 'shake';
+  const shakeFrame = frame < fps * 0.4;
+  const camShakeX = isHighImpact && shakeFrame ? (frame % 2 === 0 ? 5 : -5) * (1 - frame / (fps * 0.4)) : 0;
+  const camShakeY = isHighImpact && shakeFrame ? (frame % 3 === 0 ? 3 : -3) * (1 - frame / (fps * 0.4)) : 0;
+
   const sceneScale = interpolate(
     frame,
     [0, fps * 0.35],
@@ -110,7 +115,7 @@ export const NarrationScene: React.FC<NarrationSceneProps> = ({
     <AbsoluteFill
       style={{
         opacity: sceneOpacity,
-        transform: `scale(${sceneScale})`,
+        transform: `scale(${sceneScale}) translate(${camShakeX}px, ${camShakeY}px)`,
       }}
     >
       {/* 背景层（Ken Burns 缓慢推拉） */}
