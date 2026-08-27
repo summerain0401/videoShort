@@ -5,7 +5,7 @@ generate-story.py — 剧本生成器 2.0（野原经济学 · 蜡笔小新家�
 + 人读的 故事脚本.md + 纯口播稿 口播稿.txt。
 
 三种模式（--mode）:
-  llm          调用 LLM API 生成野原家情景剧对白（小新、美伢、广志、小白）
+  llm          调用 LLMRouter (TaskTier.REASONING_DESIGN -> Claude Opus) 深度生成情景剧对白与反转
   from-script  从已有口播稿/对白生成（支持 [小新]:、[美伢]: 等格式）
   template     内置野原家经典生活经济学模板
 """
@@ -14,11 +14,14 @@ import json
 import os
 import re
 import sys
-import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = ROOT / "shared" / "material-library.json"
+
+# 引入项目统一模型路由器
+sys.path.insert(0, str(ROOT))
+from shared.llm_router import router, TaskTier
 
 FPS = 30
 CHARS_PER_SEC = 4.5
@@ -32,21 +35,10 @@ THEME_PROP_MAP = [
 ]
 FALLBACK_PROPS = ["巧克比", "第二件半价牌", "工资条", "钱袋"]
 
-LLM_PROVIDERS = [
-    {"key": "OPENAI_API_KEY",       "base": "https://api.openai.com/v1",                "model": "gpt-4o-mini"},
-    {"key": "DEEPSEEK_API_KEY",     "base": "https://api.deepseek.com/v1",              "model": "deepseek-chat"},
-    {"key": "MOONSHOT_API_KEY",     "base": "https://api.moonshot.cn/v1",               "model": "moonshot-v1-8k"},
-    {"key": "DASHSCOPE_API_KEY",    "base": "https://dashscope.aliyuncs.com/compatible-mode/v1", "model": "qwen-plus"},
-    {"key": "ZHIPU_API_KEY",        "base": "https://open.bigmodel.cn/api/paas/v4",     "model": "glm-4-flash"},
-]
-
 def load_library() -> dict:
     if not LIBRARY_PATH.exists():
         return {"characters": [], "backgrounds": [], "props": []}
     return json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
-
-def active_items(lib: dict, category: str) -> list:
-    return [i for i in lib.get(category, []) if i.get("status") == "active"]
 
 def parse_speaker_dialogue(text: str) -> list[dict]:
     paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text.strip()) if p.strip()]
@@ -179,6 +171,47 @@ def build_scenes_from_dialogues(dialogues: list[dict], theme: str, lib: dict) ->
 
     return scenes
 
+# ----------------- 深度 LLM 生成模式 (Claude Opus) -----------------
+
+def generate_llm_script(theme: str) -> tuple[list[dict], dict | None]:
+    """使用 LLMRouter 的 TaskTier.REASONING_DESIGN (Claude Opus) 构思幽默反转的野原经济学情景剧"""
+    system_prompt = (
+        "你是一位顶级短视频编剧和经济学通俗科普作家。请以《蜡笔小新》家庭日常情景剧（野原经济学）的风格，"
+        "创作一段通俗易懂、幽默反转、逻辑清晰的科普短剧。\n"
+        "角色可选：小新（主角，机智调皮又一针见血）、美伢（持家妈妈，容易被促销冲昏头脑）、广志（打工人爸爸，关心工资房贷）。\n"
+        "要求：总共 5 个场景对话，每段话简短有力（25-45字），富有角色语气特色（如小新的‘嘿嘿’，美伢的破防等），最后有总结金句和互动问答。"
+    )
+    prompt = f"""
+请围绕主题【{theme}】，生成一个 5 幕对白的蜡笔小新家庭生活情景剧短视频剧本。
+必须返回纯 JSON 格式：
+{{
+  "dialogues": [
+    {{"speaker": "美伢", "text": "第1句（引出日常生活痛点或消费场景）"}},
+    {{"speaker": "小新", "text": "第2句（小新戳破真相，引出经济学概念）"}},
+    {{"speaker": "小新", "text": "第3句（通俗解释底层逻辑与商家套路）"}},
+    {{"speaker": "美伢", "text": "第4句（搭档破防或恍然大悟）"}},
+    {{"speaker": "小新", "text": "第5句（总结金句与收尾点赞引导）"}}
+  ],
+  "outro": {{
+    "question": "提问互动问题",
+    "answer": "核心金句答案",
+    "character": "小新"
+  }}
+}}
+"""
+    try:
+        cfg = router.get_provider_config(TaskTier.REASONING_DESIGN)
+        print(f"[info] 正在调度思考/设计模型 ({cfg.get('provider')}: {cfg.get('model')}) 进行情景剧深度创作...")
+        resp = router.call(prompt, system_prompt=system_prompt, tier=TaskTier.REASONING_DESIGN, json_mode=True)
+        clean_resp = re.sub(r"^```json\s*|\s*```$", "", resp.strip(), flags=re.MULTILINE)
+        data = json.loads(clean_resp)
+        if "dialogues" in data and len(data["dialogues"]) > 0:
+            return data["dialogues"], data.get("outro")
+    except Exception as e:
+        print(f"[warn] LLM 创作调用失败或未配置 Key ({e})，自动回退到经典模板", file=sys.stderr)
+    
+    return generate_template_script(theme), None
+
 # ----------------- 模板生成模式 -----------------
 
 def generate_template_script(theme: str) -> list[dict]:
@@ -225,10 +258,13 @@ def main():
     audio_dir.mkdir(parents=True, exist_ok=True)
 
     lib = load_library()
+    outro_custom = None
 
     if args.mode == "from-script" and args.input_file:
         raw_text = Path(args.input_file).read_text(encoding="utf-8")
         dialogues = parse_speaker_dialogue(raw_text)
+    elif args.mode == "llm":
+        dialogues, outro_custom = generate_llm_script(args.theme)
     else:
         dialogues = generate_template_script(args.theme)
 
@@ -249,7 +285,7 @@ def main():
     (script_dir / "口播稿.txt").write_text("\n\n".join(script_txt_lines), encoding="utf-8")
 
     # 3. 保存 outro.json
-    outro_data = {
+    outro_data = outro_custom or {
         "question": f"今天小新讲的【{args.theme}】听懂了吗？",
         "answer": "不需要的打折品也是浪费，理性消费哦！",
         "character": "小新"
