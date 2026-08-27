@@ -36,10 +36,10 @@ def prompt_for(item: dict) -> str:
     name = item["name"]
     emotion = item.get("emotion") or ""
     if kind == "background":
-        return f"治愈卡通插画，竖屏9:16，适合叠加小布丁角色和字幕的{name}场景，暖色调，柔和描边，小清新手绘质感，无人物、无文字、无字母、无数字、无水印"
+        return f"蜡笔小新动漫手绘风格背景，竖屏9:16，春日部场景：{name}，手绘粗线条，暖色明亮，小新动漫插画质感，无人物、无文字、无字母、无数字、无水印"
     if kind == "character":
-        return f"小布丁角色，{emotion}情绪，圆脸、奶油色皮肤、蜜桃粉腮红、浅黄色贝雷帽、暖黄卫衣、浅蓝短裤，治愈卡通暖色调，透明底，无文字、无水印"
-    return f"治愈卡通透明底道具：{name}，暖色调，圆润造型，柔和描边，小清新手绘质感，无文字、无字母、无数字、无水印"
+        return f"蜡笔小新动漫风格角色【{name}】，{emotion}表情与姿态，经典日漫手绘粗线条，透明底 PNG，无文字、无水印"
+    return f"蜡笔小新动漫风格道具：{name}，蜡笔手绘质感，粗线条，明快色彩，透明底，无文字、无字母、无数字、无水印"
 
 
 def scan(project: Path) -> dict:

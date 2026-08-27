@@ -1,0 +1,831 @@
+{
+  "videoId": "C101",
+  "title": "超市第二件半价真的省钱吗",
+  "totalDuration": 35.616,
+  "audioFile": "/Volumes/Samsung/codexProjects/videoShort/02_项目/C101_美伢的第二件半价/audio/voice.mp3",
+  "scenes": [
+    {
+      "sceneId": "S01a",
+      "start": 0.0,
+      "end": 3.391,
+      "speaker": "美伢",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "哇！小新快看，这盒巧克比第二件半价，",
+        "start": 0.0,
+        "end": 3.191,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "哇！小新快看，",
+            "start": 0.0,
+            "end": 1.241
+          },
+          {
+            "text": "这盒巧克比第二件半价，",
+            "start": 1.241,
+            "end": 3.191
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "thinking",
+          "enterFrom": "left",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            0.0,
+            3.391
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "right",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            0.0,
+            3.391
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 0
+    },
+    {
+      "sceneId": "S01c",
+      "start": 3.391,
+      "end": 5.652,
+      "speaker": "美伢",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "一口气买两盒立省十块钱，",
+        "start": 3.391,
+        "end": 5.452,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "一口气买两盒立省十块钱，",
+            "start": 3.391,
+            "end": 5.452
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "thinking",
+          "enterFrom": "left",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            3.391,
+            5.652
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "right",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            3.391,
+            5.652
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 2
+    },
+    {
+      "sceneId": "S01d",
+      "start": 5.652,
+      "end": 7.536,
+      "speaker": "美伢",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "我真是个持家小能手！",
+        "start": 5.652,
+        "end": 7.336,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "我真是个持家小能手！",
+            "start": 5.652,
+            "end": 7.336
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "thinking",
+          "enterFrom": "left",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            5.652,
+            7.536
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "right",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            5.652,
+            7.536
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 3
+    },
+    {
+      "sceneId": "S02a",
+      "start": 7.536,
+      "end": 10.426,
+      "speaker": "小新",
+      "characterEffect": "question",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "诶？美伢，你明明只想吃一盒吧？",
+        "start": 7.536,
+        "end": 10.226,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "诶？美伢，",
+            "start": 7.536,
+            "end": 8.433
+          },
+          {
+            "text": "你明明只想吃一盒吧？",
+            "start": 8.433,
+            "end": 10.226
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            7.536,
+            10.426
+          ],
+          "isSpeaker": true,
+          "effect": "question"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            7.536,
+            10.426
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 4
+    },
+    {
+      "sceneId": "S02b",
+      "start": 10.426,
+      "end": 12.931,
+      "speaker": "小新",
+      "characterEffect": "question",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "多掏十块钱买不需要的东西，",
+        "start": 10.426,
+        "end": 12.731,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "多掏十块钱买不需要的",
+            "start": 10.426,
+            "end": 12.199
+          },
+          {
+            "text": "东西，",
+            "start": 12.199,
+            "end": 12.731
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            10.426,
+            12.931
+          ],
+          "isSpeaker": true,
+          "effect": "question"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            10.426,
+            12.931
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 5
+    },
+    {
+      "sceneId": "S02c",
+      "start": 12.931,
+      "end": 14.472,
+      "speaker": "小新",
+      "characterEffect": "question",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "商家都乐开花啦！",
+        "start": 12.931,
+        "end": 14.272,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "商家都乐开花啦！",
+            "start": 12.931,
+            "end": 14.272
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            12.931,
+            14.472
+          ],
+          "isSpeaker": true,
+          "effect": "question"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            12.931,
+            14.472
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 6
+    },
+    {
+      "sceneId": "S03a",
+      "start": 14.472,
+      "end": 16.557,
+      "speaker": "小新",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "这在经济学里叫价格歧视！",
+        "start": 14.472,
+        "end": 16.357,
+        "highlights": [
+          "价格"
+        ],
+        "segments": [
+          {
+            "text": "这在经济学里叫价格歧视！",
+            "start": 14.472,
+            "end": 16.357
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            14.472,
+            16.557
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            14.472,
+            16.557
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 7
+    },
+    {
+      "sceneId": "S03b",
+      "start": 16.557,
+      "end": 20.379,
+      "speaker": "小新",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "商家利用第二件半价诱导你多买，虽然单价降低，",
+        "start": 16.557,
+        "end": 20.179,
+        "highlights": [
+          "单价"
+        ],
+        "segments": [
+          {
+            "text": "商家利用第二件半价诱",
+            "start": 16.557,
+            "end": 18.203
+          },
+          {
+            "text": "导你多买，",
+            "start": 18.203,
+            "end": 19.027
+          },
+          {
+            "text": "虽然单价降低，",
+            "start": 19.027,
+            "end": 20.179
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            16.557,
+            20.379
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            16.557,
+            20.379
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 8
+    },
+    {
+      "sceneId": "S03c",
+      "start": 20.379,
+      "end": 22.464,
+      "speaker": "小新",
+      "characterEffect": "none",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "但你的总支出反而增加了！",
+        "start": 20.379,
+        "end": 22.264,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "但你的总支出反而增加了！",
+            "start": 20.379,
+            "end": 22.264
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            20.379,
+            22.464
+          ],
+          "isSpeaker": true,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            20.379,
+            22.464
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "infographic": {
+        "kind": "balance",
+        "title": "性价比天平",
+        "leftLabel": "1件原价",
+        "rightLabel": "2件半价",
+        "tilt": "right"
+      },
+      "shotIndex": 9
+    },
+    {
+      "sceneId": "S04a",
+      "start": 22.464,
+      "end": 26.335,
+      "speaker": "美伢",
+      "characterEffect": "steam",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "什么？！原来多买不是赚了，而是多掏了钱！",
+        "start": 22.464,
+        "end": 26.135,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "什么？！",
+            "start": 22.464,
+            "end": 23.198
+          },
+          {
+            "text": "原来多买不是赚了，",
+            "start": 23.198,
+            "end": 24.85
+          },
+          {
+            "text": "而是多掏了钱！",
+            "start": 24.85,
+            "end": 26.135
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "smug",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            22.464,
+            26.335
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "angry",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            22.464,
+            26.335
+          ],
+          "isSpeaker": true,
+          "effect": "steam"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 10
+    },
+    {
+      "sceneId": "S04b",
+      "start": 26.335,
+      "end": 28.464,
+      "speaker": "美伢",
+      "characterEffect": "steam",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "新之助，你怎么不早说！",
+        "start": 26.335,
+        "end": 28.264,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "新之助，",
+            "start": 26.335,
+            "end": 27.036
+          },
+          {
+            "text": "你怎么不早说！",
+            "start": 27.036,
+            "end": 28.264
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "smug",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            26.335,
+            28.464
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "angry",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            26.335,
+            28.464
+          ],
+          "isSpeaker": true,
+          "effect": "steam"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 11
+    },
+    {
+      "sceneId": "S05a",
+      "start": 28.464,
+      "end": 31.359,
+      "speaker": "小新",
+      "characterEffect": "idea",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "嘿嘿~ 记住一句话：不需要的东西，",
+        "start": 28.464,
+        "end": 31.159,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "嘿嘿~",
+            "start": 28.464,
+            "end": 28.969
+          },
+          {
+            "text": "记住一句话：不需要的",
+            "start": 28.969,
+            "end": 30.654
+          },
+          {
+            "text": "东西，",
+            "start": 30.654,
+            "end": 31.159
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            28.464,
+            31.359
+          ],
+          "isSpeaker": true,
+          "effect": "idea"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            28.464,
+            31.359
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "prop",
+          "name": "第二件半价牌",
+          "emotion": null,
+          "enterFrom": "top",
+          "position": "center",
+          "zIndex": 3,
+          "duration": [
+            28.464,
+            31.359
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 12
+    },
+    {
+      "sceneId": "S05b",
+      "start": 31.359,
+      "end": 35.616,
+      "speaker": "小新",
+      "characterEffect": "idea",
+      "backgroundName": "春日部超市",
+      "subtitle": {
+        "text": "打一折也是浪费！点赞关注小新，明天再带你省大钱哦~",
+        "start": 31.359,
+        "end": 35.416,
+        "highlights": [],
+        "segments": [
+          {
+            "text": "打一折也是浪费！",
+            "start": 31.359,
+            "end": 32.657
+          },
+          {
+            "text": "点赞关注小新，",
+            "start": 32.657,
+            "end": 33.793
+          },
+          {
+            "text": "明天再带你省大钱哦~",
+            "start": 33.793,
+            "end": 35.416
+          }
+        ]
+      },
+      "elements": [
+        {
+          "type": "character",
+          "name": "小新",
+          "emotion": "explaining",
+          "enterFrom": "none",
+          "position": "left",
+          "zIndex": 2,
+          "duration": [
+            31.359,
+            35.616
+          ],
+          "isSpeaker": true,
+          "effect": "idea"
+        },
+        {
+          "type": "character",
+          "name": "美伢",
+          "emotion": "shopping",
+          "enterFrom": "none",
+          "position": "right",
+          "zIndex": 2,
+          "duration": [
+            31.359,
+            35.616
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        },
+        {
+          "type": "prop",
+          "name": "第二件半价牌",
+          "emotion": null,
+          "enterFrom": "top",
+          "position": "center",
+          "zIndex": 3,
+          "duration": [
+            31.359,
+            35.616
+          ],
+          "isSpeaker": false,
+          "effect": "none"
+        }
+      ],
+      "overlays": [],
+      "shotIndex": 13
+    }
+  ]
+}

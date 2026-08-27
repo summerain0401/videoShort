@@ -55,12 +55,13 @@ function findActiveMaterial(lib, type, name, emotion) {
 /** 正文场景默认背景映射（scene-config 指定 background 时优先） */
 function resolveBackground(lib, sceneId, sceneBackgroundName) {
   if (sceneBackgroundName) {
-    return findActiveMaterial(lib, 'background', sceneBackgroundName);
+    const found = findActiveMaterial(lib, 'background', sceneBackgroundName);
+    if (found) return found;
   }
   const num = parseInt(sceneId.replace(/\D/g, ''), 10) || 1;
-  // 未指定时：S01 用小镇街道引入问题，S02 起进入超市场景
-  const bgName = num <= 1 ? '小镇街道' : '超市内部';
-  return findActiveMaterial(lib, 'background', bgName);
+  // 默认：S01 春日部街道引入，S02 起进入春日部超市
+  const bgName = num <= 1 ? '春日部街道' : '春日部超市';
+  return findActiveMaterial(lib, 'background', bgName) || findActiveMaterial(lib, 'background', '小镇街道');
 }
 
 /** 把 timeline 里的场景和元素都填上素材路径 */
@@ -133,14 +134,16 @@ async function main() {
   // 4.1 片尾角色素材解析：outro.character 指定角色名，缺省兜底「小布丁」；
   //     提问阶段用 thinking，答案揭晓阶段用 smile；找不到素材则整体回退纯卡片
   if (outro) {
-    const outroCharName = outro.character || '小布丁';
+    const outroCharName = outro.character || '小新';
     outro.character = outroCharName;
     outro.characterImage =
       outro.characterImage ??
-      findActiveMaterial(library, 'character', outroCharName, 'thinking');
+      findActiveMaterial(library, 'character', outroCharName, 'thinking') ??
+      findActiveMaterial(library, 'character', '小新', 'thinking');
     outro.characterImageHappy =
       outro.characterImageHappy ??
-      findActiveMaterial(library, 'character', outroCharName, 'smile');
+      findActiveMaterial(library, 'character', outroCharName, 'smile') ??
+      findActiveMaterial(library, 'character', '小新', 'smile');
   }
 
   const inputProps = {timeline, library, narration, outro};

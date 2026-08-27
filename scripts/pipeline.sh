@@ -142,7 +142,8 @@ cmd_preview() {
 # render — 渲染
 # ---------------------------------------------------------------------------
 cmd_render() {
-  local dir="$1" extra="${2:-}"
+  local dir="$1"
+  shift || true
   require_project "$dir"
   production_gate "$dir"
   [ -f "$ROOT/$dir/data/timeline.json" ] || err "缺少 timeline.json，请先: pipeline.sh timeline $dir"
@@ -151,8 +152,8 @@ cmd_render() {
     info "混音: audio/voice.mp3 + 转场音效（有 BGM 则自动 Ducking）"
     "$PY" "$ROOT/scripts/mix-audio.py" "$dir"
   fi
-  info "渲染: node scripts/render.mjs $dir $extra"
-  node "$ROOT/scripts/render.mjs" "$dir" $extra
+  info "渲染: node scripts/render.mjs $dir $*"
+  node "$ROOT/scripts/render.mjs" "$dir" "$@"
   ok "渲染完成"
 }
 

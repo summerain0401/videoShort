@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "lastUpdated": "2026-08-19",
+  "version": "2.0.0",
+  "lastUpdated": "2026-08-27",
   "statuses": {
     "generating": "素材生成中，未检查",
     "pending_review": "已生成待人工检查",
@@ -237,6 +237,326 @@
       ],
       "createdAt": "2026-08-18",
       "usageCount": 0
+    },
+    {
+      "id": "char_小新_smile",
+      "type": "character",
+      "name": "小新",
+      "emotion": "smile",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_smile.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，smile表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "smile"
+      ]
+    },
+    {
+      "id": "char_小新_thinking",
+      "type": "character",
+      "name": "小新",
+      "emotion": "thinking",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_thinking.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，thinking表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "thinking"
+      ]
+    },
+    {
+      "id": "char_小新_explaining",
+      "type": "character",
+      "name": "小新",
+      "emotion": "explaining",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_explaining.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，explaining表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "explaining"
+      ]
+    },
+    {
+      "id": "char_小新_smug",
+      "type": "character",
+      "name": "小新",
+      "emotion": "smug",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_smug.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，smug表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "smug"
+      ]
+    },
+    {
+      "id": "char_小新_shocked",
+      "type": "character",
+      "name": "小新",
+      "emotion": "shocked",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_shocked.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，shocked表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "shocked"
+      ]
+    },
+    {
+      "id": "char_小新_confused",
+      "type": "character",
+      "name": "小新",
+      "emotion": "confused",
+      "action": "standing",
+      "filePath": "shared/characters/char_小新_confused.png",
+      "status": "active",
+      "contentDescription": "野原新之助（小新），红衣黄裤，confused表情",
+      "tags": [
+        "角色",
+        "小新",
+        "野原经济学",
+        "confused"
+      ]
+    },
+    {
+      "id": "char_美伢_shopping",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "shopping",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_shopping.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，shopping表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "shopping"
+      ]
+    },
+    {
+      "id": "char_美伢_angry",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "angry",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_angry.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，angry表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "angry"
+      ]
+    },
+    {
+      "id": "char_美伢_shocked",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "shocked",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_shocked.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，shocked表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "shocked"
+      ]
+    },
+    {
+      "id": "char_美伢_calculating",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "calculating",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_calculating.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，calculating表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "calculating"
+      ]
+    },
+    {
+      "id": "char_美伢_smile",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "smile",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_smile.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，smile表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "smile"
+      ]
+    },
+    {
+      "id": "char_美伢_crying",
+      "type": "character",
+      "name": "美伢",
+      "emotion": "crying",
+      "action": "standing",
+      "filePath": "shared/characters/char_美伢_crying.png",
+      "status": "active",
+      "contentDescription": "野原美伢，主妇造型，crying表情",
+      "tags": [
+        "角色",
+        "美伢",
+        "野原经济学",
+        "crying"
+      ]
+    },
+    {
+      "id": "char_广志_tired",
+      "type": "character",
+      "name": "广志",
+      "emotion": "tired",
+      "action": "standing",
+      "filePath": "shared/characters/char_广志_tired.png",
+      "status": "active",
+      "contentDescription": "野原广志，西装社职员，tired表情",
+      "tags": [
+        "角色",
+        "广志",
+        "野原经济学",
+        "tired"
+      ]
+    },
+    {
+      "id": "char_广志_shocked",
+      "type": "character",
+      "name": "广志",
+      "emotion": "shocked",
+      "action": "standing",
+      "filePath": "shared/characters/char_广志_shocked.png",
+      "status": "active",
+      "contentDescription": "野原广志，西装社职员，shocked表情",
+      "tags": [
+        "角色",
+        "广志",
+        "野原经济学",
+        "shocked"
+      ]
+    },
+    {
+      "id": "char_广志_thinking",
+      "type": "character",
+      "name": "广志",
+      "emotion": "thinking",
+      "action": "standing",
+      "filePath": "shared/characters/char_广志_thinking.png",
+      "status": "active",
+      "contentDescription": "野原广志，西装社职员，thinking表情",
+      "tags": [
+        "角色",
+        "广志",
+        "野原经济学",
+        "thinking"
+      ]
+    },
+    {
+      "id": "char_广志_smile",
+      "type": "character",
+      "name": "广志",
+      "emotion": "smile",
+      "action": "standing",
+      "filePath": "shared/characters/char_广志_smile.png",
+      "status": "active",
+      "contentDescription": "野原广志，西装社职员，smile表情",
+      "tags": [
+        "角色",
+        "广志",
+        "野原经济学",
+        "smile"
+      ]
+    },
+    {
+      "id": "char_广志_crying",
+      "type": "character",
+      "name": "广志",
+      "emotion": "crying",
+      "action": "standing",
+      "filePath": "shared/characters/char_广志_crying.png",
+      "status": "active",
+      "contentDescription": "野原广志，西装社职员，crying表情",
+      "tags": [
+        "角色",
+        "广志",
+        "野原经济学",
+        "crying"
+      ]
+    },
+    {
+      "id": "char_小白_happy",
+      "type": "character",
+      "name": "小白",
+      "emotion": "happy",
+      "action": "standing",
+      "filePath": "shared/characters/char_小白_happy.png",
+      "status": "active",
+      "contentDescription": "野原小白，白色棉花糖小狗，happy表情",
+      "tags": [
+        "角色",
+        "小白",
+        "野原经济学",
+        "happy"
+      ]
+    },
+    {
+      "id": "char_小白_wondering",
+      "type": "character",
+      "name": "小白",
+      "emotion": "wondering",
+      "action": "standing",
+      "filePath": "shared/characters/char_小白_wondering.png",
+      "status": "active",
+      "contentDescription": "野原小白，白色棉花糖小狗，wondering表情",
+      "tags": [
+        "角色",
+        "小白",
+        "野原经济学",
+        "wondering"
+      ]
+    },
+    {
+      "id": "char_小白_rolling",
+      "type": "character",
+      "name": "小白",
+      "emotion": "rolling",
+      "action": "standing",
+      "filePath": "shared/characters/char_小白_rolling.png",
+      "status": "active",
+      "contentDescription": "野原小白，白色棉花糖小狗，rolling表情",
+      "tags": [
+        "角色",
+        "小白",
+        "野原经济学",
+        "rolling"
+      ]
     }
   ],
   "backgrounds": [
@@ -353,27 +673,61 @@
       ],
       "createdAt": "2026-08-19",
       "usageCount": 0
+    },
+    {
+      "id": "bg_nohara_living",
+      "type": "background",
+      "name": "野原家客厅",
+      "filePath": "shared/backgrounds/bg_nohara_living.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经典场景：野原家客厅",
+      "tags": [
+        "背景",
+        "蜡笔小新",
+        "野原家客厅"
+      ]
+    },
+    {
+      "id": "bg_kasukabe_market",
+      "type": "background",
+      "name": "春日部超市",
+      "filePath": "shared/backgrounds/bg_kasukabe_market.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经典场景：春日部超市",
+      "tags": [
+        "背景",
+        "蜡笔小新",
+        "春日部超市"
+      ]
+    },
+    {
+      "id": "bg_office_desk",
+      "type": "background",
+      "name": "双叶商事办公室",
+      "filePath": "shared/backgrounds/bg_office_desk.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经典场景：双叶商事办公室",
+      "tags": [
+        "背景",
+        "蜡笔小新",
+        "双叶商事办公室"
+      ]
+    },
+    {
+      "id": "bg_kasukabe_street",
+      "type": "background",
+      "name": "春日部街道",
+      "filePath": "shared/backgrounds/bg_kasukabe_street.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经典场景：春日部街道",
+      "tags": [
+        "背景",
+        "蜡笔小新",
+        "春日部街道"
+      ]
     }
   ],
   "props": [
-    {
-      "id": "prop_钱袋",
-      "type": "prop",
-      "name": "钱袋",
-      "emotion": null,
-      "action": null,
-      "filePath": "shared/props/prop_钱袋.png",
-      "status": "active",
-      "contentDescription": "治愈系卡通麻布钱袋，金色硬币图案",
-      "tags": [
-        "道具",
-        "钱",
-        "钱袋",
-        "治愈卡通"
-      ],
-      "createdAt": "2026-08-17",
-      "usageCount": 0
-    },
     {
       "id": "prop_物价牌",
       "type": "prop",
@@ -404,24 +758,6 @@
         "道具",
         "超市",
         "货架",
-        "治愈卡通"
-      ],
-      "createdAt": "2026-08-17",
-      "usageCount": 0
-    },
-    {
-      "id": "prop_工资条",
-      "type": "prop",
-      "name": "工资条",
-      "emotion": null,
-      "action": null,
-      "filePath": "shared/props/prop_工资条.png",
-      "status": "active",
-      "contentDescription": "治愈系卡通工资条纸条，粉色纸币",
-      "tags": [
-        "道具",
-        "工资",
-        "工资条",
         "治愈卡通"
       ],
       "createdAt": "2026-08-17",
@@ -460,6 +796,54 @@
       ],
       "createdAt": "2026-08-18",
       "usageCount": 0
+    },
+    {
+      "id": "prop_巧克比",
+      "type": "prop",
+      "name": "巧克比",
+      "filePath": "shared/props/prop_巧克比.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经济学道具：巧克比",
+      "tags": [
+        "道具",
+        "巧克比"
+      ]
+    },
+    {
+      "id": "prop_第二件半价牌",
+      "type": "prop",
+      "name": "第二件半价牌",
+      "filePath": "shared/props/prop_第二件半价牌.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经济学道具：第二件半价牌",
+      "tags": [
+        "道具",
+        "第二件半价牌"
+      ]
+    },
+    {
+      "id": "prop_工资条",
+      "type": "prop",
+      "name": "工资条",
+      "filePath": "shared/props/prop_工资条.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经济学道具：工资条",
+      "tags": [
+        "道具",
+        "工资条"
+      ]
+    },
+    {
+      "id": "prop_钱袋",
+      "type": "prop",
+      "name": "钱袋",
+      "filePath": "shared/props/prop_钱袋.png",
+      "status": "active",
+      "contentDescription": "蜡笔小新经济学道具：钱袋",
+      "tags": [
+        "道具",
+        "钱袋"
+      ]
     }
   ]
 }

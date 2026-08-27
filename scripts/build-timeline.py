@@ -320,9 +320,14 @@ def align_by_sentence(scene_config: dict, word_boundaries: list) -> tuple[list |
         end = (wb["offset"] + wb["duration"]) / TICK_TO_SEC
         elements = []
         overlays = []
-        for el in scene.get("elements", []):
+        speaker = scene.get("speaker") or wb.get("speaker")
+        char_effect = scene.get("characterEffect", "none")
+        raw_elements = scene.get("elements", [])
+        char_count = sum(1 for e in raw_elements if e.get("type") == "character")
+        char_idx = 0
+
+        for el in raw_elements:
             if el.get("type") == "overlay":
-                # 动态视觉图层（价格标签/算式/对比卡）：纯文本渲染，无需素材
                 overlays.append({
                     "kind": el.get("kind", "price-tag"),
                     "text": el.get("text", ""),
@@ -330,19 +335,36 @@ def align_by_sentence(scene_config: dict, word_boundaries: list) -> tuple[list |
                     "position": el.get("position", "top"),
                 })
                 continue
+
+            pos = el.get("position")
+            if el.get("type") == "character":
+                if not pos:
+                    pos = "left" if char_count > 1 and char_idx == 0 else "right" if char_count > 1 else "center"
+                char_idx += 1
+                is_spk = (el["name"] == speaker) if speaker else True
+                eff = char_effect if (el["name"] == speaker or not speaker) else "none"
+            else:
+                is_spk = False
+                eff = "none"
+
             elements.append({
                 "type": el["type"],
                 "name": el["name"],
                 "emotion": el.get("emotion"),
                 "enterFrom": el.get("enterFrom", "none"),
-                "position": el.get("position"),
+                "position": pos,
                 "zIndex": el.get("zIndex", 1),
                 "duration": [round(start, 3), round(end, 3)],
+                "isSpeaker": is_spk,
+                "effect": eff,
             })
-        scenes.append({
+
+        scene_dict = {
             "sceneId": scene.get("sceneId", f"S{len(scenes)+1:02d}"),
             "start": round(start, 3),
             "end": round(end, 3),
+            "speaker": speaker,
+            "characterEffect": char_effect,
             "backgroundName": scene.get("background"),
             "subtitle": {
                 "text": scene.get("narrationSegment", ""),
@@ -352,7 +374,12 @@ def align_by_sentence(scene_config: dict, word_boundaries: list) -> tuple[list |
             },
             "elements": elements,
             "overlays": overlays,
-        })
+        }
+        if "infographic" in scene:
+            scene_dict["infographic"] = scene["infographic"]
+        if "dialogueBubble" in scene:
+            scene_dict["dialogueBubble"] = scene["dialogueBubble"]
+        scenes.append(scene_dict)
     return scenes, "aligned"
 
 

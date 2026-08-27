@@ -2,26 +2,53 @@
 
 export type ElementType = "character" | "prop";
 
+export type CharacterEffectType = "steam" | "sweat" | "shake" | "idea" | "question" | "none";
+
 export interface SceneElement {
   type: ElementType;
   name: string;
   emotion?: string;
   enterFrom?: "left" | "right" | "top" | "bottom" | "none";
-  /** 画面位置: left | right | center（可选，默认按 index 交替） */
+  /** 画面位置: left | right | center */
   position?: "left" | "right" | "center";
   zIndex: number;
   /** [start, end] 秒 */
   duration: [number, number];
   /** 渲染脚本解析后的素材路径（相对 public/） */
   imagePath?: string;
+  /** 是否为当前正在说话的角色 */
+  isSpeaker?: boolean;
+  /** 角色头顶/身体表情特效 */
+  effect?: CharacterEffectType;
 }
 
-/** 动态视觉图层（节点3：数字/对比语句触发的纯文本子模板） */
+/** 动态视觉图层（纯文本子模板） */
 export interface InfoOverlayData {
   kind: 'price-tag' | 'equation' | 'vs-card';
   text: string;
   title?: string;
   position?: 'top' | 'center' | 'bottom';
+}
+
+/** 2.0 涂鸦风动态图表数据 */
+export interface InfographicData {
+  kind: 'balance' | 'bar' | 'counter';
+  title?: string;
+  /** 天平左右文本及倾斜方向 */
+  leftLabel?: string;
+  rightLabel?: string;
+  tilt?: 'left' | 'right' | 'balanced';
+  /** 柱状对比图 */
+  bars?: Array<{ label: string; value: number; color?: string; unit?: string }>;
+  /** 跳字计数器 */
+  counter?: { prefix?: string; suffix?: string; from: number; to: number };
+}
+
+/** 2.0 漫画对话气泡数据 */
+export interface DialogueBubbleData {
+  speaker: string;
+  side?: 'left' | 'right' | 'center';
+  text: string;
 }
 
 export interface TimelineScene {
@@ -30,21 +57,29 @@ export interface TimelineScene {
   start: number;
   /** 秒 */
   end: number;
+  /** 当前发言角色（如：小新 / 美伢 / 广志） */
+  speaker?: string;
+  /** 角色特效（如：冒蒸汽/大汗/震惊抖动/灯泡） */
+  characterEffect?: CharacterEffectType;
+  /** 2.0 动态图表组件 */
+  infographic?: InfographicData;
+  /** 2.0 漫画对话气泡 */
+  dialogueBubble?: DialogueBubbleData;
   subtitle: {
     text: string;
     start: number;
     end: number;
-    /** 关键词高亮（由场景配置指定，WorkBuddy 产稿时填入） */
+    /** 关键词高亮 */
     highlights?: string[];
-    /** 节点5：6~10 字断句段（可选，由 build-timeline 生成），每段按字数比例分配展示时间 */
+    /** 断句段，每段按字数比例分配展示时间 */
     segments?: Array<{text: string; start: number; end: number}>;
   };
   elements: SceneElement[];
   /** 动态视觉图层（价格标签/算式/对比卡，纯文本渲染） */
   overlays?: InfoOverlayData[];
-  /** 镜头序号（分镜细分后递增，渲染端据此差异化 Ken Burns 方向） */
+  /** 镜头序号 */
   shotIndex?: number;
-  /** 场景配置指定的背景名（可选，未指定时按序号默认） */
+  /** 场景配置指定的背景名 */
   backgroundName?: string;
   /** 渲染脚本解析后的背景路径（相对 public/） */
   backgroundPath?: string;
@@ -58,14 +93,13 @@ export interface Timeline {
   scenes: TimelineScene[];
 }
 
-/** 片尾问答数据（data/outro.json，渲染脚本会补充角色素材路径） */
+/** 片尾问答数据（data/outro.json） */
 export interface OutroData {
   question: string;
   answer: string;
-  /** 角色名（可选，渲染脚本兜底为「小布丁」） */
   character?: string;
-  /** 提问阶段角色图片路径（渲染脚本解析，相对 public/） */
   characterImage?: string;
-  /** 答案揭晓阶段角色图片路径（渲染脚本解析，相对 public/） */
   characterImageHappy?: string;
+  companionImage?: string;
 }
+
