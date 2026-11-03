@@ -1,18 +1,18 @@
-# videoShort · 布丁经济学短视频工作流
+# videoShort · Pudding Economics
 
-[中文](README.md) | [English](README.en.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-使用原创角色「小布丁」和共享素材，制作生活经济学竖屏短视频。Python 脚本负责剧本、配音、时间轴、素材与质检，React / Remotion 负责画面与合成。品牌与内容边界见 [ACCOUNT_BRAND.md](ACCOUNT_BRAND.md)。
+A vertical-video workflow for everyday economics using the original 小布丁 (Little Pudding) character and shared assets. Python handles scripts, speech, timelines, assets, and checks; React / Remotion handles visuals and composition. See the [brand guide](ACCOUNT_BRAND.md).
 
-## 当前能力
+## Current capabilities
 
-已有项目脚本、场景配置、时间轴、封面和共享角色 / 背景 / 道具。默认出片目标为 1080×1920、30 fps；具体时长由配音与时间轴决定。设计来源文档中的海绵宝宝案例不是当前主角或已交付能力。
+The repository contains scripts, scene configurations, timelines, covers, and shared characters / backgrounds / props. The target is 1080×1920 at 30 fps; narration and timeline determine duration. SpongeBob examples in design-source documents are not the current protagonist or a verified delivered feature.
 
-生产前必须人工检查剧本与素材，填写每个项目的 `qa/review.json`；检查器不会代为批准。干净克隆中的历史项目不一定包含审核记录和配音文件，因此不能保证一条命令重建所有历史成片。
+Human script and material approval in each project's `qa/review.json` is required before production. The checker does not approve anything automatically. Historical projects in a clean clone may lack review records and audio, so full reconstruction is not guaranteed.
 
-## 环境准备
+## Setup
 
-需要 Node.js / npm、支持当前 Remotion 的浏览器、Python 3.10+ 和 FFmpeg / ffprobe。基础 Python 依赖可在独立环境中准备：
+Requires Node.js / npm, a Remotion-compatible browser, Python 3.10+, and FFmpeg / ffprobe. Basic Python dependencies can be installed in an isolated environment:
 
 ```bash
 npm ci
@@ -23,31 +23,31 @@ bash scripts/pipeline.sh help
 bash scripts/pipeline.sh list
 ```
 
-仓库没有完整锁定的 Python 依赖清单。Azure 配音需额外安装 `azure-cognitiveservices-speech` 并配置 [环境变量示例](.env.example)；语义素材检索还需要 PyTorch、Transformers、FAISS、NumPy，并在首次使用时下载模型。上述可选能力不是基础安装的一部分。
+There is no complete locked Python manifest. Azure speech additionally needs `azure-cognitiveservices-speech` and [environment configuration](.env.example). Semantic asset search additionally needs PyTorch, Transformers, FAISS, and NumPy and downloads a model on first use. These optional capabilities are not included in the basic setup above.
 
-## 生产入口
+## Production entry
 
-从仓库根目录运行，使用自己的新项目编号：
+Run from the repository root with your own new project ID:
 
 ```bash
-bash scripts/pipeline.sh new "生活经济学主题" C100_新选题
-# 修改剧本，补齐素材，人工完成 qa/review.json 后：
+bash scripts/pipeline.sh new "Everyday economics topic" C100_新选题
+# Edit the script, prepare assets, and complete qa/review.json manually:
 bash scripts/pipeline.sh voice 02_项目/C100_新选题 edge
 bash scripts/pipeline.sh timeline 02_项目/C100_新选题
 bash scripts/pipeline.sh render 02_项目/C100_新选题
 bash scripts/pipeline.sh check 02_项目/C100_新选题
 ```
 
-配音需要联网，所选服务可能有费用。`new` 使用模板模式，生成的是待编辑起稿，不代表经过研究或审核的事实内容；不传 `edge` 时，配音选择逻辑还可能使用配置的 Azure。
+Speech requires network access and may incur service costs. `new` uses template mode and creates a draft, not researched or approved factual content. Without the explicit `edge` argument, speech selection may use configured Azure credentials.
 
-## 输入与输出
+## Inputs and outputs
 
-- `02_项目/`：每期的 `script/`、`data/`、`audio/`、`qa/` 和 `deliverables/`。
-- `shared/`：素材、索引与账号头像，见 [共享素材说明](shared/README.md)。`public/shared` 为指向该目录的相对符号链接，迁移时需保留。
-- `scripts/`：生产与检查入口；`remotion/`：视频组件。
-- `batch-plans/`：批量选题；`tests/` 目前没有实际测试用例。
+- `02_项目/`: per-episode `script/`, `data/`, `audio/`, `qa/`, and `deliverables/`.
+- `shared/`: assets, index, and avatars; see the [shared-asset guide](shared/README.md). Preserve the relative `public/shared` symlink when moving the project.
+- `scripts/`: production/checking entry points; `remotion/`: video components.
+- `batch-plans/`: batch topics; `tests/` currently contains no actual test cases.
 
-技术和语义检查不能替代人工审片。本次文档整理只做无外部副作用的入口核对，没有配音、付费调用或整片渲染。
+Technical and semantic checks do not replace human review. This documentation update checked safe entry points only; no speech, paid call, or complete render was performed.
 
-## 许可
-当前默认分支未提供项目级许可证文件；公开可见不等于授予复用许可。第三方依赖及素材保留各自条款。
+## License
+The default branch does not include a project-level license file. Public visibility does not itself grant reuse rights. Third-party dependencies and assets retain their own terms.

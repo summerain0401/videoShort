@@ -1,6 +1,6 @@
 # videoShort · Pudding Economics
 
-[中文](README.md) | [English](README.en.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
 A vertical-video workflow for everyday economics using the original 小布丁 (Little Pudding) character and shared assets. Python handles scripts, speech, timelines, assets, and checks; React / Remotion handles visuals and composition. See the [brand guide](ACCOUNT_BRAND.md).
 
